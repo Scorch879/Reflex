@@ -44,7 +44,7 @@ You awake as a "lab rat" within a digital purgatory known as **THE MIND LAB**. T
 ---
 
 ## ⚙️ Technical Implementation
-* **Engine:** Unity `6000.2.15f1`
+* **Engine:** Unity `6000.3.8f1 LTS` 
 * **Extensions:** Cinemachine (used for dynamic camera shifts based on emotional states).
 * **AI Logic:** Behavioral trees that switch branches based on the player's "Aggression Score."
 
