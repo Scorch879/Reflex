@@ -48,3 +48,24 @@ You awake as a "lab rat" within a digital purgatory known as **THE MIND LAB**. T
 * **Engine:** Unity `6000.2.15f1`
 * **State Machine:** Integrated with **Cinemachine** for dynamic camera shifts based on emotional states (e.g., tight, shaky cams for Aggressive; wide, smooth pans for Calm).
 * **AI Logic:** Behavioral trees that switch branches based on the player's "Aggression Score."
+
+---
+
+## System Requirements
+* ** Game engine:** Unity 6000.2.15f1
+* ** Unity extensions:** Cinemachine
+
+* **Animation applications:**
+* **Asesprite (main asset editor)
+* * **Smack Studios (animator)
+
+* **System Minimum Requirements:**
+* **Operating System:** 	Windows® 10 Home 64 Bit
+* **Processor:** 		      Intel® Core™ i3-1005G1 or AMD® FX-6350
+* **Memory:** 		        4 GB RAM
+* **Graphics:** 		      Intel® UHD Graphics
+* **DirectX:**		        Microsoft® Direct X 12
+* **Network:** 		        Broadband Internet Connection
+* **Storage:**		        4 GB available space
+* **Sound Card:**		      Direct X 12- compatible sound card
+
