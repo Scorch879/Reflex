@@ -67,5 +67,11 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "reflex.slnx"
+    "dotnet.defaultSolution": "reflex.slnx",
+    "cSpell.words": [
+        "Behaviour",
+        "Cinemachine",
+        "Mathf",
+        "Scriptable"
+    ]
 }
