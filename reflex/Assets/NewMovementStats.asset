@@ -16,8 +16,8 @@ MonoBehaviour:
   sprintSpeed: 10
   JumpHeight: 1.2
   gravity: 15
-  acceleration: 10
-  deceleration: 10
+  acceleration: 30
+  deceleration: 25
   airAcceleration: 5
   airDeceleration: 2
   deadZone: 0.1

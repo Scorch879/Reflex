@@ -153,6 +153,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 52.2, y: -87.2, z: 0}
 --- !u!212 &51322935
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -198,6 +199,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
   m_Color: {r: 0.8679245, g: 0.13510147, b: 0.13510147, a: 1}
   m_FlipX: 0
@@ -207,7 +209,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &204850536
 GameObject:
@@ -301,6 +302,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &204850540
 MeshFilter:
@@ -339,20 +341,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 928d45468c0996b489b5057fb4d1539c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementManagement
-  movementDirection: {x: 0, y: 0, z: 0}
-  movementSpeed: 5
-  sprintSpeed: 15
-  gravity: 50
-  JumpHeight: 1.5
-  acceleration: 25
-  deceleration: 10
-  airAcceleration: 2
-  airDeceleration: 0.5
-  airResistance: 0.5
-  deadZone: 5
+  movementVariables: {fileID: 11400000, guid: eb843777f58075144adb8f9625df68c3, type: 2}
   playerController: {fileID: 204850544}
   camera: {fileID: 786249934}
-  verticalVelcocityOffset: 4
+  verticalVelocityOffset: 0
 --- !u!114 &204850543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,7 +488,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.27115452, y: -0.5475468, z: 0.19341265, w: 0.7676323}
-  m_LocalPosition: {x: 77.7574, y: 7.980989, z: 18.376648}
+  m_LocalPosition: {x: 78.7574, y: 7.220992, z: 14.466646}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -665,6 +657,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &381665046
 MeshFilter:
@@ -715,14 +708,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -886,7 +879,7 @@ Transform:
   m_GameObject: {fileID: 786249931}
   serializedVersion: 2
   m_LocalRotation: {x: 0.27115452, y: -0.5475468, z: 0.19341265, w: 0.7676323}
-  m_LocalPosition: {x: 77.7574, y: 7.980989, z: 18.376648}
+  m_LocalPosition: {x: 78.7574, y: 7.220992, z: 14.466646}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -916,7 +909,7 @@ MonoBehaviour:
       Size: {x: 2, y: 0.8}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
-  TargetOffset: {x: -1, y: 0.76, z: 3.91}
+  TargetOffset: {x: 0, y: 0, z: 0}
   Damping: {x: 1, y: 1, z: 1}
   Lookahead:
     Enabled: 0
@@ -1007,6 +1000,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &962114436
 TilemapRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1052,6 +1046,7 @@ TilemapRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -1059,7 +1054,6 @@ TilemapRenderer:
   m_SortOrder: 0
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
-  m_MaskInteraction: 0
 --- !u!1839735485 &962114437
 Tilemap:
   m_ObjectHideFlags: 0
