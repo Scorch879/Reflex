@@ -6,8 +6,8 @@ using UnityEngine.InputSystem;
 public class PlayerMovementManagement : MonoBehaviour
 {
     [SerializeField] private DefaultMovementStats movementVariables;
-    [SerializeField]private CharacterController playerController;
-    [SerializeField]private new CinemachinePositionComposer camera;
+    [SerializeField] private CharacterController playerController;
+    [SerializeField] private new CinemachinePositionComposer camera;
     [SerializeField] private float verticalVelocityOffset = 0;
 
     /// <summary>
@@ -24,7 +24,7 @@ public class PlayerMovementManagement : MonoBehaviour
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction sprintAction;
-    
+
 
 
     /// <summary>
@@ -32,14 +32,14 @@ public class PlayerMovementManagement : MonoBehaviour
     /// </summary>
     private PlayerInput userInput;
 
-    
+
 
     /// <summary>
     /// Vertical velocity of the player, which will be updated based on gravity and jumping. This variable will be modified in the Jump method when the player jumps and in the MovePlayer method to apply gravity when the player is in the air.
     /// </summary>
     private float verticalVelocity;
     private bool isSprinting;
-    
+
 
 
     /// <summary>
@@ -66,24 +66,36 @@ public class PlayerMovementManagement : MonoBehaviour
         }
         return movementVariables.movementSpeed;
 
-        
+
     }
 
     private void MovePlayer()
     {
-        Vector3 moveDirection = transform.forward * moveInput.y + transform.right * moveInput.x;
-        Vector3 targetVelocity = moveDirection * GetCurrentSpeed();
+        Vector3 cameraForward = Camera.main.transform.forward;
+        Vector3 cameraRight = Camera.main.transform.right;
+
+        cameraForward.y = 0;
+        cameraRight.y = 0;
+        cameraForward.Normalize();
+        cameraRight.Normalize();
 
         isOnGround = playerController.isGrounded;
 
-        if (isOnGround) {
+        Vector3 moveDirection = (cameraForward * moveInput.y) + (cameraRight * moveInput.x);
+
+        Vector3 targetVelocity = moveDirection * GetCurrentSpeed();
+
+        if (isOnGround)
+        {
             tempAccel = movementVariables.acceleration;
             tempDecel = movementVariables.deceleration;
-        } else {
+        }
+        else
+        {
             tempAccel = movementVariables.airAcceleration;
             tempDecel = movementVariables.airDeceleration;
         }
-        
+
 
         if (moveDirection.magnitude > 0.1f)
         {
@@ -93,21 +105,25 @@ public class PlayerMovementManagement : MonoBehaviour
         {
             currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, tempDecel * Time.deltaTime);
         }
-        
-        if (playerController.isGrounded && verticalVelocity < 0) {
 
-            if (verticalVelocityOffset > 0) {
+        if (playerController.isGrounded && verticalVelocity < 0)
+        {
+
+            if (verticalVelocityOffset > 0)
+            {
                 float temp = verticalVelocityOffset * -1f;
                 verticalVelocityOffset = temp;
             }
 
             verticalVelocity = verticalVelocityOffset;
 
-        } else {
+        }
+        else
+        {
             verticalVelocity -= movementVariables.gravity * Time.deltaTime;
         }
 
-        Vector3 finalVelocity = currentVelocity + (Vector3.up * verticalVelocity); 
+        Vector3 finalVelocity = currentVelocity + (Vector3.up * verticalVelocity);
         playerController.Move(finalVelocity * Time.deltaTime);
     }
 
@@ -120,7 +136,8 @@ public class PlayerMovementManagement : MonoBehaviour
         }
 
         isSprinting = sprintAction.IsPressed();
-        if (isSprinting) {
+        if (isSprinting)
+        {
             Debug.Log("Sprinting");
         }
     }
@@ -131,7 +148,8 @@ public class PlayerMovementManagement : MonoBehaviour
         {
             camera.DeadZoneDepth = movementVariables.deadZone; // Adjust this value to increase/decrease the FOV change
             Debug.Log("FOV Change: " + camera.DeadZoneDepth);
-        } else
+        }
+        else
         {
             camera.DeadZoneDepth = 0.0f;
             Debug.Log("FOV Reset: " + camera.DeadZoneDepth);
@@ -140,7 +158,8 @@ public class PlayerMovementManagement : MonoBehaviour
 
     // Start is called once
     // {} before the first execution of Update after the MonoBehaviour is created
-    void Start() {
+    void Start()
+    {
         userInput = GetComponent<PlayerInput>();
         moveAction = userInput.actions.FindAction("Move");
         jumpAction = userInput.actions.FindAction("Jump");
@@ -151,8 +170,9 @@ public class PlayerMovementManagement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update() {
-         //Every input detection of user input it will auto move in each frame
+    void Update()
+    {
+        //Every input detection of user input it will auto move in each frame
         ReadInputs();
         MovePlayer();
         FOVChangeWhenRunning();
