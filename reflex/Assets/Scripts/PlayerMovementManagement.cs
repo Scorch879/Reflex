@@ -8,19 +8,21 @@ public class PlayerMovementManagement : MonoBehaviour
     [SerializeField] private DefaultMovementStats movementVariables;
     [SerializeField] private CharacterController playerController;
     [SerializeField] private new CinemachinePositionComposer camera;
-    [SerializeField] private float verticalVelocityOffset = 0;
+    [SerializeField] private Animator playerAnim;
+    //[SerializeField] private float verticalVelocityOffset = 0;
 
     /// <summary>
     /// Current velocity of the player, which will be updated based on player input and used to move the character controller. This variable will be modified in the MovePlayer method to create smooth acceleration and deceleration when the player starts or stops moving.
     /// </summary>
+    /// [Tooltip("How fast the player rotates to face movement direction. Higher = Snappier.")
+    [SerializeField] private float rotationSpeed = 10f;
     private Vector3 currentVelocity;
-    private Vector3 moveInput;
-
 
 
     /// <summary>
     /// Input Actions for player movement, jump, and sprint. These actions are defined in the Input System and will be used to read player inputs for movement, jumping, and sprinting.
     /// </summary>
+    public Vector2 moveInput;
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction sprintAction;
@@ -30,6 +32,7 @@ public class PlayerMovementManagement : MonoBehaviour
     /// <summary>
     /// Reference to the PlayerInput component, which is used to access the input actions defined in the Input System. This variable will be initialized in the Start method and used to read player inputs in the ReadInputs method.
     /// </summary>
+    [Header("Player Input Reference")]
     private PlayerInput userInput;
 
 
@@ -45,9 +48,9 @@ public class PlayerMovementManagement : MonoBehaviour
     /// <summary>
     /// Temporary variables for acceleration and deceleration, which will be set based on whether the player is grounded or in the air. These variables will be used in the MovePlayer method to apply different acceleration and deceleration values depending on the player's state (grounded or airborne).
     /// </summary>
-    float tempAccel;
-    float tempDecel;
-    bool isOnGround;
+    private float tempAccel;
+    private float tempDecel;
+    private bool isOnGround;
 
 
     private void Jump()
@@ -81,8 +84,8 @@ public class PlayerMovementManagement : MonoBehaviour
 
         isOnGround = playerController.isGrounded;
 
+        // Calculate direction based on camera
         Vector3 moveDirection = (cameraForward * moveInput.y) + (cameraRight * moveInput.x);
-
         Vector3 targetVelocity = moveDirection * GetCurrentSpeed();
 
         if (isOnGround)
@@ -96,27 +99,27 @@ public class PlayerMovementManagement : MonoBehaviour
             tempDecel = movementVariables.airDeceleration;
         }
 
-
+        // --- ROTATION LOGIC ---
+        // We only rotate if the player is actually providing move input
         if (moveDirection.magnitude > 0.1f)
         {
             currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, tempAccel * Time.deltaTime);
+
+            // Create a target rotation based on the direction we are moving
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            
+            // Smoothly rotate the player transform towards that target rotation
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
         else
         {
             currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, tempDecel * Time.deltaTime);
         }
 
+        // Handle Gravity
         if (playerController.isGrounded && verticalVelocity < 0)
         {
-
-            if (verticalVelocityOffset > 0)
-            {
-                float temp = verticalVelocityOffset * -1f;
-                verticalVelocityOffset = temp;
-            }
-
-            verticalVelocity = verticalVelocityOffset;
-
+            verticalVelocity = -2f; // Small constant downward force to keep grounded
         }
         else
         {
@@ -126,7 +129,6 @@ public class PlayerMovementManagement : MonoBehaviour
         Vector3 finalVelocity = currentVelocity + (Vector3.up * verticalVelocity);
         playerController.Move(finalVelocity * Time.deltaTime);
     }
-
     private void ReadInputs()
     {
         moveInput = moveAction.ReadValue<Vector2>();

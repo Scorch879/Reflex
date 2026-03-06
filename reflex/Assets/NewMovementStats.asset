@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dc1d7aebcffbb44da9b5f9591c564d2, type: 3}
   m_Name: NewMovementStats
   m_EditorClassIdentifier: Assembly-CSharp::DefaultMovementStats
-  movementSpeed: 5
+  movementSpeed: 6.7
   sprintSpeed: 10
   JumpHeight: 1.2
   gravity: 15
