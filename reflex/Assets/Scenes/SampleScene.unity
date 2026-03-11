@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 51322935}
   - component: {fileID: 51322938}
   - component: {fileID: 51322939}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -409,9 +409,9 @@ GameObject:
   - component: {fileID: 204850542}
   - component: {fileID: 204850545}
   - component: {fileID: 204850546}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -749,6 +749,7 @@ GameObject:
   - component: {fileID: 370048210}
   - component: {fileID: 370048208}
   - component: {fileID: 370048213}
+  - component: {fileID: 370048214}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -856,10 +857,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adaa96ffa8c6cae4bb0eb379cad2e0f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
+  animator: {fileID: 0}
+  detectionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  patrolRadius: 10
   controller: {fileID: 370048210}
   player: {fileID: 204850541}
   spriteRenderer: {fileID: 51322935}
+  agent: {fileID: 0}
   speed: 3
+  laserLine: {fileID: 0}
+--- !u!195 &370048214
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370048206}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 3
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &381665043
 GameObject:
   m_ObjectHideFlags: 0
@@ -1653,7 +1683,7 @@ GameObject:
   - component: {fileID: 961540670}
   - component: {fileID: 961540673}
   - component: {fileID: 961540672}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Capsule Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1871,6 +1901,7 @@ GameObject:
   - component: {fileID: 1119442406}
   - component: {fileID: 1119442405}
   - component: {fileID: 1119442404}
+  - component: {fileID: 1119442407}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
@@ -1953,6 +1984,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1119442407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119442403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: ef0b4baa7d3cce5478d1ec3495c7fe81, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &1172993006
 GameObject:
   m_ObjectHideFlags: 0
@@ -2199,7 +2262,7 @@ GameObject:
   - component: {fileID: 1741330008}
   - component: {fileID: 1741330007}
   - component: {fileID: 1741330006}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2308,7 +2371,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1964602098}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
