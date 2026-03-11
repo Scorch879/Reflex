@@ -71,53 +71,53 @@ public class PlayerMovementManagement : MonoBehaviour
 
 
     }
-    private void MovePlayer()
+private void MovePlayer()
+{
+    // 1. Get the direction relative to your 2.5D camera view
+    Vector3 moveDirection = CameraDirectionLogic.GetRelativeDirection(moveInput, Camera.main);
+    Vector3 targetVelocity = moveDirection * GetCurrentSpeed();
+
+    // 2. Determine acceleration based on whether we are grounded
+    isOnGround = playerController.isGrounded;
+    float currentAccel = isOnGround ? movementVariables.acceleration : movementVariables.airAcceleration;
+    float currentDecel = isOnGround ? movementVariables.deceleration : movementVariables.airDeceleration;
+
+    // 3. Move towards the target velocity
+    if (moveDirection.magnitude > 0.1f)
     {
-        // 1. Get the direction relative to your 2.5D camera view
-        Vector3 moveDirection = CameraDirectionLogic.GetRelativeDirection(moveInput, Camera.main);
-        Vector3 targetVelocity = moveDirection * GetCurrentSpeed();
-
-        // 2. Determine acceleration based on whether we are grounded
-        isOnGround = playerController.isGrounded;
-        float currentAccel = isOnGround ? movementVariables.acceleration : movementVariables.airAcceleration;
-        float currentDecel = isOnGround ? movementVariables.deceleration : movementVariables.airDeceleration;
-
-        // 3. Move towards the target velocity
-        if (moveDirection.magnitude > 0.1f)
-        {
-            currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, currentAccel * Time.deltaTime);
-            RotateTowards(moveDirection); // Smoothly turn to face movement
-        }
-        else
-        {
-            currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, currentDecel * Time.deltaTime);
-        }
-
-        // 4. Handle Gravity
-        ApplyGravity();
-
-        // 5. Final Movement Execution
-        Vector3 finalVelocity = currentVelocity + (Vector3.up * verticalVelocity);
-        playerController.Move(finalVelocity * Time.deltaTime);
+        currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, currentAccel * Time.deltaTime);
+        RotateTowards(moveDirection); // Smoothly turn to face movement
+    }
+    else
+    {
+        currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, currentDecel * Time.deltaTime);
     }
 
-    private void RotateTowards(Vector3 direction)
-    {
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-    }
+    // 4. Handle Gravity
+    ApplyGravity();
 
-    private void ApplyGravity()
+    // 5. Final Movement Execution
+    Vector3 finalVelocity = currentVelocity + (Vector3.up * verticalVelocity);
+    playerController.Move(finalVelocity * Time.deltaTime);
+}
+
+private void RotateTowards(Vector3 direction)
+{
+    Quaternion targetRotation = Quaternion.LookRotation(direction);
+    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+}
+
+private void ApplyGravity()
+{
+    if (playerController.isGrounded && verticalVelocity < 0)
     {
-        if (playerController.isGrounded && verticalVelocity < 0)
-        {
-            verticalVelocity = -2f; // Keeps character snapped to the floor
-        }
-        else
-        {
-            verticalVelocity -= movementVariables.gravity * Time.deltaTime;
-        }
+        verticalVelocity = -2f; // Keeps character snapped to the floor
     }
+    else
+    {
+        verticalVelocity -= movementVariables.gravity * Time.deltaTime;
+    }
+}
     private void ReadInputs()
     {
         moveInput = moveAction.ReadValue<Vector2>();
