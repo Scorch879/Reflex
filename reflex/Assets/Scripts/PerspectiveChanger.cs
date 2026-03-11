@@ -10,7 +10,7 @@ public class PerspectiveChanger : MonoBehaviour
     public SpriteLibraryAsset[] spriteSwapLib;
 
     [Tooltip("The SpriteRenderer to change sprites on.")]
-    public SpriteLibrary spriteLib;
+    public SpriteLibrary spriteLib; 
 
     [Tooltip("The transform that defines the object's orientation (which way is 'front'). If not set, the parent transform will be used.")]
     public Transform orientationSource;
@@ -20,7 +20,7 @@ public class PerspectiveChanger : MonoBehaviour
     private void LateUpdate()
     {
         // Always perform billboarding if the camera is set
-        if (cameraObj == null) return;
+        if(cameraObj == null) return;
         UpdatePerspective();
     }
 
@@ -38,7 +38,7 @@ public class PerspectiveChanger : MonoBehaviour
         float angle = Vector3.SignedAngle(forwardDir, -billboardForward, Vector3.up);
 
         int index = Mathf.RoundToInt(angle / 45f);
-
+        
         // Wrap index to 0-7 range
         index = (index % 8 + 8) % 8;
 
@@ -47,7 +47,7 @@ public class PerspectiveChanger : MonoBehaviour
            // Debug.Log($"<color=orange>Perspective:</color> {directionNames[index]} (Angle: {angle:F1}°)");
             dirIndexDisplay = index;
         }
-
+        
         {
             if (spriteSwapLib.Length > index && spriteSwapLib[index] != null)
             {
