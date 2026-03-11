@@ -44,7 +44,7 @@ public class PerspectiveChanger : MonoBehaviour
 
         if (index != dirIndexDisplay)
         {
-            Debug.Log($"<color=orange>Perspective:</color> {directionNames[index]} (Angle: {angle:F1}°)");
+           // Debug.Log($"<color=orange>Perspective:</color> {directionNames[index]} (Angle: {angle:F1}°)");
             dirIndexDisplay = index;
         }
         

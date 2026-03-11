@@ -138,10 +138,6 @@ public class PlayerMovementManagement : MonoBehaviour
         }
 
         isSprinting = sprintAction.IsPressed();
-        if (isSprinting)
-        {
-            Debug.Log("Sprinting");
-        }
     }
 
     private void FOVChangeWhenRunning()
@@ -149,12 +145,10 @@ public class PlayerMovementManagement : MonoBehaviour
         if (isSprinting)
         {
             camera.DeadZoneDepth = movementVariables.deadZone; // Adjust this value to increase/decrease the FOV change
-            Debug.Log("FOV Change: " + camera.DeadZoneDepth);
         }
         else
         {
             camera.DeadZoneDepth = 0.0f;
-            Debug.Log("FOV Reset: " + camera.DeadZoneDepth);
         }
     }
 
