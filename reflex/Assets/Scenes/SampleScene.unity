@@ -282,6 +282,51 @@ MonoBehaviour:
   spriteLib: {fileID: 51322937}
   orientationSource: {fileID: 204850541}
   dirIndexDisplay: 0
+--- !u!1 &164001719
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 164001720}
+  - component: {fileID: 164001721}
+  m_Layer: 0
+  m_Name: WhipSlot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &164001720
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164001719}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 204850541}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &164001721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164001719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3718e5106fa0ad540922732199b0bc78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WhipWeapon
+  weaponData: {fileID: 11400000, guid: 864fb045b9cdaf544a268c43051bc98d, type: 2}
 --- !u!1 &204850536
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,6 +390,7 @@ Transform:
   - {fileID: 51322934}
   - {fileID: 961540670}
   - {fileID: 1047832560}
+  - {fileID: 164001720}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &204850542
@@ -362,9 +408,7 @@ MonoBehaviour:
   movementVariables: {fileID: 11400000, guid: eb843777f58075144adb8f9625df68c3, type: 2}
   playerController: {fileID: 204850544}
   camera: {fileID: 786249934}
-  playerAnim: {fileID: 204850545}
   rotationSpeed: 15
-  moveInput: {x: 0, y: 0}
 --- !u!114 &204850543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,10 +509,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 204850536}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 283ecab059a553e42aea78e4c6e9d18a, type: 3}
+  m_Script: {fileID: 11500000, guid: e5f9c8d5d1a001a4db761a30828fba6a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
   playerAnim: {fileID: 204850545}
+  currentWeapon: {fileID: 164001721}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
