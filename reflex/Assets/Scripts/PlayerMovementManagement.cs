@@ -71,63 +71,52 @@ public class PlayerMovementManagement : MonoBehaviour
 
 
     }
-
     private void MovePlayer()
     {
-        Vector3 cameraForward = Camera.main.transform.forward;
-        Vector3 cameraRight = Camera.main.transform.right;
-
-        cameraForward.y = 0;
-        cameraRight.y = 0;
-        cameraForward.Normalize();
-        cameraRight.Normalize();
-
-        isOnGround = playerController.isGrounded;
-
-        // Calculate direction based on camera
-        Vector3 moveDirection = (cameraForward * moveInput.y) + (cameraRight * moveInput.x);
+        // 1. Get the direction relative to your 2.5D camera view
+        Vector3 moveDirection = CameraDirectionLogic.GetRelativeDirection(moveInput, Camera.main);
         Vector3 targetVelocity = moveDirection * GetCurrentSpeed();
 
-        if (isOnGround)
-        {
-            tempAccel = movementVariables.acceleration;
-            tempDecel = movementVariables.deceleration;
-        }
-        else
-        {
-            tempAccel = movementVariables.airAcceleration;
-            tempDecel = movementVariables.airDeceleration;
-        }
+        // 2. Determine acceleration based on whether we are grounded
+        isOnGround = playerController.isGrounded;
+        float currentAccel = isOnGround ? movementVariables.acceleration : movementVariables.airAcceleration;
+        float currentDecel = isOnGround ? movementVariables.deceleration : movementVariables.airDeceleration;
 
-        // --- ROTATION LOGIC ---
-        // We only rotate if the player is actually providing move input
+        // 3. Move towards the target velocity
         if (moveDirection.magnitude > 0.1f)
         {
-            currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, tempAccel * Time.deltaTime);
-
-            // Create a target rotation based on the direction we are moving
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            
-            // Smoothly rotate the player transform towards that target rotation
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, currentAccel * Time.deltaTime);
+            RotateTowards(moveDirection); // Smoothly turn to face movement
         }
         else
         {
-            currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, tempDecel * Time.deltaTime);
+            currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, currentDecel * Time.deltaTime);
         }
 
-        // Handle Gravity
+        // 4. Handle Gravity
+        ApplyGravity();
+
+        // 5. Final Movement Execution
+        Vector3 finalVelocity = currentVelocity + (Vector3.up * verticalVelocity);
+        playerController.Move(finalVelocity * Time.deltaTime);
+    }
+
+    private void RotateTowards(Vector3 direction)
+    {
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    }
+
+    private void ApplyGravity()
+    {
         if (playerController.isGrounded && verticalVelocity < 0)
         {
-            verticalVelocity = -2f; // Small constant downward force to keep grounded
+            verticalVelocity = -2f; // Keeps character snapped to the floor
         }
         else
         {
             verticalVelocity -= movementVariables.gravity * Time.deltaTime;
         }
-
-        Vector3 finalVelocity = currentVelocity + (Vector3.up * verticalVelocity);
-        playerController.Move(finalVelocity * Time.deltaTime);
     }
     private void ReadInputs()
     {
