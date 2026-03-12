@@ -10,12 +10,20 @@ public class WeaponManager : MonoBehaviour
     private InputAction attackAction;
 
     void Start()
+{
+    userInput = GetComponent<PlayerInput>();
+    
+    if (userInput != null)
     {
-        userInput = GetComponent<PlayerInput>();
-        // Using "Attack" to match your common setup
-        attackAction = userInput.actions.FindAction("Attack");
-        attackAction?.Enable();
+        // We use the Map Name / Action Name format for precision
+        attackAction = userInput.actions.FindAction("PlayerMovementAction/Attack");
+        
+        if (attackAction != null)
+        {
+            attackAction.Enable();
+        }
     }
+}
 
     void Update()
     {
