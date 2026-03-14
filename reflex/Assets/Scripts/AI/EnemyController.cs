@@ -7,6 +7,12 @@ public class EnemyController : MonoBehaviour
     [Header("Visuals")]
     public Animator animator;
 
+    [Header("AI Vision")]
+    public float visionRange = 8f;
+    public float visionAngle = 90f;
+    public float chaseLeashRange = 15f;
+    [HideInInspector] public Vector3 lastKnownPlayerPosition;
+
     [Header("Detection Settings")]
     public LayerMask detectionLayers; // Set this in the Inspector
 
@@ -66,12 +72,6 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void FlipSprite(float horizontalDirection)
-    {
-        // if (horizontalDirection > 0.1f) spriteRenderer.flipX = false;
-        // else if (horizontalDirection < -0.1f) spriteRenderer.flipX = true;
-    }
-
     void Update() {
         if (player == null) return;
 
@@ -97,37 +97,70 @@ public class EnemyController : MonoBehaviour
         _currentState.OnEnter();
     }
 
-    void OnDrawGizmos()
+    public bool CanSeePlayer()
     {
-        if (player != null) {
-            float distance = Vector3.Distance(transform.position, player.position);
-            Vector3 direction = (player.position - transform.position).normalized;
-            
-            // Check if path is clear
-            bool clearShot = false;
-            if (Physics.Raycast(transform.position, direction, out RaycastHit hit, 8f))
-            {
-                if (hit.collider.CompareTag("Player")) clearShot = true;
-            }
+        if (player == null) return false;
 
-            // Green if he sees you, Red if you are hidden
-            Gizmos.color = clearShot ? Color.green : Color.red;
-            Gizmos.DrawLine(transform.position, player.position);
-        }
-
-        // Draw the Chase Range in Red
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 8f);
-
-        // Draw a line to the player if they are assigned
-        if (player != null)
+        // Is player within vision range?
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        if (distanceToPlayer > visionRange)
         {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawLine(transform.position, player.position);
+            HideLaser();
+            return false;
         }
 
-        Vector3 groundPos = new Vector3(transform.position.x, 0, transform.position.z);
-        Gizmos.DrawWireSphere(groundPos, 8f);
+        Vector3 eyePosition = transform.position + Vector3.up * 1f;
+        Vector3 playerTargetPosition = player.position + Vector3.up * 1f; // Aim for the player's torso
+        Vector3 directionToPlayer = (playerTargetPosition - eyePosition).normalized;
+
+        // Is player within vision angle?
+        float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+        if (angleToPlayer > visionAngle / 2)
+        {
+            HideLaser();
+            return false;
+        }
+
+        // Is there a clear line of sight?
+        if (Physics.Raycast(eyePosition, directionToPlayer, out RaycastHit hit, visionRange, detectionLayers))
+        {
+            bool isPlayer = hit.collider.CompareTag("Player");
+            DrawLaser(hit.point, isPlayer); // Draw laser to whatever we hit
+
+            if (isPlayer)
+            {
+                lastKnownPlayerPosition = player.position;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        // Vision Cone
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, visionRange);
+        Vector3 eyePosition = transform.position + Vector3.up;
+        Vector3 forward = transform.forward;
+        Quaternion leftRayRotation = Quaternion.AngleAxis(-visionAngle / 2, Vector3.up);
+        Quaternion rightRayRotation = Quaternion.AngleAxis(visionAngle / 2, Vector3.up);
+        Vector3 leftRayDirection = leftRayRotation * forward;
+        Vector3 rightRayDirection = rightRayRotation * forward;
+        Gizmos.DrawRay(eyePosition, leftRayDirection * visionRange);
+        Gizmos.DrawRay(eyePosition, rightRayDirection * visionRange);
+
+        // Chase Leash Range
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, chaseLeashRange);
+
+        // Last Known Position
+        if (lastKnownPlayerPosition != Vector3.zero)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawSphere(lastKnownPlayerPosition, 0.5f);
+        }
     }
 
     public LineRenderer laserLine; // Drag the LineRenderer component here
