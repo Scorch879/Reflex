@@ -68,8 +68,8 @@ public class EnemyController : MonoBehaviour
 
     public void FlipSprite(float horizontalDirection)
     {
-        if (horizontalDirection > 0.1f) spriteRenderer.flipX = false;
-        else if (horizontalDirection < -0.1f) spriteRenderer.flipX = true;
+        // if (horizontalDirection > 0.1f) spriteRenderer.flipX = false;
+        // else if (horizontalDirection < -0.1f) spriteRenderer.flipX = true;
     }
 
     void Update() {
