@@ -204,7 +204,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2033202849, guid: f8a5e147c5d4afd42a2fe8ebf8989f27, type: 3}
+  m_Sprite: {fileID: 624099733, guid: 7cbee04021d83ae4ba70a4a59163f502, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_CategoryHash: 1.8625731e-11
   m_labelHash: 3.0548682e-28
   m_SpriteKey: 0
-  m_SpriteHash: 1052507461
+  m_SpriteHash: 1051505931
 --- !u!114 &51322937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrary
   m_Library: []
-  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: ec38c2f6b0f389644ad9007ec42b41e0, type: 3}
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 36ae22dd77ec88149b6a21b4fe6aad76, type: 3}
 --- !u!114 &51322938
 MonoBehaviour:
   m_ObjectHideFlags: 0

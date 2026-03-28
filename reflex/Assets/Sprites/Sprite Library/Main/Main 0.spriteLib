@@ -140,6 +140,182 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: -1095432965, guid: 4a2dc9cf09cbfb948a757ae51ae4b933, type: 3}
     m_FromMain: 0
     m_EntryOverrideCount: 22
+  - m_Name: Whip Move
+    m_Hash: 162656182
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Whip Move_0
+      m_Hash: 403299502
+      m_Sprite: {fileID: 69713990, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 69713990, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_1
+      m_Hash: 789507128
+      m_Sprite: {fileID: 1199942587, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1199942587, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_2
+      m_Hash: 906476930
+      m_Sprite: {fileID: 1185969186, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1185969186, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_3
+      m_Hash: 16813332
+      m_Sprite: {fileID: 1862388889, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1862388889, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_4
+      m_Hash: 526653623
+      m_Sprite: {fileID: 1341812089, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1341812089, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_5
+      m_Hash: 677586977
+      m_Sprite: {fileID: 7681729, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 7681729, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_6
+      m_Hash: 829061531
+      m_Sprite: {fileID: 743161532, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 743161532, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_7
+      m_Hash: 107825421
+      m_Sprite: {fileID: -1969454965, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1969454965, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_8
+      m_Hash: 382882972
+      m_Sprite: {fileID: 2090154432, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 2090154432, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_9
+      m_Hash: 567632906
+      m_Sprite: {fileID: 1112561495, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1112561495, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_10
+      m_Hash: 477522259
+      m_Sprite: {fileID: 333440126, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 333440126, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_11
+      m_Hash: 728848837
+      m_Sprite: {fileID: -896653466, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -896653466, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_12
+      m_Hash: 846727295
+      m_Sprite: {fileID: 230581781, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 230581781, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_13
+      m_Hash: 92223721
+      m_Sprite: {fileID: -477381753, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -477381753, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_14
+      m_Hash: 454798666
+      m_Sprite: {fileID: -1443339205, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1443339205, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_15
+      m_Hash: 740072924
+      m_Sprite: {fileID: 520031336, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 520031336, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_16
+      m_Hash: 890621030
+      m_Sprite: {fileID: -1948585066, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1948585066, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_17
+      m_Hash: 34798832
+      m_Sprite: {fileID: -1898853036, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1898853036, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_18
+      m_Hash: 313385313
+      m_Sprite: {fileID: -720744418, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -720744418, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_19
+      m_Hash: 631951863
+      m_Sprite: {fileID: -570481116, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -570481116, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_20
+      m_Hash: 928725648
+      m_Sprite: {fileID: -1750519044, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1750519044, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_21
+      m_Hash: 6031878
+      m_Sprite: {fileID: 1828511890, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1828511890, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_22
+      m_Hash: 425024444
+      m_Sprite: {fileID: 514274766, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 514274766, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_23
+      m_Hash: 777153322
+      m_Sprite: {fileID: -1526106804, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1526106804, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_24
+      m_Hash: 808910473
+      m_Sprite: {fileID: 987918632, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 987918632, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_25
+      m_Hash: 120704543
+      m_Sprite: {fileID: -1408186538, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1408186538, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_26
+      m_Hash: 507027365
+      m_Sprite: {fileID: -1873761289, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1873761289, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_27
+      m_Hash: 692039475
+      m_Sprite: {fileID: 1004980134, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1004980134, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_28
+      m_Hash: 964735650
+      m_Sprite: {fileID: 27383123, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 27383123, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_29
+      m_Hash: 243761716
+      m_Sprite: {fileID: -1190018849, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1190018849, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_30
+      m_Hash: 775949265
+      m_Sprite: {fileID: 331941923, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 331941923, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_31
+      m_Hash: 424098631
+      m_Sprite: {fileID: 1207735379, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1207735379, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_32
+      m_Hash: 5139197
+      m_Sprite: {fileID: -1769224897, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1769224897, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    - m_Name: Whip Move_33
+      m_Hash: 927554155
+      m_Sprite: {fileID: -624486866, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -624486866, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 34
   m_PrimaryLibraryGUID: 
-  m_ModificationHash: 639084322011591745
+  m_ModificationHash: 639102964701346529
   m_Version: 1

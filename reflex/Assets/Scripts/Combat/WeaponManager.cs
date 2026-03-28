@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using System;
 
 public class WeaponManager : MonoBehaviour
 {
@@ -17,6 +18,12 @@ public class WeaponManager : MonoBehaviour
     [Header("Combo & Cooldown State")]
     private int currentComboIndex = 0;
     private float lastAttackTime;
+    [SerializeField] private float comboTime = 0f;
+    private bool startResetTime = false;
+
+
+    [SerializeField] private bool canAttack = true;
+    [SerializeField] private bool toIdle = false;
 
     void Start()
     {
@@ -39,44 +46,75 @@ public class WeaponManager : MonoBehaviour
     {
         if (attackAction != null && attackAction.triggered)
         {
-            if (CanAttack())
+            if (canAttack)
             {
                 ExecuteAttack();
             }
         }
+        UpdateTime();   
     }
 
-    private bool CanAttack()
+
+    private void UpdateTime()
+    {
+        // If the animation hasn't finished yet, don't count down
+        if(!startResetTime) return;
+
+        if(comboTime <= 0)
+        {   
+            if(currentComboIndex > 0) { ResetComboTime(); }
+            return;
+        }
+
+        comboTime -= Time.deltaTime;
+    }
+
+    private void ResetComboTime()
+    {
+        toIdle = true;
+        currentComboIndex = 0;
+        comboTime = currentWeaponData.comboResetTime;
+        playerVisuals.GoToIdle();
+        canAttack = true;
+        startResetTime = false;
+    }
+    // only use this in animation events
+    private void CanAttackEvent()
+    {
+        if (currentWeaponData == null) return;
+        canAttack = !canAttack;
+        toIdle = false;
+    }
+
+    // use this to call publicly
+    public bool CanAttackLocal(bool attack)
     {
         if (currentWeaponData == null) return false;
-        return Time.time >= lastAttackTime + currentWeaponData.attackRate;
+        canAttack = attack;
+        return canAttack;
     }
+    
 
     private void ExecuteAttack()
     {
         if (currentWeaponData == null || currentWeaponData.comboChain.Length == 0) return;
-
-        // Reset combo if player waited too long
-        if (Time.time - lastAttackTime > currentWeaponData.comboResetTime)
+        startResetTime = false;
+        currentComboIndex++;
+        if(currentComboIndex > currentWeaponData.comboChain.Length)
         {
-            currentComboIndex = 0;
+            currentComboIndex = currentWeaponData.comboChain.Length;
         }
+        AttackStep step = currentWeaponData.comboChain[currentComboIndex-1];
+        comboTime = currentWeaponData.comboResetTime;
 
-        AttackStep step = currentWeaponData.comboChain[currentComboIndex];
 
         // 1. Tell Visuals to play the specific animation for this combo hit
-        playerVisuals.PlayAttack(currentComboIndex);
+        playerVisuals.PlayAttack(currentComboIndex-1, currentWeaponData.weaponName);
 
         // 2. Physical Hitbox Scaling
         UpdateHitboxTransform(step);
-
-        // 3. Trigger the logic and damage check
-        StopAllCoroutines();
-        StartCoroutine(HitboxRoutine(step));
-
-        // 4. Update State
         lastAttackTime = Time.time;
-        currentComboIndex = (currentComboIndex + 1) % currentWeaponData.comboChain.Length;
+        
     }
 
     private void UpdateHitboxTransform(AttackStep step)
@@ -85,7 +123,9 @@ public class WeaponManager : MonoBehaviour
         hitboxVisual.transform.localPosition = new Vector3(0, 0, step.attackRange / 2f);
     }
 
-    private IEnumerator HitboxRoutine(AttackStep step)
+    //Anim Event --| 
+    //             v
+    public void HitboxOn()
     {
         hitboxVisual.SetActive(true);
 
@@ -104,7 +144,7 @@ public class WeaponManager : MonoBehaviour
         {
             foreach (Collider enemy in hitEnemies)
             {
-                Debug.Log($"<color=red>HIT CONFIRMED:</color> Dealt {step.attackDamage} damage to {enemy.name}");
+                Debug.Log($"<color=red>HIT CONFIRMED:</color> Dealt damage to {enemy.name}");
 
                 // This is where you will eventually call enemy.TakeDamage()
             }
@@ -113,10 +153,20 @@ public class WeaponManager : MonoBehaviour
         {
             Debug.Log("<color=white>Attack missed.</color> No enemies found in range.");
         }
+    }
 
-        // 4. Wait for the duration defined in your WeaponData, then hide
-        yield return new WaitForSeconds(step.activeTime);
+    public void HitboxOff()
+    {
         hitboxVisual.SetActive(false);
+    }
+
+    public void StartResetTime()
+    {
+        // This allows the timer to start ticking in Update()
+        startResetTime = true; 
+        
+        // Set the initial duration from your WeaponData
+        comboTime = currentWeaponData.comboResetTime;
     }
 
 //this is for debugging purposes can remove or delete

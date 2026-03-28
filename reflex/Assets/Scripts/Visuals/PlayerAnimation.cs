@@ -6,6 +6,14 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField] private Animator playerAnim;
     [SerializeField] private PlayerMovementManagement playerMovement;
 
+    public string weapon = "";
+    public int comboInd = 0;
+
+
+    private void Awake()
+    {
+    }
+
     private void Update()
     {
         MoveState();
@@ -33,14 +41,21 @@ public class PlayerAnimation : MonoBehaviour
     /// Tells the animator to play the attack and sets the combo index.
     /// Called by WeaponManager when the player clicks.
     /// </summary>
-    public void PlayAttack(int comboIndex)
+    public void PlayAttack(int comboIndex, string weaponName)
     {
         if (playerAnim == null) return;
 
-        // Set the combo hit number (0, 1, or 2)
+        playerAnim.Play($"{weaponName} {comboIndex}", 0, 0f);
+    
+        weapon = weaponName;
+        comboInd = comboIndex;
+
         playerAnim.SetInteger("ComboIndex", comboIndex);
-        
-        // Fire the trigger to start the transition
-        playerAnim.SetTrigger("Attack");
     }
+    
+    public void GoToIdle()
+    {
+        playerAnim.SetTrigger("goToIdle");
+    }
+   
 }
