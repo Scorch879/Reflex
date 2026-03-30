@@ -3,12 +3,14 @@ using UnityEngine;
 [System.Serializable]
 public struct AttackStep
 {
+    
     public float attackRange;
     public float attackWidth;
     public float verticalScale;
     public float attackDamage;
     public float attackStunDuration;
-    public float activeTime; // How long the red box stays visible
+    public float activeTime;
+    public float startupDelay; // How long the red box stays visible
 }
 
 [CreateAssetMenu(fileName = "NewWeaponData", menuName = "Combat/Weapon Data")]

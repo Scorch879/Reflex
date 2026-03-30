@@ -10,7 +10,7 @@ public class WeaponManager : MonoBehaviour
     public WeaponData currentWeaponData;
     public GameObject hitboxVisual;
     public LayerMask enemyLayer;
-
+    private Coroutine hitboxCoroutine;
     [Header("Input")]
     private PlayerInput userInput;
     private InputAction attackAction;
@@ -104,6 +104,13 @@ public class WeaponManager : MonoBehaviour
         {
             currentComboIndex = currentWeaponData.comboChain.Length;
         }
+
+
+        // Reset combo if the player waited too long
+        if (Time.time - lastAttackTime > currentWeaponData.comboResetTime)
+        {
+            currentComboIndex = currentWeaponData.comboChain.Length;
+        }
         AttackStep step = currentWeaponData.comboChain[currentComboIndex-1];
         comboTime = currentWeaponData.comboResetTime;
 
@@ -113,6 +120,11 @@ public class WeaponManager : MonoBehaviour
 
         // 2. Physical Hitbox Scaling
         UpdateHitboxTransform(step);
+        // Play Visuals
+        playerVisuals.PlayAttack(currentComboIndex);
+
+        // START the routine (We don't stop the old one anymore because CanAttack blocks it)
+        hitboxCoroutine = StartCoroutine(HitboxRoutine(step));
         lastAttackTime = Time.time;
         
     }
@@ -127,37 +139,42 @@ public class WeaponManager : MonoBehaviour
     //             v
     public void HitboxOn()
     {
-        hitboxVisual.SetActive(true);
+        // 1. STARTUP DELAY
+        // This allows the "Wind-up" animation to play first
+        yield return new WaitForSeconds(step.startupDelay);
 
-        // 1. Get the current World Position, Rotation, and Scale of the hitbox
-        // We use lossyScale / 2 because OverlapBox expects "half-extents"
+        // 2. ACTIVATE HITBOX
+        hitboxVisual.SetActive(true);
+        UpdateHitboxTransform(step); // Ensure scale/pos are updated after the wait
+
+        // 3. DAMAGE DETECTION
+        HashSet<Collider> alreadyHit = new HashSet<Collider>();
         Vector3 center = hitboxVisual.transform.position;
         Vector3 halfExtents = hitboxVisual.transform.lossyScale / 2f;
         Quaternion orientation = hitboxVisual.transform.rotation;
 
-        // 2. Perform the Physics Check
-        // This looks for anything on the 'Enemy' layer inside that yellow box
         Collider[] hitEnemies = Physics.OverlapBox(center, halfExtents, orientation, enemyLayer);
 
-        // 3. Handle the Results
-        if (hitEnemies.Length > 0)
+        foreach (Collider enemy in hitEnemies)
         {
-            foreach (Collider enemy in hitEnemies)
+            if (!alreadyHit.Contains(enemy))
             {
                 Debug.Log($"<color=red>HIT CONFIRMED:</color> Dealt damage to {enemy.name}");
 
                 // This is where you will eventually call enemy.TakeDamage()
             }
+            else
+            {
+                Debug.Log("<color=white>Attack missed.</color> No enemies found in range.");
+            }
         }
-        else
-        {
-            Debug.Log("<color=white>Attack missed.</color> No enemies found in range.");
-        }
+        
     }
 
     public void HitboxOff()
     {
         hitboxVisual.SetActive(false);
+        hitboxCoroutine = null;
     }
 
     public void StartResetTime()
