@@ -41,7 +41,7 @@ public class PlayerAnimation : MonoBehaviour
     /// Tells the animator to play the attack and sets the combo index.
     /// Called by WeaponManager when the player clicks.
     /// </summary>
-    public void PlayAttack(int omboIndecx, string weaponName)
+    public void PlayAttack(int comboIndex, string weaponName)
     {
         if (playerAnim == null) return;
 

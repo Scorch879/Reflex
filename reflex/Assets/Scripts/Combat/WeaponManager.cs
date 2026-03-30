@@ -121,10 +121,10 @@ public class WeaponManager : MonoBehaviour
         // 2. Physical Hitbox Scaling
         UpdateHitboxTransform(step);
         // Play Visuals
-        playerVisuals.PlayAttack(currentComboIndex);
+        playerVisuals.PlayAttack(currentComboIndex, currentWeaponData.weaponName);
 
         // START the routine (We don't stop the old one anymore because CanAttack blocks it)
-        hitboxCoroutine = StartCoroutine(HitboxRoutine(step));
+        //hitboxCoroutine = StartCoroutine(HitboxRoutine(step));
         lastAttackTime = Time.time;
         
     }
@@ -141,14 +141,14 @@ public class WeaponManager : MonoBehaviour
     {
         // 1. STARTUP DELAY
         // This allows the "Wind-up" animation to play first
-        yield return new WaitForSeconds(step.startupDelay);
+        // yield return new WaitForSeconds(step.startupDelay);
 
         // 2. ACTIVATE HITBOX
         hitboxVisual.SetActive(true);
-        UpdateHitboxTransform(step); // Ensure scale/pos are updated after the wait
+        //UpdateHitboxTransform(step); // Ensure scale/pos are updated after the wait
 
         // 3. DAMAGE DETECTION
-        HashSet<Collider> alreadyHit = new HashSet<Collider>();
+        //HashSet<Collider> alreadyHit = new HashSet<Collider>();
         Vector3 center = hitboxVisual.transform.position;
         Vector3 halfExtents = hitboxVisual.transform.lossyScale / 2f;
         Quaternion orientation = hitboxVisual.transform.rotation;
@@ -157,16 +157,7 @@ public class WeaponManager : MonoBehaviour
 
         foreach (Collider enemy in hitEnemies)
         {
-            if (!alreadyHit.Contains(enemy))
-            {
-                Debug.Log($"<color=red>HIT CONFIRMED:</color> Dealt damage to {enemy.name}");
-
-                // This is where you will eventually call enemy.TakeDamage()
-            }
-            else
-            {
-                Debug.Log("<color=white>Attack missed.</color> No enemies found in range.");
-            }
+            Debug.Log($"<color=red>HIT CONFIRMED:</color> Dealt damage to {enemy.name}");
         }
         
     }
@@ -186,7 +177,6 @@ public class WeaponManager : MonoBehaviour
         comboTime = currentWeaponData.comboResetTime;
     }
 
-//this is for debugging purposes can remove or delete
     private void OnDrawGizmos()
     {
         if (hitboxVisual != null && hitboxVisual.activeInHierarchy)
