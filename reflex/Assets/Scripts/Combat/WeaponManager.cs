@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using System.Collections.Generic;
 
 public class WeaponManager : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class WeaponManager : MonoBehaviour
     public WeaponData currentWeaponData;
     public GameObject hitboxVisual;
     public LayerMask enemyLayer;
-
+    private Coroutine hitboxCoroutine;
     [Header("Input")]
     private PlayerInput userInput;
     private InputAction attackAction;
@@ -49,14 +50,22 @@ public class WeaponManager : MonoBehaviour
     private bool CanAttack()
     {
         if (currentWeaponData == null) return false;
-        return Time.time >= lastAttackTime + currentWeaponData.attackRate;
+
+        // 1. Check if the cooldown (attackRate) has passed
+        bool cooldownOver = Time.time >= lastAttackTime + currentWeaponData.attackRate;
+
+        // 2. Check if a hitbox is currently active
+        // If hitboxCoroutine is NOT null, it means HitboxRoutine is still running
+        bool notCurrentlyAttacking = (hitboxCoroutine == null);
+
+        return cooldownOver && notCurrentlyAttacking;
     }
 
     private void ExecuteAttack()
     {
         if (currentWeaponData == null || currentWeaponData.comboChain.Length == 0) return;
 
-        // Reset combo if player waited too long
+        // Reset combo if the player waited too long
         if (Time.time - lastAttackTime > currentWeaponData.comboResetTime)
         {
             currentComboIndex = 0;
@@ -64,17 +73,12 @@ public class WeaponManager : MonoBehaviour
 
         AttackStep step = currentWeaponData.comboChain[currentComboIndex];
 
-        // 1. Tell Visuals to play the specific animation for this combo hit
+        // Play Visuals
         playerVisuals.PlayAttack(currentComboIndex);
 
-        // 2. Physical Hitbox Scaling
-        UpdateHitboxTransform(step);
+        // START the routine (We don't stop the old one anymore because CanAttack blocks it)
+        hitboxCoroutine = StartCoroutine(HitboxRoutine(step));
 
-        // 3. Trigger the logic and damage check
-        StopAllCoroutines();
-        StartCoroutine(HitboxRoutine(step));
-
-        // 4. Update State
         lastAttackTime = Time.time;
         currentComboIndex = (currentComboIndex + 1) % currentWeaponData.comboChain.Length;
     }
@@ -87,39 +91,42 @@ public class WeaponManager : MonoBehaviour
 
     private IEnumerator HitboxRoutine(AttackStep step)
     {
-        hitboxVisual.SetActive(true);
+        // 1. STARTUP DELAY
+        // This allows the "Wind-up" animation to play first
+        yield return new WaitForSeconds(step.startupDelay);
 
-        // 1. Get the current World Position, Rotation, and Scale of the hitbox
-        // We use lossyScale / 2 because OverlapBox expects "half-extents"
+        // 2. ACTIVATE HITBOX
+        hitboxVisual.SetActive(true);
+        UpdateHitboxTransform(step); // Ensure scale/pos are updated after the wait
+
+        // 3. DAMAGE DETECTION
+        HashSet<Collider> alreadyHit = new HashSet<Collider>();
         Vector3 center = hitboxVisual.transform.position;
         Vector3 halfExtents = hitboxVisual.transform.lossyScale / 2f;
         Quaternion orientation = hitboxVisual.transform.rotation;
 
-        // 2. Perform the Physics Check
-        // This looks for anything on the 'Enemy' layer inside that yellow box
         Collider[] hitEnemies = Physics.OverlapBox(center, halfExtents, orientation, enemyLayer);
 
-        // 3. Handle the Results
-        if (hitEnemies.Length > 0)
+        foreach (Collider enemy in hitEnemies)
         {
-            foreach (Collider enemy in hitEnemies)
+            if (!alreadyHit.Contains(enemy))
             {
-                Debug.Log($"<color=red>HIT CONFIRMED:</color> Dealt {step.attackDamage} damage to {enemy.name}");
-
-                // This is where you will eventually call enemy.TakeDamage()
+                alreadyHit.Add(enemy);
+                Debug.Log($"<color=red>HIT!</color> {enemy.name} for {step.attackDamage} damage.");
+                // enemy.GetComponent<EnemyHealth>()?.TakeDamage(step.attackDamage);
             }
         }
-        else
-        {
-            Debug.Log("<color=white>Attack missed.</color> No enemies found in range.");
-        }
 
-        // 4. Wait for the duration defined in your WeaponData, then hide
+        // 4. ACTIVE TIME
+        // How long the "hit" stays in the world
         yield return new WaitForSeconds(step.activeTime);
+
+        // 5. DEACTIVATE
         hitboxVisual.SetActive(false);
+        hitboxCoroutine = null;
     }
 
-//this is for debugging purposes can remove or delete
+    //this is for debugging purposes can remove or delete
     private void OnDrawGizmos()
     {
         if (hitboxVisual != null && hitboxVisual.activeInHierarchy)
