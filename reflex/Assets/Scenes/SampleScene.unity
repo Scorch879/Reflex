@@ -200,16 +200,16 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -2076136041
+  m_SortingLayer: 2
+  m_SortingOrder: 5
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 624099733, guid: 7cbee04021d83ae4ba70a4a59163f502, type: 3}
+  m_Sprite: {fileID: -570481116, guid: ecf40a886ecc1eb4fadf6b3c0750af2d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.4615386, y: 2.4615386}
+  m_Size: {x: 1.0961539, y: 2.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -226,8 +226,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteResolver
-  m_CategoryHash: 1.8625731e-11
-  m_labelHash: 3.0548682e-28
+  m_CategoryHash: 4.2836623e-33
+  m_labelHash: 2.9632577e-16
   m_SpriteKey: 0
   m_SpriteHash: 1051505931
 --- !u!114 &51322937
@@ -257,6 +257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billboarding
   cameraObj: {fileID: 330585545}
+  xRotate: 20
 --- !u!114 &51322939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,6 +411,7 @@ GameObject:
   - component: {fileID: 204850545}
   - component: {fileID: 204850546}
   - component: {fileID: 204850547}
+  - component: {fileID: 204850548}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -454,6 +456,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1964602098}
+  - {fileID: 1489690236}
   - {fileID: 51322934}
   - {fileID: 961540670}
   - {fileID: 1689204906}
@@ -566,6 +569,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
   playerAnim: {fileID: 204850545}
   playerMovement: {fileID: 204850542}
+  playerManager: {fileID: 204850548}
+  weapon: 
+  comboInd: 0
 --- !u!114 &204850547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -579,11 +585,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
   playerVisuals: {fileID: 204850546}
-  currentWeaponData: {fileID: 11400000, guid: 2af0d5c3a3e75cf4db6171d154b674f4, type: 2}
+  playerManager: {fileID: 204850548}
   hitboxVisual: {fileID: 271341581}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &204850548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204850536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81b83cb6490d1024e84a868ea8d0fe74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
+  isRunning: 0
+  isAttacking: 0
+  isIdle: 1
+  comboCount: 0
+  currentComboIndex: 0
+  canAttack: 1
+  comboTime: 0
+  canGoToIdle: 1
+  playerInput: {fileID: 204850543}
+  weaponData: {fileID: 11400000, guid: 59bc94e2d26edbe4d8e20e062a55949d, type: 2}
 --- !u!1 &271341581
 GameObject:
   m_ObjectHideFlags: 0
@@ -1561,6 +1589,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billboarding
   cameraObj: {fileID: 330585545}
+  xRotate: 0
 --- !u!212 &734532630
 SpriteRenderer:
   serializedVersion: 2
@@ -2036,6 +2065,7 @@ GameObject:
   - component: {fileID: 1119442405}
   - component: {fileID: 1119442404}
   - component: {fileID: 1119442407}
+  - component: {fileID: 1119442408}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
@@ -2150,6 +2180,19 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: ef0b4baa7d3cce5478d1ec3495c7fe81, type: 2}
   m_BuildHeightMesh: 0
+--- !u!210 &1119442408
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119442403}
+  m_Enabled: 1
+  m_SortingLayerID: -2076136041
+  m_SortingLayer: 2
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &1172993006
 GameObject:
   m_ObjectHideFlags: 0
@@ -2272,6 +2315,115 @@ Transform:
   m_Children: []
   m_Father: {fileID: 370048212}
   m_LocalEulerAnglesHint: {x: -93.2, y: 0, z: -66.1}
+--- !u!1 &1489690235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1489690236}
+  - component: {fileID: 1489690238}
+  - component: {fileID: 1489690240}
+  m_Layer: 3
+  m_Name: Weapon Sprite
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1489690236
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489690235}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 204850541}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!212 &1489690238
+SpriteRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489690235}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 0a5ef831c321132438b221a42122fbc8, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 11.25, y: 3.0384614}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &1489690240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489690235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8611f58dbf6b454eaf836b149a92293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PerspectiveChanger
+  cameraObj: {fileID: 330585545}
+  spriteSwapLib: []
+  spriteLib: {fileID: 0}
+  orientationSource: {fileID: 204850541}
+  dirIndexDisplay: 0
 --- !u!1 &1689204905
 GameObject:
   m_ObjectHideFlags: 0

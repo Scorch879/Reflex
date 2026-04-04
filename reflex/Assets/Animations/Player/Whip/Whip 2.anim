@@ -49,7 +49,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: 1.3200992e-20
         inSlope: Infinity
         outSlope: Infinity
@@ -94,7 +94,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.46666667
+        time: 0.51666665
         value: 4.1292402e-33
         inSlope: Infinity
         outSlope: Infinity
@@ -119,7 +119,34 @@ AnimationClip:
     classID: 114
     script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
     flags: 1
-  m_PPtrCurves: []
+  m_PPtrCurves:
+  - serializedVersion: 2
+    curve:
+    - time: 0
+      value: {fileID: 1169984810, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
+    - time: 0.05
+      value: {fileID: 27727693, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
+    - time: 0.1
+      value: {fileID: -673109009, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
+    - time: 0.15
+      value: {fileID: -311719664, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
+    - time: 0.18333334
+      value: {fileID: -1874415744, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
+    - time: 0.25
+      value: {fileID: 224584030, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
+    - time: 0.31666666
+      value: {fileID: 2001650042, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
+    - time: 0.38333333
+      value: {fileID: 123034344, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
+    - time: 0.51666665
+      value: {fileID: 65586796, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
+    - time: 0.5833333
+      value: {fileID: -1517833581, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
+    attribute: m_Sprite
+    path: Weapon Sprite
+    classID: 212
+    script: {fileID: 0}
+    flags: 2
   m_SampleRate: 60
   m_WrapMode: 0
   m_Bounds:
@@ -136,13 +163,32 @@ AnimationClip:
       isPPtrCurve: 0
       isIntCurve: 1
       isSerializeReferenceCurve: 0
-    pptrCurveMapping: []
+    - serializedVersion: 2
+      path: 2786741944
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
+    pptrCurveMapping:
+    - {fileID: 1169984810, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
+    - {fileID: 27727693, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
+    - {fileID: -673109009, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
+    - {fileID: -311719664, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
+    - {fileID: -1874415744, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
+    - {fileID: 224584030, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
+    - {fileID: 2001650042, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
+    - {fileID: 123034344, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
+    - {fileID: 65586796, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
+    - {fileID: -1517833581, guid: 61de5a0a262393a44948133e6a3be9c2, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.5833333
+    m_StopTime: 0.59999996
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -190,7 +236,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.15
         value: 1.3200992e-20
         inSlope: Infinity
         outSlope: Infinity
@@ -235,7 +281,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.46666667
+        time: 0.51666665
         value: 4.1292402e-33
         inSlope: Infinity
         outSlope: Infinity
@@ -263,4 +309,18 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.25
+    functionName: HitboxOn
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.38333333
+    functionName: HitboxOff
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

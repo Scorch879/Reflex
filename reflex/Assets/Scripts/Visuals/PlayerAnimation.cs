@@ -5,6 +5,8 @@ public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] private Animator playerAnim;
     [SerializeField] private PlayerMovementManagement playerMovement;
+    [SerializeField] private PlayerManager playerManager;
+
 
     public string weapon = "";
     public int comboInd = 0;
@@ -17,12 +19,13 @@ public class PlayerAnimation : MonoBehaviour
     private void Update()
     {
         MoveState();
+        UpdateAnimatorStates();
     }
 
     private void MoveState()
     {
         bool isRunning = playerMovement.moveInput.magnitude > 0.1f;
-        playerAnim.SetBool("isRunning", isRunning);
+        playerManager.isRunning = isRunning;
     }
 
     /// <summary>
@@ -41,21 +44,21 @@ public class PlayerAnimation : MonoBehaviour
     /// Tells the animator to play the attack and sets the combo index.
     /// Called by WeaponManager when the player clicks.
     /// </summary>
-    public void PlayAttack(int comboIndex, string weaponName)
+    public void PlayAttack(int comboIndex)
     {
         if (playerAnim == null) return;
-
-        playerAnim.Play($"{weaponName} {comboIndex}", 0, 0f);
-    
-        weapon = weaponName;
-        comboInd = comboIndex;
-
-        playerAnim.SetInteger("ComboIndex", comboIndex);
+        Debug.Log($"Attack {comboIndex}");
+        playerAnim.Play($"Attack {comboIndex}", 0, 0f);
+        if ( comboIndex>= playerManager.weaponData.comboChain.Length)
+        {
+            playerManager.currentComboIndex = 0;
+        }
     }
     
-    public void GoToIdle()
+    public void UpdateAnimatorStates()
     {
-        playerAnim.SetTrigger("goToIdle");
+        playerAnim.SetBool("isRunning", playerManager.isRunning);
+        playerAnim.SetFloat("comboTime", playerManager.comboTime);
     }
    
 }

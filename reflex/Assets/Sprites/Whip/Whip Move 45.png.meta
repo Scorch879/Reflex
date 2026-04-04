@@ -1,0 +1,924 @@
+fileFormatVersion: 2
+guid: 95c53cd4ab835d44ea250eb626e00075
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 52
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Whip Move_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1900
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 080b9e505bd7b0d418c22ccaa2e1465d
+      internalID: 1720133594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_1
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 1900
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aea628205477ab5428e252ac7f68663e
+      internalID: 1081088082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_2
+      rect:
+        serializedVersion: 2
+        x: 1108
+        y: 1900
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f176818d8e9af744a9f13dcf6f1946d
+      internalID: -789624051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_3
+      rect:
+        serializedVersion: 2
+        x: 1662
+        y: 1900
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68603443b8934e64bb6b14bcac2e3eb2
+      internalID: 106854328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_4
+      rect:
+        serializedVersion: 2
+        x: 2216
+        y: 1900
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 002a61dac2595354f9c025882bff59c6
+      internalID: 1029362805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_5
+      rect:
+        serializedVersion: 2
+        x: 2770
+        y: 1900
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1689aec73558aa5428f878c753a35a5a
+      internalID: -1400626079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1520
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc6722f585a30834db30eb4fd296729d
+      internalID: -1491293517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_7
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 1520
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8f929b5e9b831346a3f7192e783dc63
+      internalID: -2139052041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_8
+      rect:
+        serializedVersion: 2
+        x: 1108
+        y: 1520
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e95b8f7b1739c04baefeb1a95a34231
+      internalID: -1957275198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_9
+      rect:
+        serializedVersion: 2
+        x: 1662
+        y: 1520
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb82849164845d141be45de62823719e
+      internalID: 398352962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_10
+      rect:
+        serializedVersion: 2
+        x: 2216
+        y: 1520
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ac44a901c3f0e24b8a0f70a707b49b3
+      internalID: -1837271902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_11
+      rect:
+        serializedVersion: 2
+        x: 2770
+        y: 1520
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e570a5c31fa58a4384b42f245628dc6
+      internalID: 4482314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1140
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 118c8227c366389499f92b251a4ba7ae
+      internalID: 1191108549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_13
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 1140
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7aca9a903105448448887090876fb9f4
+      internalID: 823300260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_14
+      rect:
+        serializedVersion: 2
+        x: 1108
+        y: 1140
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14385fe1baba5ae469244df418fd184d
+      internalID: 1955182297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_15
+      rect:
+        serializedVersion: 2
+        x: 1662
+        y: 1140
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc2a3a438e39dab49a657ed168c24195
+      internalID: 615537711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_16
+      rect:
+        serializedVersion: 2
+        x: 2216
+        y: 1140
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cfdf11852ed53b44bf084594e29e8dc
+      internalID: 1907227780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_17
+      rect:
+        serializedVersion: 2
+        x: 2770
+        y: 1140
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9ed1ee9472849046bf761e96489169f
+      internalID: -161531382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 760
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3c9fca84e4146e4598686fbaeaa035a
+      internalID: 1821597836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_19
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 760
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a318dc3dd689381448acaf9609e4d18b
+      internalID: -81457349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_20
+      rect:
+        serializedVersion: 2
+        x: 1108
+        y: 760
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 453934f8f78027a46a218a9a8a74f59d
+      internalID: 1740379437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_21
+      rect:
+        serializedVersion: 2
+        x: 1662
+        y: 760
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36772d2c9dfd47343a3b52147a9b2fe8
+      internalID: 618240518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_22
+      rect:
+        serializedVersion: 2
+        x: 2216
+        y: 760
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17fab2d8c8db98d45961fd8ea946a582
+      internalID: 1202555474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_23
+      rect:
+        serializedVersion: 2
+        x: 2770
+        y: 760
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56d932d02e421dd44b0adcb66627bc0e
+      internalID: 1425802961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 380
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2cf0b7dc8388bea48948e34f2bf9768f
+      internalID: 384878792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_25
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 380
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42b3e857621c85445a1ec7ad91b3316a
+      internalID: -1882504518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_26
+      rect:
+        serializedVersion: 2
+        x: 1108
+        y: 380
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70b2e3f14179b334b93e8d6b211fb1fa
+      internalID: 1681145514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_27
+      rect:
+        serializedVersion: 2
+        x: 1662
+        y: 380
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16062d77f7162f1498554cbb0266f5cb
+      internalID: -732694873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_28
+      rect:
+        serializedVersion: 2
+        x: 2216
+        y: 380
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6b4b2e6b6a1f414b8e09ddfa88ad15b
+      internalID: -917017929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_29
+      rect:
+        serializedVersion: 2
+        x: 2770
+        y: 380
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: adef034edf5d16940a9a4a72c707e43a
+      internalID: -647799077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f92067770467a4b4cacc017bda732761
+      internalID: 611902194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_31
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 0
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37de7b7f271e3574cb0d2807e7656a56
+      internalID: -1299192889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_32
+      rect:
+        serializedVersion: 2
+        x: 1108
+        y: 0
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c4c2f01dd69c7a40a2ac9ecb0b24751
+      internalID: 229525143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_33
+      rect:
+        serializedVersion: 2
+        x: 1662
+        y: 0
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3ae01f3de575b94cb6475f67d873a27
+      internalID: -1688609015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whip Move_34
+      rect:
+        serializedVersion: 2
+        x: 2216
+        y: 0
+        width: 554
+        height: 380
+      alignment: 9
+      pivot: {x: 0.4, y: 0.61}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac5eb8780c0f93d4e8747a646ede4e50
+      internalID: 405386978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 6b3b8ee6260c3624088286b2dc4da390
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":6.0,"y":6.0},"gridSpriteSize":{"x":554.0,"y":380.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.4000000059604645,"y":0.6100000143051148},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":9,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Whip Move_0: 1720133594
+      Whip Move_1: 1081088082
+      Whip Move_10: -1837271902
+      Whip Move_11: 4482314
+      Whip Move_12: 1191108549
+      Whip Move_13: 823300260
+      Whip Move_14: 1955182297
+      Whip Move_15: 615537711
+      Whip Move_16: 1907227780
+      Whip Move_17: -161531382
+      Whip Move_18: 1821597836
+      Whip Move_19: -81457349
+      Whip Move_2: -789624051
+      Whip Move_20: 1740379437
+      Whip Move_21: 618240518
+      Whip Move_22: 1202555474
+      Whip Move_23: 1425802961
+      Whip Move_24: 384878792
+      Whip Move_25: -1882504518
+      Whip Move_26: 1681145514
+      Whip Move_27: -732694873
+      Whip Move_28: -917017929
+      Whip Move_29: -647799077
+      Whip Move_3: 106854328
+      Whip Move_30: 611902194
+      Whip Move_31: -1299192889
+      Whip Move_32: 229525143
+      Whip Move_33: -1688609015
+      Whip Move_34: 405386978
+      Whip Move_4: 1029362805
+      Whip Move_5: -1400626079
+      Whip Move_6: -1491293517
+      Whip Move_7: -2139052041
+      Whip Move_8: -1957275198
+      Whip Move_9: 398352962
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

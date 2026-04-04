@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 
 public class Billboarding : MonoBehaviour
 {
     [SerializeField] private Camera cameraObj;
+    [SerializeField] private float xRotate;
+
 
 
     // Update is called once per frame
@@ -16,6 +19,6 @@ public class Billboarding : MonoBehaviour
         Vector3 camPos = cameraObj.transform.position;
         camPos.y = transform.position.y;
         transform.LookAt(camPos);
-        transform.Rotate(20f, 180f, 0f);
+        transform.Rotate(xRotate, 180f, 0f);
     }
 }
