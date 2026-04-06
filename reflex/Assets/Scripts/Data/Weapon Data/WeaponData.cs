@@ -9,8 +9,6 @@ public struct AttackStep
     public float verticalScale;
     public float attackDamage;
     public float attackStunDuration;
-    public float activeTime;
-    public float startupDelay; // How long the red box stays visible
 }
 
 [CreateAssetMenu(fileName = "NewWeaponData", menuName = "Combat/Weapon Data")]
