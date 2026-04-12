@@ -40,6 +40,13 @@ public class ChaseState : IEnemyState
                 hasLineOfSight = true;
                 // Continuously update last known position while we can see them
                 _enemy.lastKnownPlayerPosition = _enemy.player.position;
+
+                // Transition to Attack State if close enough
+                if (Vector3.Distance(_enemy.transform.position, _enemy.player.position) <= _enemy.attackRange)
+                {
+                    _enemy.ChangeState(new AttackState(_enemy));
+                    return;
+                }
             }
         }
 

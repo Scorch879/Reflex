@@ -28,6 +28,10 @@ public class EnemyController : MonoBehaviour
     
     [Header("Settings")]
     public float speed = 3f;
+    public float maxHealth = 100f;
+    public float currentHealth;
+    public float attackRange = 2f;
+    public float attackCooldown = 1.5f;
     private float _verticalVelocity;
     private Vector3 _lastPosition;
     private float _stuckTimer;
@@ -37,6 +41,7 @@ public class EnemyController : MonoBehaviour
     void Start() {
 
         _homePosition = transform.position; // Remember where we started
+        currentHealth = maxHealth;
 
         if (agent == null) agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 
@@ -183,5 +188,21 @@ public class EnemyController : MonoBehaviour
     }
 
 
+    public void TakeDamage(float amount)
+    {
+        // Don't take further damage or change states if already dead
+        if (currentHealth <= 0) return;
+
+        currentHealth -= amount;
+        
+        if (currentHealth <= 0)
+        {
+            ChangeState(new DeathState(this));
+        }
+        else 
+        { 
+            ChangeState(new HurtState(this)); 
+        }
+    }
     
 }
