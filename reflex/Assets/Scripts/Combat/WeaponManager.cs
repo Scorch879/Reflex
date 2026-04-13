@@ -126,7 +126,7 @@ public class WeaponManager : MonoBehaviour
     //             v
     public void HitboxOn()
     {
-        hitboxVisual.SetActive(true);
+        hitboxVisual.SetActive(false);
         Vector3 center = hitboxVisual.transform.position;
         Vector3 halfExtents = hitboxVisual.transform.lossyScale / 2f;
         Quaternion orientation = hitboxVisual.transform.rotation;
