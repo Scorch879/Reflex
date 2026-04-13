@@ -8,6 +8,7 @@ public class PlayerMovementManagement : MonoBehaviour
     [SerializeField] private DefaultMovementStats movementVariables;
     [SerializeField] private CharacterController playerController;
     [SerializeField] private new CinemachinePositionComposer camera;
+    [SerializeField] private PlayerManager playerManager; 
 
     [Header("Movement Settings")]
     [SerializeField] private float rotationSpeed = 10f;
@@ -26,6 +27,7 @@ public class PlayerMovementManagement : MonoBehaviour
 
     void Start()
     {
+    
         userInput = GetComponent<PlayerInput>();
 
         // Initialize and Enable Actions
@@ -41,6 +43,11 @@ public class PlayerMovementManagement : MonoBehaviour
     void Update()
     {
         if (isDashing) return;
+        if (playerManager.isAttacking) 
+    {
+        currentVelocity = Vector3.zero;
+        return;
+    }
         ReadInputs();
         MovePlayer();
         FOVChangeWhenRunning();
