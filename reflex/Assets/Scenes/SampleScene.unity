@@ -604,6 +604,7 @@ MonoBehaviour:
   movementVariables: {fileID: 11400000, guid: eb843777f58075144adb8f9625df68c3, type: 2}
   playerController: {fileID: 204850544}
   camera: {fileID: 786249934}
+  playerManager: {fileID: 204850548}
   rotationSpeed: 15
 --- !u!114 &204850543
 MonoBehaviour:
