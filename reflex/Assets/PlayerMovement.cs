@@ -102,7 +102,7 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Dash"",
+                    ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""1c5574bc-dff3-4f2f-b2bf-6d5b3b417656"",
                     ""expectedControlType"": """",
@@ -203,7 +203,7 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Dash"",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -214,7 +214,7 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Dash"",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -248,7 +248,7 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
         // PlayerMovementAction
         m_PlayerMovementAction = asset.FindActionMap("PlayerMovementAction", throwIfNotFound: true);
         m_PlayerMovementAction_Move = m_PlayerMovementAction.FindAction("Move", throwIfNotFound: true);
-        m_PlayerMovementAction_Dash = m_PlayerMovementAction.FindAction("Dash", throwIfNotFound: true);
+        m_PlayerMovementAction_Jump = m_PlayerMovementAction.FindAction("Jump", throwIfNotFound: true);
         m_PlayerMovementAction_Sprint = m_PlayerMovementAction.FindAction("Sprint", throwIfNotFound: true);
         m_PlayerMovementAction_Attack = m_PlayerMovementAction.FindAction("Attack", throwIfNotFound: true);
     }
@@ -332,7 +332,7 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerMovementAction;
     private List<IPlayerMovementActionActions> m_PlayerMovementActionActionsCallbackInterfaces = new List<IPlayerMovementActionActions>();
     private readonly InputAction m_PlayerMovementAction_Move;
-    private readonly InputAction m_PlayerMovementAction_Dash;
+    private readonly InputAction m_PlayerMovementAction_Jump;
     private readonly InputAction m_PlayerMovementAction_Sprint;
     private readonly InputAction m_PlayerMovementAction_Attack;
     /// <summary>
@@ -351,9 +351,9 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Move => m_Wrapper.m_PlayerMovementAction_Move;
         /// <summary>
-        /// Provides access to the underlying input action "PlayerMovementAction/Dash".
+        /// Provides access to the underlying input action "PlayerMovementAction/Jump".
         /// </summary>
-        public InputAction @Dash => m_Wrapper.m_PlayerMovementAction_Dash;
+        public InputAction @Jump => m_Wrapper.m_PlayerMovementAction_Jump;
         /// <summary>
         /// Provides access to the underlying input action "PlayerMovementAction/Sprint".
         /// </summary>
@@ -391,9 +391,9 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @Dash.started += instance.OnDash;
-            @Dash.performed += instance.OnDash;
-            @Dash.canceled += instance.OnDash;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
@@ -414,9 +414,9 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @Dash.started -= instance.OnDash;
-            @Dash.performed -= instance.OnDash;
-            @Dash.canceled -= instance.OnDash;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
@@ -471,12 +471,12 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMove(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Dash" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Jump" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnDash(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Sprint" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

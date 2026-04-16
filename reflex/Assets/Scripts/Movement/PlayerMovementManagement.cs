@@ -1,53 +1,43 @@
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections;
 
 public class PlayerMovementManagement : MonoBehaviour
 {
     [SerializeField] private DefaultMovementStats movementVariables;
     [SerializeField] private CharacterController playerController;
     [SerializeField] private new CinemachinePositionComposer camera;
-    [SerializeField] private PlayerManager playerManager; 
-
+    
     [Header("Movement Settings")]
     [SerializeField] private float rotationSpeed = 10f;
-
+    
     public Vector2 moveInput { get; private set; }
     private Vector3 currentVelocity;
     private float verticalVelocity;
     private bool isSprinting;
     private bool isOnGround;
-    private bool isDashing = false;
-    private float lastDashTime;
+
     private PlayerInput userInput;
     private InputAction moveAction;
-    private InputAction dashAction;
+    private InputAction jumpAction;
     private InputAction sprintAction;
 
     void Start()
     {
-    
         userInput = GetComponent<PlayerInput>();
-
+        
         // Initialize and Enable Actions
         moveAction = userInput.actions.FindAction("Move");
-        dashAction = userInput.actions.FindAction("Dash");
+        jumpAction = userInput.actions.FindAction("Jump");
         sprintAction = userInput.actions.FindAction("Sprint");
 
         moveAction.Enable();
-        dashAction.Enable();
+        jumpAction.Enable();
         sprintAction?.Enable();
     }
 
     void Update()
     {
-        if (isDashing) return;
-        if (playerManager.isAttacking) 
-    {
-        currentVelocity = Vector3.zero;
-        return;
-    }
         ReadInputs();
         MovePlayer();
         FOVChangeWhenRunning();
@@ -56,40 +46,13 @@ public class PlayerMovementManagement : MonoBehaviour
     private void ReadInputs()
     {
         moveInput = moveAction.ReadValue<Vector2>();
-
-        if (dashAction.triggered)
+        
+        if (jumpAction.triggered)
         {
-            StartCoroutine(PerformDash());
+            Jump();
         }
 
         isSprinting = sprintAction.IsPressed();
-    }
-    private bool CanDash()
-    {
-        return !isDashing && Time.time >= lastDashTime + movementVariables.dashCooldown;
-    }
-    private IEnumerator PerformDash()
-    {
-        isDashing = true;
-        lastDashTime = Time.time;
-
-        // 1. Determine Dash Direction
-        // If player is moving, dash in that direction. If stationary, dash forward.
-        Vector3 dashDir = CameraDirectionLogic.GetRelativeDirection(moveInput, Camera.main);
-        if (dashDir.magnitude < 0.1f) dashDir = transform.forward;
-
-        // 2. Apply Dash Velocity
-        float startTime = Time.time;
-        while (Time.time < startTime + movementVariables.dashDuration)
-        {
-            // We bypass the acceleration logic for a constant high-speed burst
-            playerController.Move(dashDir * movementVariables.dashSpeed * Time.deltaTime);
-            yield return null;
-        }
-
-        isDashing = false;
-        // Optional: Reset currentVelocity so you don't "slide" after the dash ends
-        currentVelocity = dashDir * GetCurrentSpeed();
     }
 
     private void MovePlayer()
@@ -99,7 +62,7 @@ public class PlayerMovementManagement : MonoBehaviour
         Vector3 targetVelocity = moveDirection * GetCurrentSpeed();
 
         isOnGround = playerController.isGrounded;
-
+        
         // 2. Pick acceleration/deceleration based on ground state
         float accel = isOnGround ? movementVariables.acceleration : movementVariables.airAcceleration;
         float decel = isOnGround ? movementVariables.deceleration : movementVariables.airDeceleration;

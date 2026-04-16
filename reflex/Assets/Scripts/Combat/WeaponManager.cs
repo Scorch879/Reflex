@@ -12,6 +12,7 @@ public class WeaponManager : MonoBehaviour
 
     public GameObject hitboxVisual;
     public LayerMask enemyLayer;
+    private Coroutine hitboxCoroutine;
 
     [Header("Input")]
     private InputAction attackAction;
@@ -45,18 +46,18 @@ public class WeaponManager : MonoBehaviour
                 ExecuteAttack();
             }
         }
-        UpdateTime();
+        UpdateTime();   
     }
 
 
     private void UpdateTime()
     {
         // If the animation hasn't finished yet, don't count down
-        if (!startResetTime) return;
+        if(!startResetTime) return;
 
-        if (playerManager.comboTime <= 0)
-        {
-            if (playerManager.currentComboIndex > 0) { ResetComboTime(); }
+        if(playerManager.comboTime <= 0)
+        {   
+            if(playerManager.currentComboIndex > 0) { ResetComboTime(); }
             return;
         }
 
@@ -84,25 +85,25 @@ public class WeaponManager : MonoBehaviour
         playerManager.canAttack = attack;
         return playerManager.canAttack;
     }
-
+    
 
     private void ExecuteAttack()
     {
         if (playerManager.weaponData == null) return;
         playerManager.canAttack = false;
-        playerManager.isAttacking = true;
 
         startResetTime = false;
         playerManager.currentComboIndex++;
 
-        if (playerManager.currentComboIndex > playerManager.weaponData.comboChain.Length)
+        if(playerManager.currentComboIndex > playerManager.weaponData.comboChain.Length)
         {
             playerManager.currentComboIndex = playerManager.weaponData.comboChain.Length;
         }
-
-        AttackStep step = playerManager.weaponData.comboChain[playerManager.currentComboIndex - 1];
+        
+        AttackStep step = playerManager.weaponData.comboChain[playerManager.currentComboIndex-1];
         playerManager.comboTime = playerManager.weaponData.comboResetTime;
 
+        playerVisuals.PlayAttack(playerManager.currentComboIndex-1);
 
         // 2. Physical Hitbox Scaling
         UpdateHitboxTransform(step);
@@ -112,7 +113,7 @@ public class WeaponManager : MonoBehaviour
         // START the routine (We don't stop the old one anymore because CanAttack blocks it)
         //hitboxCoroutine = StartCoroutine(HitboxRoutine(step));
         lastAttackTime = Time.time;
-
+        
     }
 
     private void UpdateHitboxTransform(AttackStep step)
@@ -136,21 +137,22 @@ public class WeaponManager : MonoBehaviour
         {
             Debug.Log($"<color=red>HIT CONFIRMED:</color> Dealt damage to {enemy.name}");
         }
-
+        
     }
 
     public void HitboxOff()
     {
         hitboxVisual.SetActive(false);
+        hitboxCoroutine = null;
         playerManager.canAttack = true;
 
         StartResetTime();
     }
-
+    
 
     public void StartResetTime()
     {
-        startResetTime = true;
+        startResetTime = true; 
         playerManager.comboTime = playerManager.weaponData.comboResetTime;
     }
 
