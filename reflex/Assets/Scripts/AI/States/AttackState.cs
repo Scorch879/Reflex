@@ -14,19 +14,21 @@ public class AttackState : IEnemyState
     {
         Debug.Log("ENTERED ATTACK STATE");
         // Stop moving to attack
-        _enemy.agent.isStopped = true; 
+        _enemy.agent.isStopped = true;
         _enemy.spriteRenderer.color = Color.magenta; // Indicate attacking visually
-        
+
         _attackTimer = _enemy.attackCooldown;
-        
-        // TODO: Trigger attack animation here!
-        // _enemy.animator.SetTrigger("Attack");
+
+        if (_enemy.animator != null)
+        {
+            _enemy.animator.SetBool("isAttacking", true);
+        }
     }
 
     public void Tick()
     {
         _attackTimer -= Time.deltaTime;
-        
+
         if (_attackTimer <= 0)
         {
             // Attack finished, go back to chasing
@@ -36,6 +38,13 @@ public class AttackState : IEnemyState
 
     public void OnExit()
     {
-        _enemy.agent.isStopped = false; // Allow movement again
+        // 1. Unfreeze the legs
+        _enemy.agent.isStopped = false;
+
+        // 2. Turn OFF the attack animation so it doesn't get stuck sliding around in a punch pose!
+        if (_enemy.animator != null)
+        {
+            _enemy.animator.SetBool("isAttacking", false);
+        }
     }
 }

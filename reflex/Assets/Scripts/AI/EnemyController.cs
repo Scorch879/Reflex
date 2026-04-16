@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour 
+public class EnemyController : MonoBehaviour
 {
     private IEnemyState _currentState;
-   
+
     [Header("Visuals")]
     public Animator animator;
 
@@ -25,7 +25,7 @@ public class EnemyController : MonoBehaviour
     public Transform player;
     public SpriteRenderer spriteRenderer;
     public UnityEngine.AI.NavMeshAgent agent;
-    
+
     [Header("Settings")]
     public float speed = 3f;
     public float maxHealth = 100f;
@@ -38,7 +38,8 @@ public class EnemyController : MonoBehaviour
 
     public Vector3 GetHomePosition() => _homePosition;
 
-    void Start() {
+    void Start()
+    {
 
         _homePosition = transform.position; // Remember where we started
         currentHealth = maxHealth;
@@ -46,16 +47,18 @@ public class EnemyController : MonoBehaviour
         if (agent == null) agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 
         agent.updateRotation = false;
-        
-        if (player == null) {
+
+        if (player == null)
+        {
             player = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
         // This finds the SpriteRenderer component on the same object or its children
-        if (spriteRenderer == null) {
+        if (spriteRenderer == null)
+        {
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
-        
+
         ChangeState(new IdleState(this));
     }
 
@@ -77,7 +80,8 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void Update() {
+    void Update()
+    {
         if (player == null) return;
 
         // Rotate the transform to match the direction the NavMesh Agent is walking
@@ -87,16 +91,23 @@ public class EnemyController : MonoBehaviour
             direction.y = 0; // Keep the enemy upright
             transform.rotation = Quaternion.LookRotation(direction);
         }
-        
+
         if (animator != null)
         {
-            animator.SetFloat("Speed", agent.velocity.magnitude);
+            // If speed is greater than 0.1, moving is true. Otherwise, false.
+            bool moving = agent.velocity.magnitude > 0.1f;
+            animator.SetBool("isWalking", moving);
+
+            // Track grounded state using CharacterController if available, fallback to NavMeshAgent
+            bool grounded = controller != null ? controller.isGrounded : agent.isOnNavMesh;
+            animator.SetBool("isGrounded", grounded);
         }
 
         _currentState?.Tick();
     }
 
-    public void ChangeState(IEnemyState newState) {
+    public void ChangeState(IEnemyState newState)
+    {
         _currentState?.OnExit();
         _currentState = newState;
         _currentState.OnEnter();
@@ -172,11 +183,11 @@ public class EnemyController : MonoBehaviour
     public void DrawLaser(Vector3 targetPos, bool canSee)
     {
         if (laserLine == null) return;
-        
+
         laserLine.enabled = true;
         laserLine.SetPosition(0, transform.position + Vector3.up * 0.5f); // Eye level
         laserLine.SetPosition(1, targetPos);
-        
+
         // Change color: Red if blocked, Green if spotting you
         laserLine.startColor = canSee ? Color.green : Color.red;
         laserLine.endColor = canSee ? Color.green : Color.red;
@@ -194,15 +205,15 @@ public class EnemyController : MonoBehaviour
         if (currentHealth <= 0) return;
 
         currentHealth -= amount;
-        
+
         if (currentHealth <= 0)
         {
             ChangeState(new DeathState(this));
         }
-        else 
-        { 
-            ChangeState(new HurtState(this)); 
+        else
+        {
+            ChangeState(new HurtState(this));
         }
     }
-    
+
 }

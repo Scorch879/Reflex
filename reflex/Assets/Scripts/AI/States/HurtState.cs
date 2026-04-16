@@ -28,7 +28,10 @@ public class HurtState : IEnemyState
             _enemy.spriteRenderer.color = new Color(1f, 0.5f, 0.5f); 
         }
         
-        // TODO: _enemy.animator.SetTrigger("Hurt");
+        if (_enemy.animator != null)
+        {
+            _enemy.animator.SetBool("isHurt", true);
+        }
     }
 
     public void Tick()
@@ -46,6 +49,11 @@ public class HurtState : IEnemyState
         if (_enemy.agent != null && _enemy.agent.isActiveAndEnabled && _enemy.agent.isOnNavMesh)
         {
             _enemy.agent.isStopped = false;
+        }
+
+        if (_enemy.animator != null)
+        {
+            _enemy.animator.SetBool("isHurt", false);
         }
     }
 }

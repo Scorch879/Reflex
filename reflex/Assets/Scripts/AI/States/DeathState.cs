@@ -28,6 +28,14 @@ public class DeathState : IEnemyState
         // Disable colliders so the player doesn't bump into a dead enemy
         if (_enemy.TryGetComponent(out Collider collider)) collider.enabled = false;
 
+        // Ensure all active booleans are reset so the animator doesn't loop them
+        if (_enemy.animator != null)
+        {
+            _enemy.animator.SetBool("isWalking", false);
+            _enemy.animator.SetBool("isAttacking", false);
+            _enemy.animator.SetBool("isHurt", false);
+        }
+
         // TODO: Play death animation or destroy object after a delay
     }
 
