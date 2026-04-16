@@ -4,6 +4,7 @@ public class AttackState : IEnemyState
 {
     private EnemyController _enemy;
     private float _attackTimer;
+    private bool _hasFinishedAttacking;
 
     public AttackState(EnemyController enemy)
     {
@@ -12,39 +13,47 @@ public class AttackState : IEnemyState
 
     public void OnEnter()
     {
-        Debug.Log("ENTERED ATTACK STATE");
-        // Stop moving to attack
-        _enemy.agent.isStopped = true;
-        _enemy.spriteRenderer.color = Color.magenta; // Indicate attacking visually
-
-        _attackTimer = _enemy.attackCooldown;
-
-        if (_enemy.animator != null)
-        {
+       Debug.Log("ENTERED ATTACK STATE");
+        _enemy.agent.isStopped = true; 
+        
+        // Trigger the animation
+        if (_enemy.animator != null) 
             _enemy.animator.SetBool("isAttacking", true);
-        }
+
+        // Set to 0 so the very first bite happens instantly
+        _attackTimer = 0f;
     }
 
     public void Tick()
     {
-        _attackTimer -= Time.deltaTime;
+        // 1. Keep looking at player while standing still
+        Vector3 dirToPlayer = (_enemy.player.position - _enemy.transform.position).normalized;
+        dirToPlayer.y = 0; 
+        _enemy.transform.rotation = Quaternion.LookRotation(dirToPlayer);
 
+        // 2. Handle the swing timer
+        _attackTimer -= Time.deltaTime;
         if (_attackTimer <= 0)
         {
-            // Attack finished, go back to chasing
+            // Trigger the actual Hitbox code we wrote in EnemyController!
+            _enemy.AttackPlayer(); 
+            _attackTimer = _enemy.attackCooldown; // Reset timer for the next bite
+        }
+
+        // 3. Only go back to Chase if the player runs away
+        float distance = Vector3.Distance(_enemy.transform.position, _enemy.player.position);
+        if (distance > _enemy.attackRange)
+        {
             _enemy.ChangeState(new ChaseState(_enemy));
         }
     }
 
     public void OnExit()
     {
-        // 1. Unfreeze the legs
-        _enemy.agent.isStopped = false;
-
-        // 2. Turn OFF the attack animation so it doesn't get stuck sliding around in a punch pose!
-        if (_enemy.animator != null)
-        {
+       _enemy.agent.isStopped = false; 
+        
+        // Turn off the attack animation
+        if (_enemy.animator != null) 
             _enemy.animator.SetBool("isAttacking", false);
-        }
     }
 }

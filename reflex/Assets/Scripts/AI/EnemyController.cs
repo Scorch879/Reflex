@@ -106,6 +106,39 @@ public class EnemyController : MonoBehaviour
         _currentState?.Tick();
     }
 
+
+    public void AttackPlayer()
+    {
+        // 1. Tell the Animator to play the bite/attack animation
+        if (animator != null)
+        {
+            animator.SetBool("isAttacking", true);
+        }
+
+        // 2. Calculate the "Hitbox" (a mathematical sphere right in front of the Ant's mouth)
+        // The '1f' pushes it 1 unit forward. The Vector3.up raises it to chest/head height.
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        Vector3 hitBoxCenter = transform.position + (directionToPlayer * 1f) + (Vector3.up * 1f);
+
+        // 3. Generate the invisible Hitbox sphere and grab any colliders it touches
+        // The '1f' at the end is the size of the bite radius.
+        Collider[] hitObjects = Physics.OverlapSphere(hitBoxCenter, 1f);
+
+        // 4. Loop through everything we hit and check if it's the Player
+        foreach (Collider hit in hitObjects)
+        {
+            if (hit.CompareTag("Player"))
+            {
+                // The Ant's teeth connected with the player's Capsule Collider!
+                Debug.Log("<color=orange>ANT BIT THE PLAYER!</color>");
+
+                // NOTE: Once you build a PlayerHealth script, you will trigger the damage here like this:
+                // PlayerHealth pHealth = hit.GetComponent<PlayerHealth>();
+                // if (pHealth != null) pHealth.TakeDamage(20f);
+            }
+        }
+    }
+    
     public void ChangeState(IEnemyState newState)
     {
         _currentState?.OnExit();
