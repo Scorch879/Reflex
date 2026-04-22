@@ -4,6 +4,7 @@ using System.Collections;
 using System;
 using Unity.VisualScripting;
 
+
 public class WeaponManager : MonoBehaviour
 {
     [Header("References")]
@@ -34,6 +35,24 @@ public class WeaponManager : MonoBehaviour
         {
             playerVisuals.SwapWeaponAnimations(playerManager.weaponData.weaponOverride);
         }
+    }
+
+    public void EquipWeapon(WeaponData newData)
+    {
+        // 1. Update the data reference in PlayerManager
+        playerManager.weaponData = newData;
+
+        // 2. Reset combo state to prevent errors
+        playerManager.currentComboIndex = 0;
+        playerManager.canAttack = true;
+
+        // 3. Update the animations visually
+        if (newData.weaponOverride != null)
+        {
+            playerVisuals.SwapWeaponAnimations(newData.weaponOverride);
+        }
+
+        Debug.Log($"<color=cyan>Weapon Swapped to {newData.weaponName}!</color>");
     }
 
     void Update()
