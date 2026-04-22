@@ -48,7 +48,7 @@ public class PlayerManager : MonoBehaviour
         isDead = true;
         canAttack = false;
         Debug.Log("Player is Dead");
-    }
+    }   
     private void Update()
     {
         CheckIfIdle();
