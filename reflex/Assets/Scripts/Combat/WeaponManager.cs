@@ -125,16 +125,18 @@ public class WeaponManager : MonoBehaviour
     //             v
     public void HitboxOn()
     {
-        hitboxVisual.SetActive(false);
+        hitboxVisual.SetActive(true);
         Vector3 center = hitboxVisual.transform.position;
         Vector3 halfExtents = hitboxVisual.transform.lossyScale / 2f;
         Quaternion orientation = hitboxVisual.transform.rotation;
 
         Collider[] hitEnemies = Physics.OverlapBox(center, halfExtents, orientation, enemyLayer);
-
+        AttackStep step = playerManager.weaponData.comboChain[playerManager.currentComboIndex];
+        float finalDamage = step.attackDamage * playerManager.TotalDamageMultiplier;
         foreach (Collider enemy in hitEnemies)
         {
-            Debug.Log($"<color=red>HIT CONFIRMED:</color> Dealt damage to {enemy.name}");
+            // Now you can pass finalDamage to your enemy script
+            Debug.Log($"Hit {enemy.name} for {finalDamage} damage!");
         }
 
     }
