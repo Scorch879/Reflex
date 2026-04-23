@@ -112,7 +112,7 @@ public class EnemyController : MonoBehaviour
         // 1. Tell the Animator to play the bite/attack animation
         if (animator != null)
         {
-            animator.SetBool("isAttacking", true);
+            animator.Play("Attack");
         }
 
         // 2. Calculate the "Hitbox" (a mathematical sphere right in front of the Ant's mouth)

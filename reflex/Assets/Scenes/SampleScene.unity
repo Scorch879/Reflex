@@ -1395,7 +1395,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &410087040
 Light:
   m_ObjectHideFlags: 0
@@ -22839,14 +22839,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   animator: {fileID: 1346839036}
-  visionRange: 8
+  visionRange: 10
   visionAngle: 90
   chaseLeashRange: 15
   lastKnownPlayerPosition: {x: 0, y: 0, z: 0}
   detectionLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  patrolRadius: 10
+  patrolRadius: 20
   controller: {fileID: 0}
   player: {fileID: 204850541}
   spriteRenderer: {fileID: 51322935}

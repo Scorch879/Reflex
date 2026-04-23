@@ -31,7 +31,7 @@ public class HurtState : IEnemyState
         
         if (_enemy.animator != null)
         {
-            _enemy.animator.SetBool("isHurt", true);
+            _enemy.animator.Play("Hurt Front");
         }
     }
 
@@ -39,8 +39,7 @@ public class HurtState : IEnemyState
     {
         _stunTimer -= Time.deltaTime;
         if (_stunTimer <= 0)
-        {
-           
+        { 
             // After flinching, get mad and chase the player!
             _enemy.ChangeState(new ChaseState(_enemy));
         }
@@ -51,11 +50,6 @@ public class HurtState : IEnemyState
         if (_enemy.agent != null && _enemy.agent.isActiveAndEnabled && _enemy.agent.isOnNavMesh)
         {
             _enemy.agent.isStopped = false;
-        }
-
-        if (_enemy.animator != null)
-        {
-            _enemy.animator.SetBool("isHurt", false);
         }
     }
 }

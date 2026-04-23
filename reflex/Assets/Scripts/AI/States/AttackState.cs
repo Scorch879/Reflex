@@ -13,12 +13,8 @@ public class AttackState : IEnemyState
 
     public void OnEnter()
     {
-       Debug.Log("ENTERED ATTACK STATE");
-        _enemy.agent.isStopped = true; 
-        
-        // Trigger the animation
-        if (_enemy.animator != null) 
-            _enemy.animator.SetBool("isAttacking", true);
+        Debug.Log("ENTERED ATTACK STATE");
+        _enemy.agent.isStopped = true;
 
         // Set to 0 so the very first bite happens instantly
         _attackTimer = 0f;
@@ -28,7 +24,7 @@ public class AttackState : IEnemyState
     {
         // 1. Keep looking at player while standing still
         Vector3 dirToPlayer = (_enemy.player.position - _enemy.transform.position).normalized;
-        dirToPlayer.y = 0; 
+        dirToPlayer.y = 0;
         _enemy.transform.rotation = Quaternion.LookRotation(dirToPlayer);
 
         // 2. Handle the swing timer
@@ -36,7 +32,7 @@ public class AttackState : IEnemyState
         if (_attackTimer <= 0)
         {
             // Trigger the actual Hitbox code we wrote in EnemyController!
-            _enemy.AttackPlayer(); 
+            _enemy.AttackPlayer();
             _attackTimer = _enemy.attackCooldown; // Reset timer for the next bite
         }
 
@@ -50,10 +46,6 @@ public class AttackState : IEnemyState
 
     public void OnExit()
     {
-       _enemy.agent.isStopped = false; 
-        
-        // Turn off the attack animation
-        if (_enemy.animator != null) 
-            _enemy.animator.SetBool("isAttacking", false);
+        _enemy.agent.isStopped = false;
     }
 }

@@ -11,32 +11,31 @@ public class DeathState : IEnemyState
 
     public void OnEnter()
     {
-        Debug.Log("Enemy Defeated!");
+        Debug.Log("<color=PURPLE>Enemy Defeated! ENTERING DEATH STATE</color>");
         if (_enemy.spriteRenderer != null)
-        {
-            _enemy.spriteRenderer.color = Color.black; // Show death visually
-        }
-        
-        // Stop the NavMeshAgent
-        if (_enemy.agent != null)
         {
             if (_enemy.agent.isActiveAndEnabled && _enemy.agent.isOnNavMesh)
                 _enemy.agent.isStopped = true;
             _enemy.agent.enabled = false;
         }
 
-        // Disable colliders so the player doesn't bump into a dead enemy
-        if (_enemy.TryGetComponent(out Collider collider)) collider.enabled = false;
-
-        // Ensure all active booleans are reset so the animator doesn't loop them
-        if (_enemy.animator != null)
+        // 2. Disable colliders so the player can walk over the corpse
+        if (_enemy.TryGetComponent(out Collider collider))
         {
-            _enemy.animator.SetBool("isWalking", false);
-            _enemy.animator.SetBool("isAttacking", false);
-            _enemy.animator.SetBool("isHurt", false);
+            collider.enabled = false;
         }
 
-        // TODO: Play death animation or destroy object after a delay
+        // 3. Play the exact death animation
+        if (_enemy.animator != null)
+        {
+            // Based on your earlier screenshot, the gray box is named "Death Back"
+            _enemy.animator.Play("Death Back");
+        }
+
+        // 4. Destroy the GameObject after 3 seconds to free up memory
+        // Make sure the time matches how long your animation takes to fall to the floor
+        Object.Destroy(_enemy.gameObject, 3f);
+
     }
 
     public void Tick() { /* Do nothing, dead things don't tick */ }
