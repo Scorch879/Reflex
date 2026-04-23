@@ -156,6 +156,12 @@ public class WeaponManager : MonoBehaviour
         {
             // Now you can pass finalDamage to your enemy script
             Debug.Log($"Hit {enemy.name} for {finalDamage} damage!");
+
+            EnemyHurtbox hurtbox = enemy.GetComponent<EnemyHurtbox>();
+            if (hurtbox != null)
+            {
+                hurtbox.ReceiveDamage(finalDamage);
+            }
         }
 
     }

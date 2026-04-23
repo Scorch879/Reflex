@@ -1,10 +1,11 @@
 using UnityEngine;
 
+
 public class HurtState : IEnemyState
 {
     private EnemyController _enemy;
     private float _stunTimer;
-    private const float StunDuration = 0.4f; // How long the enemy flinches
+    private const float StunDuration  = 0.5f; // How long the enemy flinches
 
     public HurtState(EnemyController enemy)
     {
