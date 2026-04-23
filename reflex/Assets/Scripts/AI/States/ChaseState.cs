@@ -16,7 +16,12 @@ public class ChaseState : IEnemyState
     {
         Debug.Log("ENTERED CHASE STATE!");
         _enemy.agent.speed = _enemy.speed;
-        _enemy.spriteRenderer.color = Color.red; // Turn angry!
+
+        if (_enemy.spriteRenderer != null)
+        {
+            _enemy.spriteRenderer.color = Color.darkRed;
+        }
+        
         _lostSightTimer = 0f;
     }
 
@@ -30,7 +35,7 @@ public class ChaseState : IEnemyState
         Vector3 eyePosition = _enemy.transform.position + Vector3.up * 1f; // From enemy's eyes
         Vector3 playerTargetPosition = _enemy.player.position + Vector3.up * 1f; // To player's torso
         Vector3 dirToPlayer = (playerTargetPosition - eyePosition).normalized;
-        
+
         bool hasLineOfSight = false;
         // Use the chaseLeashRange for the raycast distance
         if (Physics.Raycast(eyePosition, dirToPlayer, out RaycastHit hit, _enemy.chaseLeashRange, _enemy.detectionLayers))

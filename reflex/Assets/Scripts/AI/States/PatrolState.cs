@@ -9,8 +9,11 @@ public class PatrolState : IEnemyState
 
     public void OnEnter()
     {
-        _enemy.spriteRenderer.color = Color.white;
-        
+        if (_enemy.spriteRenderer != null)
+        {
+            _enemy.spriteRenderer.color = Color.white;
+        }
+
         Vector3 randomDirection = Random.insideUnitSphere * _enemy.patrolRadius;
         randomDirection += _enemy.GetHomePosition();
 
