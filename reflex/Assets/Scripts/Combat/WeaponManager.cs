@@ -4,6 +4,7 @@ using System.Collections;
 using System;
 using Unity.VisualScripting;
 
+
 public class WeaponManager : MonoBehaviour
 {
     [Header("References")]
@@ -34,6 +35,24 @@ public class WeaponManager : MonoBehaviour
         {
             playerVisuals.SwapWeaponAnimations(playerManager.weaponData.weaponOverride);
         }
+    }
+
+    public void EquipWeapon(WeaponData newData)
+    {
+        // 1. Update the data reference in PlayerManager
+        playerManager.weaponData = newData;
+
+        // 2. Reset combo state to prevent errors
+        playerManager.currentComboIndex = 0;
+        playerManager.canAttack = true;
+
+        // 3. Update the animations visually
+        if (newData.weaponOverride != null)
+        {
+            playerVisuals.SwapWeaponAnimations(newData.weaponOverride);
+        }
+
+        Debug.Log($"<color=cyan>Weapon Swapped to {newData.weaponName}!</color>");
     }
 
     void Update()
@@ -125,16 +144,18 @@ public class WeaponManager : MonoBehaviour
     //             v
     public void HitboxOn()
     {
-        hitboxVisual.SetActive(false);
+        hitboxVisual.SetActive(true);
         Vector3 center = hitboxVisual.transform.position;
         Vector3 halfExtents = hitboxVisual.transform.lossyScale / 2f;
         Quaternion orientation = hitboxVisual.transform.rotation;
 
         Collider[] hitEnemies = Physics.OverlapBox(center, halfExtents, orientation, enemyLayer);
-
+        AttackStep step = playerManager.weaponData.comboChain[playerManager.currentComboIndex];
+        float finalDamage = step.attackDamage * playerManager.TotalDamageMultiplier;
         foreach (Collider enemy in hitEnemies)
         {
-            Debug.Log($"<color=red>HIT CONFIRMED:</color> Dealt damage to {enemy.name}");
+            // Now you can pass finalDamage to your enemy script
+            Debug.Log($"Hit {enemy.name} for {finalDamage} damage!");
         }
 
     }

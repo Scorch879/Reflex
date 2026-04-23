@@ -12,10 +12,43 @@ public class PlayerManager : MonoBehaviour
     public bool canAttack = true;
     public float comboTime;
     public bool canGoToIdle = true;
-
     public PlayerInput playerInput;
     public WeaponData weaponData;
 
+    [Header("Data Reference")]
+    public PlayerData stats; // Drag your PlayerData asset here
+
+    [Header("Runtime Stats")]
+    public float currentHealth;
+    public float bonusMaxHealth = 0f;
+    public float damageMultiplierModifier = 0f;
+    public bool isDead = false;
+
+    // Properties to calculate final values on the fly
+    public float MaxHealth => stats.baseMaxHealth + bonusMaxHealth;
+    public float TotalDamageMultiplier => stats.baseDamageMultiplier + damageMultiplierModifier;
+    private void Start()
+    {
+        if (stats != null)
+        {
+            currentHealth = MaxHealth;
+        }
+    }
+
+    public void TakeDamage(float amount)
+    {
+        if (isDead) return;
+        currentHealth -= amount;
+        Debug.Log($"HP: {currentHealth}/{MaxHealth}");
+        if (currentHealth <= 0) Die();
+    }
+
+    private void Die()
+    {
+        isDead = true;
+        canAttack = false;
+        Debug.Log("Player is Dead");
+    }   
     private void Update()
     {
         CheckIfIdle();
@@ -25,7 +58,7 @@ public class PlayerManager : MonoBehaviour
 
     private void CheckIfIdle()
     {
-        if(isRunning || isAttacking)
+        if (isRunning || isAttacking)
         {
             isIdle = false;
         }
@@ -37,7 +70,7 @@ public class PlayerManager : MonoBehaviour
 
     private void CheckComboTime()
     {
-        if(comboTime < 0)
+        if (comboTime < 0)
         {
             comboTime = 0;
         }
