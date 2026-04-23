@@ -39,6 +39,7 @@ public class HurtState : IEnemyState
         _stunTimer -= Time.deltaTime;
         if (_stunTimer <= 0)
         {
+           
             // After flinching, get mad and chase the player!
             _enemy.ChangeState(new ChaseState(_enemy));
         }
