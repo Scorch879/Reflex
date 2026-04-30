@@ -392,6 +392,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8914506016455806642, guid: a1fc2bd105cf00147b9af02a9e6627fc, type: 3}
+      propertyPath: m_Radius
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8914506016455806642, guid: a1fc2bd105cf00147b9af02a9e6627fc, type: 3}
       propertyPath: m_StoppingDistance
       value: 0
       objectReference: {fileID: 0}
@@ -446,9 +450,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   animator: {fileID: 2020278892775021035}
-  visionRange: 13
-  visionAngle: 90
-  chaseLeashRange: 20
+  visionRange: 30
+  visionAngle: 360
+  chaseLeashRange: 50
   lastKnownPlayerPosition: {x: 0, y: 0, z: 0}
   detectionLayers:
     serializedVersion: 2
@@ -458,7 +462,7 @@ MonoBehaviour:
   player: {fileID: 0}
   spriteRenderer: {fileID: 0}
   agent: {fileID: 3395915927390723374}
-  speed: 3
+  speed: 5
   maxHealth: 1
   currentHealth: 0
   attackRange: 3
