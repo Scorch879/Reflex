@@ -73,6 +73,6 @@ public class SearchState : IEnemyState
 
     public void OnExit()
     {
-        _enemy.spriteRenderer.color = Color.white; // Reset color
+       // _enemy.spriteRenderer.color = Color.white; // Reset color
     }
 }

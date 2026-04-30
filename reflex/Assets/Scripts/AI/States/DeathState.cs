@@ -14,9 +14,12 @@ public class DeathState : IEnemyState
         Debug.Log("<color=PURPLE>Enemy Defeated! ENTERING DEATH STATE</color>");
         if (_enemy.spriteRenderer != null)
         {
-            if (_enemy.agent.isActiveAndEnabled && _enemy.agent.isOnNavMesh)
-                _enemy.agent.isStopped = true;
-            _enemy.agent.enabled = false;
+            if (_enemy.agent != null)
+            {
+                if (_enemy.agent.isActiveAndEnabled && _enemy.agent.isOnNavMesh)
+                    _enemy.agent.isStopped = true;
+                _enemy.agent.enabled = false;
+            }
         }
 
         // 2. Disable colliders so the player can walk over the corpse

@@ -161,11 +161,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2569490332786100504, guid: a1fc2bd105cf00147b9af02a9e6627fc, type: 3}
       propertyPath: m_Name
-      value: Alien Variant
+      value: Alien_Prefab
       objectReference: {fileID: 0}
     - target: {fileID: 2569490332786100504, guid: a1fc2bd105cf00147b9af02a9e6627fc, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569490332786100504, guid: a1fc2bd105cf00147b9af02a9e6627fc, type: 3}
+      propertyPath: m_TagString
+      value: Ant
       objectReference: {fileID: 0}
     - target: {fileID: 2938451507340914851, guid: a1fc2bd105cf00147b9af02a9e6627fc, type: 3}
       propertyPath: m_Layer
@@ -389,7 +393,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8914506016455806642, guid: a1fc2bd105cf00147b9af02a9e6627fc, type: 3}
       propertyPath: m_StoppingDistance
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9095179753200772553, guid: a1fc2bd105cf00147b9af02a9e6627fc, type: 3}
       propertyPath: m_Layer
@@ -442,9 +446,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   animator: {fileID: 2020278892775021035}
-  visionRange: 10
+  visionRange: 13
   visionAngle: 90
-  chaseLeashRange: 15
+  chaseLeashRange: 20
   lastKnownPlayerPosition: {x: 0, y: 0, z: 0}
   detectionLayers:
     serializedVersion: 2
@@ -459,6 +463,8 @@ MonoBehaviour:
   currentHealth: 0
   attackRange: 3
   attackCooldown: 1.5
+  enemyType: Default
+  isElite: 0
   laserLine: {fileID: 0}
 --- !u!114 &7167864896676954990
 MonoBehaviour:

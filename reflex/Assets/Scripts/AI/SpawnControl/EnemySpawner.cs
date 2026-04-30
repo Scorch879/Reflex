@@ -1,43 +1,61 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Spawner Settings")]
     public GameObject enemyPrefab; // The blueprint to spawn
-    public float respawnDelay = 3f; // How long to wait after the enemy dies
+    public int spawnCount = 3; // How many enemies to spawn per wave
+    public float spawnRadius = 5f; // How far from the spawner to place them
+    public float respawnDelay = 3f; // How long to wait after the entire wave is gone
 
-    private GameObject _currentEnemy;
+    private readonly List<GameObject> _currentEnemies = new List<GameObject>();
     private float _timer;
 
     void Start()
     {
-        // Spawn the very first enemy when the game starts
-        SpawnEnemy();
+        SpawnWave();
     }
 
     void Update()
     {
-        // If the current enemy is dead (deleted by the DeathState)
-        if (_currentEnemy == null)
+        RemoveDestroyedEnemies();
+
+        if (_currentEnemies.Count == 0)
         {
             _timer -= Time.deltaTime;
-
-            // When the timer hits 0, respawn!
-            if (_timer <= 0)
+            if (_timer <= 0f)
             {
-                SpawnEnemy();
+                SpawnWave();
             }
         }
     }
 
-    void SpawnEnemy()
+    private void RemoveDestroyedEnemies()
     {
-        // Create a new enemy at this spawner's exact position and rotation
-        _currentEnemy = Instantiate(enemyPrefab, transform.position, transform.rotation);
-        
-        // Reset the timer for the next death
-        _timer = respawnDelay; 
-        
-        Debug.Log("<color=green>SPAWNING NEW ENEMY!</color>");
+        for (int i = _currentEnemies.Count - 1; i >= 0; i--)
+        {
+            if (_currentEnemies[i] == null)
+            {
+                _currentEnemies.RemoveAt(i);
+            }
+        }
+    }
+
+    private void SpawnWave()
+    {
+        _currentEnemies.Clear();
+
+        for (int i = 0; i < spawnCount; i++)
+        {
+            Vector3 offset = Random.insideUnitSphere * spawnRadius;
+            offset.y = 0f;
+            Vector3 spawnPosition = transform.position + offset;
+            GameObject enemy = Instantiate(enemyPrefab, spawnPosition, transform.rotation);
+            _currentEnemies.Add(enemy);
+        }
+
+        _timer = respawnDelay;
+        Debug.Log($"<color=green>SPAWNED WAVE OF {spawnCount} ENEMIES</color>");
     }
 }
