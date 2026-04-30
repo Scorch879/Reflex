@@ -106,33 +106,33 @@ public class WeaponManager : MonoBehaviour
 
 
     private void ExecuteAttack()
+{
+    // 1. Cache the reference for performance and readability
+    WeaponData data = playerManager.weaponData;
+    if (data == null || data.comboChain.Length == 0) return;
+
+    // 2. Set State
+    playerManager.canAttack = false;
+    playerManager.isAttacking = true;
+    startResetTime = false; // Pause the cooldown timer during the swing
+
+    // 3. Logic: Increment and Wrap (Loop) the combo
+    playerManager.currentComboIndex++;
+    if (playerManager.currentComboIndex > data.comboChain.Length)
     {
-        if (playerManager.weaponData == null) return;
-        playerManager.canAttack = false;
-        playerManager.isAttacking = true;
-
-        startResetTime = false;
-        playerManager.currentComboIndex++;
-
-        if (playerManager.currentComboIndex > playerManager.weaponData.comboChain.Length)
-        {
-            playerManager.currentComboIndex = playerManager.weaponData.comboChain.Length;
-        }
-
-        AttackStep step = playerManager.weaponData.comboChain[playerManager.currentComboIndex - 1];
-        playerManager.comboTime = playerManager.weaponData.comboResetTime;
-
-
-        // 2. Physical Hitbox Scaling
-        UpdateHitboxTransform(step);
-        // Play Visuals
-        playerVisuals.PlayAttack(playerManager.currentComboIndex);
-
-        // START the routine (We don't stop the old one anymore because CanAttack blocks it)
-        //hitboxCoroutine = StartCoroutine(HitboxRoutine(step));
-        lastAttackTime = Time.time;
-
+        playerManager.currentComboIndex = 1; // Loop back to first attack
     }
+
+    // 4. Get the specific step data (using cached 'data' and safe index)
+    AttackStep step = data.comboChain[playerManager.currentComboIndex - 1];
+    
+    // 5. Execution
+    playerManager.comboTime = data.comboResetTime;
+    UpdateHitboxTransform(step);
+    playerVisuals.PlayAttack(playerManager.currentComboIndex);
+
+    lastAttackTime = Time.time;
+}
 
     private void UpdateHitboxTransform(AttackStep step)
     {
@@ -150,7 +150,7 @@ public class WeaponManager : MonoBehaviour
         Quaternion orientation = hitboxVisual.transform.rotation;
 
         Collider[] hitEnemies = Physics.OverlapBox(center, halfExtents, orientation, enemyLayer);
-        AttackStep step = playerManager.weaponData.comboChain[playerManager.currentComboIndex];
+        AttackStep step = playerManager.weaponData.comboChain[playerManager.currentComboIndex-1];
         float finalDamage = step.attackDamage * playerManager.TotalDamageMultiplier;
         foreach (Collider enemy in hitEnemies)
         {
