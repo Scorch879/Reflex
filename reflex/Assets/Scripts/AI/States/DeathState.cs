@@ -12,23 +12,28 @@ public class DeathState : IEnemyState
     public void OnEnter()
     {
         Debug.Log("<color=PURPLE>Enemy Defeated! ENTERING DEATH STATE</color>");
-        if (_enemy.spriteRenderer != null)
+
+        if (_enemy.agent != null)
         {
-            if (_enemy.agent != null)
+            if (_enemy.agent.isActiveAndEnabled && _enemy.agent.isOnNavMesh)
             {
-                if (_enemy.agent.isActiveAndEnabled && _enemy.agent.isOnNavMesh)
-                    _enemy.agent.isStopped = true;
-                _enemy.agent.enabled = false;
+                _enemy.agent.isStopped = true;
             }
+            _enemy.agent.enabled = false;
         }
 
-        // 2. Disable colliders so the player can walk over the corpse
-        if (_enemy.TryGetComponent(out Collider collider))
+        if (_enemy.controller != null)
+        {
+            _enemy.controller.enabled = false;
+        }
+
+        // 2. Disable all collider components so the player can walk over the corpse
+        Collider[] colliders = _enemy.GetComponentsInChildren<Collider>(includeInactive: true);
+        foreach (Collider collider in colliders)
         {
             collider.enabled = false;
         }
 
-        // 3. Play the exact death animation
         if (_enemy.animator != null)
         {
             // Based on your earlier screenshot, the gray box is named "Death Back"
