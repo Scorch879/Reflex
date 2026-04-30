@@ -467,7 +467,7 @@ MonoBehaviour:
   currentHealth: 0
   attackRange: 3
   attackCooldown: 1.5
-  enemyType: Default
+  enemyType: Ant
   isElite: 0
   laserLine: {fileID: 0}
 --- !u!114 &7167864896676954990

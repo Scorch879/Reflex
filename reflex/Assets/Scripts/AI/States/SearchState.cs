@@ -34,7 +34,10 @@ public class SearchState : IEnemyState
         _searchPoints = BuildSearchPoints();
 
         Debug.Log("ENTERING SEARCH STATE");
-        _enemy.spriteRenderer.color = Color.yellow;
+        if (_enemy.spriteRenderer != null)
+        {
+            _enemy.spriteRenderer.color = Color.yellow;
+        }
         _enemy.HideLaser();
 
         MoveToNextSearchPoint();

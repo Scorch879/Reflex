@@ -37,7 +37,7 @@ public class EnemyController : MonoBehaviour
     private float _stuckTimer;
 
     [Header("Swarm Settings")]
-    public string enemyType = "Default";
+    public string enemyType;
     [HideInInspector] public bool isElite = false;
 
     public Vector3 GetHomePosition() => _homePosition;

@@ -7,6 +7,7 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyPrefab; // The blueprint to spawn
     public int spawnCount = 3; // How many enemies to spawn per wave
     public float spawnRadius = 5f; // How far from the spawner to place them
+    public float spawnHeight = 0f; // Height offset for spawning enemies
     public float respawnDelay = 3f; // How long to wait after the entire wave is gone
 
     private readonly List<GameObject> _currentEnemies = new List<GameObject>();
@@ -49,7 +50,7 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < spawnCount; i++)
         {
             Vector3 offset = Random.insideUnitSphere * spawnRadius;
-            offset.y = 0f;
+            offset.y = spawnHeight;  // Use the configurable spawn height
             Vector3 spawnPosition = transform.position + offset;
             GameObject enemy = Instantiate(enemyPrefab, spawnPosition, transform.rotation);
             _currentEnemies.Add(enemy);

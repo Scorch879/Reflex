@@ -22429,7 +22429,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   enemyPrefab: {fileID: 8592500502273284740, guid: 7abadee4eb81e5b49b5c0c25672e11c6, type: 3}
-  respawnDelay: 3
+  spawnCount: 5
+  spawnRadius: 5
+  respawnDelay: 1
 --- !u!4 &1327668661
 Transform:
   m_ObjectHideFlags: 0
