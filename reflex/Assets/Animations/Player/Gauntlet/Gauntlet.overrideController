@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Gauntlet
+  m_Controller: {fileID: 9100000, guid: 691bcff59be9a8f44aed51d4af14cddd, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: eb887b744e1812c41a9b9fd8bd04d998, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 5bbb17a7eb771b549825149bb1b5dc5a, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 4c58c94c593a7a045a4ca65694789d99, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 8992b7d1f8e8dba4090ab26f5cf1db9a, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 3aaa5a6e7301cb44fbc5225a3738a47f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: df3f3d2cd56ed1b4994f51a846ccda4b, type: 2}
