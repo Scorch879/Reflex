@@ -121,7 +121,7 @@ MonoBehaviour:
   speed: 3
   maxHealth: 100
   currentHealth: 0
-  attackRange: 2
+  attackRange: 5
   attackCooldown: 1.5
   enemyType: Drone
   isElite: 0

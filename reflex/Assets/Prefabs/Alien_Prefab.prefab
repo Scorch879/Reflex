@@ -463,7 +463,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   agent: {fileID: 3395915927390723374}
   speed: 5
-  maxHealth: 1
+  maxHealth: 10
   currentHealth: 0
   attackRange: 3
   attackCooldown: 1.5

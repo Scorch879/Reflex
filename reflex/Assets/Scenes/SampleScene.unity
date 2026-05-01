@@ -1739,6 +1739,55 @@ MonoBehaviour:
     Time: 0
     Smoothing: 0
     IgnoreY: 0
+--- !u!1 &796820244
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 796820246}
+  - component: {fileID: 796820245}
+  m_Layer: 0
+  m_Name: DroneSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &796820245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796820244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1cc993a843f5f74b83262970dc97129, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
+  enemyPrefab: {fileID: 4977347246250205746, guid: 847e827d36c98fa4fb148c223602f676, type: 3}
+  spawnCount: 5
+  spawnRadius: 5
+  spawnHeight: 0
+  respawnDelay: 1
+--- !u!4 &796820246
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796820244}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 62.92786, y: -0, z: 9.37}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -22431,6 +22480,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 8592500502273284740, guid: 7abadee4eb81e5b49b5c0c25672e11c6, type: 3}
   spawnCount: 5
   spawnRadius: 5
+  spawnHeight: 0
   respawnDelay: 1
 --- !u!4 &1327668661
 Transform:
@@ -27887,3 +27937,4 @@ SceneRoots:
   - {fileID: 93322862}
   - {fileID: 362278430}
   - {fileID: 1327668661}
+  - {fileID: 796820246}
