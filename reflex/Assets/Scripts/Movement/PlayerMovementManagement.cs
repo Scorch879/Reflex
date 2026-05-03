@@ -8,7 +8,7 @@ public class PlayerMovementManagement : MonoBehaviour
     [SerializeField] private DefaultMovementStats movementVariables;
     [SerializeField] private CharacterController playerController;
     [SerializeField] private new CinemachinePositionComposer camera;
-    [SerializeField] private PlayerManager playerManager; 
+    [SerializeField] private PlayerManager playerManager;
 
     [Header("Movement Settings")]
     [SerializeField] private float rotationSpeed = 10f;
@@ -27,7 +27,7 @@ public class PlayerMovementManagement : MonoBehaviour
 
     void Start()
     {
-    
+
         userInput = GetComponent<PlayerInput>();
 
         // Initialize and Enable Actions
@@ -43,11 +43,11 @@ public class PlayerMovementManagement : MonoBehaviour
     void Update()
     {
         if (isDashing) return;
-        if (playerManager.isAttacking) 
-    {
-        currentVelocity = Vector3.zero;
-        return;
-    }
+        if (playerManager.isAttacking)
+        {
+            currentVelocity = Vector3.zero;
+            return;
+        }
         ReadInputs();
         MovePlayer();
         FOVChangeWhenRunning();
@@ -57,7 +57,7 @@ public class PlayerMovementManagement : MonoBehaviour
     {
         moveInput = moveAction.ReadValue<Vector2>();
 
-        if (dashAction.triggered)
+        if (dashAction.triggered && CanDash())
         {
             StartCoroutine(PerformDash());
         }
@@ -66,29 +66,29 @@ public class PlayerMovementManagement : MonoBehaviour
     }
     private bool CanDash()
     {
-        return !isDashing && Time.time >= lastDashTime + movementVariables.dashCooldown;
+        // Subtract the reduction bonus from the base cooldown
+        float actualCD = Mathf.Max(0.2f, movementVariables.dashCooldown - playerManager.cardDashCDReduction);
+        return !isDashing && Time.time >= lastDashTime + actualCD;
     }
     private IEnumerator PerformDash()
     {
         isDashing = true;
         lastDashTime = Time.time;
 
-        // 1. Determine Dash Direction
-        // If player is moving, dash in that direction. If stationary, dash forward.
         Vector3 dashDir = CameraDirectionLogic.GetRelativeDirection(moveInput, Camera.main);
         if (dashDir.magnitude < 0.1f) dashDir = transform.forward;
 
-        // 2. Apply Dash Velocity
         float startTime = Time.time;
+        // Add the distance bonus to the base speed[cite: 1, 2]
+        float totalDashSpeed = movementVariables.dashSpeed + playerManager.cardDashDistanceBonus;
+
         while (Time.time < startTime + movementVariables.dashDuration)
         {
-            // We bypass the acceleration logic for a constant high-speed burst
-            playerController.Move(dashDir * movementVariables.dashSpeed * Time.deltaTime);
+            playerController.Move(dashDir * totalDashSpeed * Time.deltaTime);
             yield return null;
         }
 
         isDashing = false;
-        // Optional: Reset currentVelocity so you don't "slide" after the dash ends
         currentVelocity = dashDir * GetCurrentSpeed();
     }
 

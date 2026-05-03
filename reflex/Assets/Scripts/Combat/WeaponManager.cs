@@ -5,6 +5,7 @@ using System;
 using Unity.VisualScripting;
 
 
+
 public class WeaponManager : MonoBehaviour
 {
     [Header("References")]
@@ -106,33 +107,33 @@ public class WeaponManager : MonoBehaviour
 
 
     private void ExecuteAttack()
-{
-    // 1. Cache the reference for performance and readability
-    WeaponData data = playerManager.weaponData;
-    if (data == null || data.comboChain.Length == 0) return;
-
-    // 2. Set State
-    playerManager.canAttack = false;
-    playerManager.isAttacking = true;
-    startResetTime = false; // Pause the cooldown timer during the swing
-
-    // 3. Logic: Increment and Wrap (Loop) the combo
-    playerManager.currentComboIndex++;
-    if (playerManager.currentComboIndex > data.comboChain.Length)
     {
-        playerManager.currentComboIndex = 1; // Loop back to first attack
+        // 1. Cache the reference for performance and readability
+        WeaponData data = playerManager.weaponData;
+        if (data == null || data.comboChain.Length == 0) return;
+
+        // 2. Set State
+        playerManager.canAttack = false;
+        playerManager.isAttacking = true;
+        startResetTime = false; // Pause the cooldown timer during the swing
+
+        // 3. Logic: Increment and Wrap (Loop) the combo
+        playerManager.currentComboIndex++;
+        if (playerManager.currentComboIndex > data.comboChain.Length)
+        {
+            playerManager.currentComboIndex = 1; // Loop back to first attack
+        }
+
+        // 4. Get the specific step data (using cached 'data' and safe index)
+        AttackStep step = data.comboChain[playerManager.currentComboIndex - 1];
+
+        // 5. Execution
+        playerManager.comboTime = data.comboResetTime;
+        UpdateHitboxTransform(step);
+        playerVisuals.PlayAttack(playerManager.currentComboIndex);
+
+        lastAttackTime = Time.time;
     }
-
-    // 4. Get the specific step data (using cached 'data' and safe index)
-    AttackStep step = data.comboChain[playerManager.currentComboIndex - 1];
-    
-    // 5. Execution
-    playerManager.comboTime = data.comboResetTime;
-    UpdateHitboxTransform(step);
-    playerVisuals.PlayAttack(playerManager.currentComboIndex);
-
-    lastAttackTime = Time.time;
-}
 
     private void UpdateHitboxTransform(AttackStep step)
     {
@@ -150,12 +151,24 @@ public class WeaponManager : MonoBehaviour
         Quaternion orientation = hitboxVisual.transform.rotation;
 
         Collider[] hitEnemies = Physics.OverlapBox(center, halfExtents, orientation, enemyLayer);
-        AttackStep step = playerManager.weaponData.comboChain[playerManager.currentComboIndex-1];
+        AttackStep step = playerManager.weaponData.comboChain[playerManager.currentComboIndex - 1];
         float finalDamage = step.attackDamage * playerManager.TotalDamageMultiplier;
+        if (UnityEngine.Random.value < playerManager.FinalCritChance)
+        {
+            finalDamage *= 2;
+            Debug.Log("<color=red>CRIT!</color>");
+        }
+
         foreach (Collider enemy in hitEnemies)
         {
-            // Now you can pass finalDamage to your enemy script
-            Debug.Log($"Hit {enemy.name} for {finalDamage} damage!");
+            // Apply finalDamage to enemy logic here...
+
+            // VAMPIRIC FOCUS (Heal on Hit)
+            if (UnityEngine.Random.value < playerManager.cardVampChance)
+            {
+                playerManager.Heal(1);
+                Debug.Log("<color=green>Healed 1 HP!</color>");
+            }
         }
 
     }
@@ -171,8 +184,8 @@ public class WeaponManager : MonoBehaviour
 
     public void StartResetTime()
     {
-        startResetTime = true;
-        playerManager.comboTime = playerManager.weaponData.comboResetTime;
+        // Base Reset Time + Card Bonus
+        playerManager.comboTime = playerManager.weaponData.comboResetTime + playerManager.cardComboWindowBonus;
     }
 
     private void OnDrawGizmos()
