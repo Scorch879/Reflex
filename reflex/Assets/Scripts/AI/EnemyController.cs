@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour 
 {
     private IEnemyState _currentState;
-
+   
     [Header("Visuals")]
     public Animator animator;
 
@@ -25,67 +25,32 @@ public class EnemyController : MonoBehaviour
     public Transform player;
     public SpriteRenderer spriteRenderer;
     public UnityEngine.AI.NavMeshAgent agent;
-
+    
     [Header("Settings")]
     public float speed = 3f;
-    public float maxHealth = 100f;
-    public float currentHealth;
-    public float attackRange = 2f;
-    public float attackCooldown = 1.5f;
     private float _verticalVelocity;
     private Vector3 _lastPosition;
     private float _stuckTimer;
 
-    [Header("Swarm Settings")]
-    public string enemyType;
-    [HideInInspector] public bool isElite = false;
-
     public Vector3 GetHomePosition() => _homePosition;
 
-    void Start()
-    {
+    void Start() {
 
         _homePosition = transform.position; // Remember where we started
-        currentHealth = maxHealth;
 
-        if (agent == null)
-        {
-            agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-            if (agent == null)
-            {
-                Debug.LogWarning($"{name}: No NavMeshAgent found on enemy.");
-            }
+        if (agent == null) agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+
+        agent.updateRotation = false;
+        
+        if (player == null) {
+            player = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
-        if (agent != null)
-        {
-            agent.updateRotation = false;
-        }
-
-        if (player == null)
-        {
-            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-            if (playerObject != null)
-            {
-                player = playerObject.transform;
-            }
-            else
-            {
-                Debug.LogWarning($"{name}: No GameObject found with tag 'Player'. Enemy will still patrol, but chasing will be disabled until the player is assigned.");
-            }
-        }
-
-        if (spriteRenderer == null)
-        {
+        // This finds the SpriteRenderer component on the same object or its children
+        if (spriteRenderer == null) {
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
-
-        if (animator == null)
-        {
-            animator = GetComponentInChildren<Animator>();
-        }
-
-        SwarmManager.RegisterEnemy(enemyType, this);
+        
         ChangeState(new IdleState(this));
     }
 
@@ -107,66 +72,26 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void Update()
-    {
+    void Update() {
+        if (player == null) return;
+
         // Rotate the transform to match the direction the NavMesh Agent is walking
-        if (agent != null && agent.velocity.sqrMagnitude > 0.1f)
+        if (agent.velocity.sqrMagnitude > 0.1f)
         {
             Vector3 direction = agent.velocity.normalized;
             direction.y = 0; // Keep the enemy upright
             transform.rotation = Quaternion.LookRotation(direction);
         }
-
+        
         if (animator != null)
         {
-            bool moving = agent != null && agent.velocity.magnitude > 0.1f;
-            animator.SetBool("isWalking", moving);
-
-            bool grounded = controller != null ? controller.isGrounded : (agent != null && agent.isOnNavMesh);
-            animator.SetBool("isGrounded", grounded);
+            animator.SetFloat("Speed", agent.velocity.magnitude);
         }
 
         _currentState?.Tick();
     }
 
-
-    public void AttackPlayer()
-    {
-        if (animator != null)
-        {
-            animator.Play("Attack");
-        }
-
-        if (player == null)
-        {
-            Debug.LogWarning($"{name}: AttackPlayer called but player is not assigned.");
-            return;
-        }
-
-        Vector3 directionToPlayer = (player.position - transform.position).normalized;
-        Vector3 hitBoxCenter = transform.position + (directionToPlayer * 1f) + (Vector3.up * 1f);
-
-        // 3. Generate the invisible Hitbox sphere and grab any colliders it touches
-        // The '1f' at the end is the size of the bite radius.
-        Collider[] hitObjects = Physics.OverlapSphere(hitBoxCenter, 1f);
-
-        // 4. Loop through everything we hit and check if it's the Player
-        foreach (Collider hit in hitObjects)
-        {
-            if (hit.CompareTag("Player"))
-            {
-                // The Ant's teeth connected with the player's Capsule Collider!
-                Debug.Log("<color=orange>ANT BIT THE PLAYER!</color>");
-
-                // NOTE: Once you build a PlayerHealth script, you will trigger the damage here like this:
-                // PlayerHealth pHealth = hit.GetComponent<PlayerHealth>();
-                // if (pHealth != null) pHealth.TakeDamage(20f);
-            }
-        }
-    }
-    
-    public void ChangeState(IEnemyState newState)
-    {
+    public void ChangeState(IEnemyState newState) {
         _currentState?.OnExit();
         _currentState = newState;
         _currentState.OnEnter();
@@ -242,11 +167,11 @@ public class EnemyController : MonoBehaviour
     public void DrawLaser(Vector3 targetPos, bool canSee)
     {
         if (laserLine == null) return;
-
+        
         laserLine.enabled = true;
         laserLine.SetPosition(0, transform.position + Vector3.up * 0.5f); // Eye level
         laserLine.SetPosition(1, targetPos);
-
+        
         // Change color: Red if blocked, Green if spotting you
         laserLine.startColor = canSee ? Color.green : Color.red;
         laserLine.endColor = canSee ? Color.green : Color.red;
@@ -258,27 +183,5 @@ public class EnemyController : MonoBehaviour
     }
 
 
-    public void TakeDamage(float amount)
-    {
-        // Don't take further damage or change states if already dead
-        if (currentHealth <= 0) return;
-
-        currentHealth -= amount;
-
-        if (currentHealth <= 0)
-        {
-            SwarmManager.UnregisterEnemy(enemyType, this);
-            ChangeState(new DeathState(this));
-        }
-        else
-        {
-            ChangeState(new HurtState(this));
-        }
-    }
-
-    void OnDisable()
-    {
-        SwarmManager.UnregisterEnemy(enemyType, this);
-    }
-
+    
 }

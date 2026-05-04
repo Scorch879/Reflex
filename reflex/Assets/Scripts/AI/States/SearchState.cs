@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class SearchState : IEnemyState
 {
@@ -8,17 +6,11 @@ public class SearchState : IEnemyState
     private float _searchTimer;
     private const float SearchDuration = 10f;
 
-    private List<Vector3> _searchPoints = new List<Vector3>();
-    private int _currentPointIndex;
-    private bool _waitingAtPoint;
-    private float _waitTimer;
-    private const float WaitAtPointDuration = 1.2f;
-
+    // Fields for the scanning behavior
+    private bool _hasArrivedAtSearchPoint;
     private Quaternion _initialScanRotation;
-    private const float ScanAngle = 120f;
-    private const float ScanSpeed = 2.2f;
-    private const float SearchRadius = 4f;
-    private const int SearchPointCount = 4;
+    private const float ScanAngle = 120f; 
+    private const float ScanSpeed = 1.2f;
 
     public SearchState(EnemyController enemy)
     {
@@ -27,31 +19,27 @@ public class SearchState : IEnemyState
 
     public void OnEnter()
     {
-        _searchTimer = SearchDuration;
-        _currentPointIndex = 0;
-        _waitingAtPoint = false;
-        _waitTimer = 0f;
-        _searchPoints = BuildSearchPoints();
-
         Debug.Log("ENTERING SEARCH STATE");
-        if (_enemy.spriteRenderer != null)
-        {
-            _enemy.spriteRenderer.color = Color.yellow;
-        }
+        _enemy.agent.SetDestination(_enemy.lastKnownPlayerPosition);
+        _enemy.spriteRenderer.color = Color.yellow; // Indicate searching
+        _searchTimer = SearchDuration;
         _enemy.HideLaser();
-
-        MoveToNextSearchPoint();
+        _hasArrivedAtSearchPoint = false;
     }
 
     public void Tick()
     {
+        // 1. If we spot the player again, go back to chasing.
         if (_enemy.CanSeePlayer())
         {
             _enemy.ChangeState(new ChaseState(_enemy));
             return;
         }
 
+        // 2. The main search timer is always counting down.
         _searchTimer -= Time.deltaTime;
+
+        // 3. If the timer runs out, give up and return to patrolling.
         if (_searchTimer <= 0f)
         {
             Debug.Log("Search timer expired. Returning to patrol.");
@@ -59,79 +47,25 @@ public class SearchState : IEnemyState
             return;
         }
 
-        if (_waitingAtPoint)
-        {
-            _waitTimer -= Time.deltaTime;
-            PerformScan();
-            if (_waitTimer <= 0f)
-            {
-                _waitingAtPoint = false;
-                MoveToNextSearchPoint();
-            }
-            return;
-        }
-
+        // 4. If we arrive at the destination and still have time, stop and wait.
         if (!_enemy.agent.pathPending && _enemy.agent.remainingDistance <= _enemy.agent.stoppingDistance)
         {
-            BeginPointWait();
-        }
-    }
-
-    private List<Vector3> BuildSearchPoints()
-    {
-        var points = new List<Vector3>();
-        Vector3 center = _enemy.lastKnownPlayerPosition;
-
-        if (center == Vector3.zero)
-        {
-            center = _enemy.transform.position;
-        }
-
-        for (int i = 0; i < SearchPointCount; i++)
-        {
-            float angle = i * (360f / SearchPointCount);
-            float radius = SearchRadius + Random.Range(-1f, 1f);
-            Vector3 direction = Quaternion.Euler(0, angle, 0) * Vector3.forward;
-            Vector3 candidate = center + direction * radius;
-
-            if (NavMesh.SamplePosition(candidate, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+            // When we first arrive, stop the agent and capture the current rotation.
+            if (!_hasArrivedAtSearchPoint)
             {
-                points.Add(hit.position);
+                _hasArrivedAtSearchPoint = true;
+                _initialScanRotation = _enemy.transform.rotation;
+                _enemy.agent.ResetPath();
             }
+
+            // Now, perform the scanning behavior
+            PerformScan();
         }
-
-        if (points.Count == 0)
-        {
-            points.Add(_enemy.transform.position);
-        }
-
-        return points;
-    }
-
-    private void MoveToNextSearchPoint()
-    {
-        if (_searchPoints.Count == 0)
-        {
-            _enemy.ChangeState(new PatrolState(_enemy));
-            return;
-        }
-
-        _enemy.agent.SetDestination(_searchPoints[_currentPointIndex]);
-        _enemy.DrawLaser(_searchPoints[_currentPointIndex], false);
-
-        _currentPointIndex = (_currentPointIndex + 1) % _searchPoints.Count;
-    }
-
-    private void BeginPointWait()
-    {
-        _waitingAtPoint = true;
-        _waitTimer = WaitAtPointDuration;
-        _initialScanRotation = _enemy.transform.rotation;
-        _enemy.agent.ResetPath();
     }
 
     private void PerformScan()
     {
+        // Use a sine wave for smooth back-and-forth rotation.
         float scanAngleOffset = Mathf.Sin(Time.time * ScanSpeed) * (ScanAngle / 2f);
         Quaternion scanRotation = Quaternion.AngleAxis(scanAngleOffset, Vector3.up);
         _enemy.transform.rotation = _initialScanRotation * scanRotation;
@@ -139,10 +73,6 @@ public class SearchState : IEnemyState
 
     public void OnExit()
     {
-        if (_enemy.spriteRenderer != null)
-        {
-            _enemy.spriteRenderer.color = Color.white;
-        }
-        _enemy.HideLaser();
+        _enemy.spriteRenderer.color = Color.white; // Reset color
     }
 }
