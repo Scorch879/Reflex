@@ -16,7 +16,12 @@ public class IdleState : IEnemyState
     public void OnEnter()
     {
         _idleTimer = _waitDuration;
-        _enemy.spriteRenderer.color = Color.white;
+
+        if (_enemy.spriteRenderer != null)
+        {
+            _enemy.spriteRenderer.color = Color.white;
+        }
+        
         Debug.Log("Enemy is resting...");
     }
 
