@@ -162,7 +162,7 @@ public class WeaponManager : MonoBehaviour
         foreach (Collider enemy in hitEnemies)
         {
             // Apply finalDamage to enemy logic here...
-
+            Debug.Log(finalDamage);  
             // VAMPIRIC FOCUS (Heal on Hit)
             if (UnityEngine.Random.value < playerManager.cardVampChance)
             {
