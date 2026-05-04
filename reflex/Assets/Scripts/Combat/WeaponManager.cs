@@ -162,7 +162,12 @@ public class WeaponManager : MonoBehaviour
         foreach (Collider enemy in hitEnemies)
         {
             // Apply finalDamage to enemy logic here...
-            enemy.GetComponent<EnemyHurtbox>()?.ReceiveDamage(finalDamage);
+            EnemyHurtbox hurtbox = enemy.GetComponent<EnemyHurtbox>();
+            if (hurtbox != null)
+            {
+                hurtbox.ReceiveDamage(finalDamage);
+            }
+
             // VAMPIRIC FOCUS (Heal on Hit)
             if (UnityEngine.Random.value < playerManager.cardVampChance)
             {
