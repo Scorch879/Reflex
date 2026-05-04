@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrarySourceAsset
+  m_Library:
+  - m_Name: Idle
+    m_Hash: 1008081451
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Front
+      m_Hash: 1060785650
+      m_Sprite: {fileID: -1506818191, guid: 9be39db4d90182f4099c360144cc90ba, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1506818191, guid: 9be39db4d90182f4099c360144cc90ba, type: 3}
+    - m_Name: Back
+      m_Hash: 234647049
+      m_Sprite: {fileID: 1322656777, guid: 1c29f7350a14c0546914c0df38cf4e1e, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1322656777, guid: 1c29f7350a14c0546914c0df38cf4e1e, type: 3}
+    - m_Name: Side
+      m_Hash: 62108811
+      m_Sprite: {fileID: 488671902, guid: afbaf7a95627c924e876f8e5d52b938a, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 488671902, guid: afbaf7a95627c924e876f8e5d52b938a, type: 3}
+    - m_Name: DiagonalFront
+      m_Hash: 143553460
+      m_Sprite: {fileID: -1591532609, guid: 51b5f722d4b6cae4faaffcd5a5e34b1b, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1591532609, guid: 51b5f722d4b6cae4faaffcd5a5e34b1b, type: 3}
+    - m_Name: DiagonalBack
+      m_Hash: 77468535
+      m_Sprite: {fileID: 1442017070, guid: 5432fadb000a4f341b49b22c62178db8, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1442017070, guid: 5432fadb000a4f341b49b22c62178db8, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 5
+  m_PrimaryLibraryGUID: 
+  m_ModificationHash: 639135349356008241
+  m_Version: 1

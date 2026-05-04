@@ -95,12 +95,1420 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: backside_0
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 1799
+        width: 74
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73fbc11440f1aec48b1744e11507eba5
+      internalID: 1442017070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_1
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 1799
+        width: 74
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afb5ef691f101d84bb6b9346f6c6a654
+      internalID: 1582115523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_2
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 1799
+        width: 74
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b2e1338123183646978722b3bee2f5b
+      internalID: 60555067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_3
+      rect:
+        serializedVersion: 2
+        x: 859
+        y: 1799
+        width: 74
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a41aeda7a74023745a5114f4ee50ebd1
+      internalID: 480630967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_4
+      rect:
+        serializedVersion: 2
+        x: 1115
+        y: 1799
+        width: 74
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98990a7c466b03749a3174976f80674c
+      internalID: 1509955730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_5
+      rect:
+        serializedVersion: 2
+        x: 1371
+        y: 1799
+        width: 74
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 192ecae062e8cb84fbb9b82ce230a03e
+      internalID: -675908690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_6
+      rect:
+        serializedVersion: 2
+        x: 1627
+        y: 1799
+        width: 74
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7878163522e45c4cba7697875703689
+      internalID: 261990375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_7
+      rect:
+        serializedVersion: 2
+        x: 1883
+        y: 1799
+        width: 74
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17a485c1492e02b4c930ad0d47c29e2b
+      internalID: -122251775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_8
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 1543
+        width: 73
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0b9cc20e2aeee64986546f11eea7e71
+      internalID: 302848949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_9
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 1543
+        width: 73
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a550bf4985f749947b64447076358fbe
+      internalID: 1165150870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_10
+      rect:
+        serializedVersion: 2
+        x: 604
+        y: 1543
+        width: 73
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a44f7f0e50fdf24d9e119d08d392e75
+      internalID: -952560815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_11
+      rect:
+        serializedVersion: 2
+        x: 860
+        y: 1543
+        width: 73
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f4613ee48af1bd44b0fbc219ff45d0b
+      internalID: 34139319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_12
+      rect:
+        serializedVersion: 2
+        x: 1116
+        y: 1543
+        width: 73
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7dc43a05111f5614a9868f6094d8b29d
+      internalID: -1126289215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_13
+      rect:
+        serializedVersion: 2
+        x: 1372
+        y: 1543
+        width: 73
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: caf27a9aed462634a909062d9f556a90
+      internalID: -333458151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_14
+      rect:
+        serializedVersion: 2
+        x: 1628
+        y: 1543
+        width: 73
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5ed998646c1a4e4a9601678702dca07
+      internalID: 103810586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_15
+      rect:
+        serializedVersion: 2
+        x: 1884
+        y: 1544
+        width: 73
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a2882792e5c05248b6f72cc5aa421d7
+      internalID: -868103753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_16
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 1288
+        width: 73
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d3425efcbe38ec458f25014307492d5
+      internalID: 525627484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_17
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 1288
+        width: 73
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20b2a57ce3359af4ba327770961bff29
+      internalID: 1697066650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_18
+      rect:
+        serializedVersion: 2
+        x: 604
+        y: 1288
+        width: 73
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c1029fc0e2c71e43bc8438f6eefd50e
+      internalID: 1880585044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_19
+      rect:
+        serializedVersion: 2
+        x: 860
+        y: 1288
+        width: 73
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c542edf0fdfb724d8c7dc9f9deb7821
+      internalID: 205501789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_20
+      rect:
+        serializedVersion: 2
+        x: 1116
+        y: 1288
+        width: 73
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94daa6a9f635d62498e33c4af85780d9
+      internalID: -1568204208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_21
+      rect:
+        serializedVersion: 2
+        x: 1372
+        y: 1288
+        width: 73
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f79afab6ef1e1394eb6df56421171439
+      internalID: -227103431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_22
+      rect:
+        serializedVersion: 2
+        x: 1628
+        y: 1288
+        width: 73
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e983e497bb1dcf43bd1b417b708e75b
+      internalID: 23392178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_23
+      rect:
+        serializedVersion: 2
+        x: 1884
+        y: 1288
+        width: 73
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f09c921678f4e04cbd17cc6cb4f2096
+      internalID: 131048327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_24
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 1032
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcf4b02a52792014eb9c9d82922fec95
+      internalID: -1186363821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_25
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 1032
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 784a8502b6f4b03468898f888dd2524c
+      internalID: 1788808358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_26
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 1032
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1bdead1002a0fe43971783a03e139e9
+      internalID: -995539954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_27
+      rect:
+        serializedVersion: 2
+        x: 859
+        y: 1032
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db4ae7f547475ff4196bd0d5a7802def
+      internalID: -610076734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_28
+      rect:
+        serializedVersion: 2
+        x: 1115
+        y: 1032
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e7d4a50a8b99344780f809c7289f44f
+      internalID: 2119617414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_29
+      rect:
+        serializedVersion: 2
+        x: 1371
+        y: 1032
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e531ba2d5b09c14b85764c087250e7e
+      internalID: -343224364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_30
+      rect:
+        serializedVersion: 2
+        x: 1627
+        y: 1032
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 818755a64cfeba145946bcff41feaba3
+      internalID: -737926895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_31
+      rect:
+        serializedVersion: 2
+        x: 1883
+        y: 1032
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe44bb51a7ca37442813eb85f3ded1a2
+      internalID: -2091664156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_32
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 776
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6ca32a34ca704e4098bb839b95a6adf
+      internalID: -1289587532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_33
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 776
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bce3707c5a06d74ea0606c5ab1c3297
+      internalID: -1654180613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_34
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 776
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fac98d3617f24241bde73e133bfd160
+      internalID: 1523186378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_35
+      rect:
+        serializedVersion: 2
+        x: 859
+        y: 776
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7cc9927c3bc7d648b41fdeff844f0a7
+      internalID: 867237945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_36
+      rect:
+        serializedVersion: 2
+        x: 1115
+        y: 776
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6925fdeabdcd1754181d45e3620784d1
+      internalID: -639875418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_37
+      rect:
+        serializedVersion: 2
+        x: 1371
+        y: 776
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53bb6c58fe464e54ab4d3016217a35e6
+      internalID: 2043025630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_38
+      rect:
+        serializedVersion: 2
+        x: 1627
+        y: 776
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99a9554aab4c3af41964fac31ae83d17
+      internalID: -49777445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_39
+      rect:
+        serializedVersion: 2
+        x: 1882
+        y: 776
+        width: 75
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac3ec8ac0ca528e40a8b142f30fee801
+      internalID: 1647890417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_40
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 520
+        width: 75
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a16d63bceeea79e4684ed0c38b3259aa
+      internalID: -1102794438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_41
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 520
+        width: 75
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff88294d11808004cbf17e47bbd37e28
+      internalID: -1398498251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_42
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 520
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 441b001de86f59f42a46853aaad12d14
+      internalID: 1858895482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_43
+      rect:
+        serializedVersion: 2
+        x: 859
+        y: 520
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad90c618d229cb543a0984775c5e064f
+      internalID: -1634912491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_44
+      rect:
+        serializedVersion: 2
+        x: 1115
+        y: 520
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63f7993d9d332d849836a790c555f761
+      internalID: -267783722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_45
+      rect:
+        serializedVersion: 2
+        x: 1371
+        y: 520
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bdeed23fd5524b4e862a72892638a6e
+      internalID: -1931957254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_46
+      rect:
+        serializedVersion: 2
+        x: 1627
+        y: 520
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13a1a46df459c994d9f21907f9ec8601
+      internalID: -1690603596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_47
+      rect:
+        serializedVersion: 2
+        x: 1883
+        y: 520
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a85f36e1e3ab8a34a8c2c5fbb48215c6
+      internalID: -199030395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_48
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 264
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 017682569c27ed24f89be1f68dd1888a
+      internalID: -240334566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_49
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 264
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0502d5ed281fdb74f9f041d2987fa325
+      internalID: 890534008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_50
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 264
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21246713a74342940afbbf2350418ba9
+      internalID: 1566375733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_51
+      rect:
+        serializedVersion: 2
+        x: 859
+        y: 264
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42e71fbbdf303cf4daa8ca2316048cef
+      internalID: 137959865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_52
+      rect:
+        serializedVersion: 2
+        x: 1115
+        y: 264
+        width: 74
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2303b94785f05a146a28573110a6c117
+      internalID: 221090205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_53
+      rect:
+        serializedVersion: 2
+        x: 1372
+        y: 264
+        width: 73
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 869f00554bb04ee4b9cf20c3585fb31f
+      internalID: -1992521618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_54
+      rect:
+        serializedVersion: 2
+        x: 1628
+        y: 264
+        width: 73
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce964abe29547ec458a373772b42e714
+      internalID: 600011973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_55
+      rect:
+        serializedVersion: 2
+        x: 1884
+        y: 264
+        width: 73
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 573205df4b2fa8a4a8c389258df85eb6
+      internalID: -1898954793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_56
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 8
+        width: 73
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c7ab9c8beae8f04d978d11d55d51b52
+      internalID: 1331556057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_57
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 8
+        width: 73
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 471add632d8c6624cb0a6f9b4e375359
+      internalID: 1437643262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_58
+      rect:
+        serializedVersion: 2
+        x: 604
+        y: 8
+        width: 73
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 315eefa28c090804b99332a9afffbcde
+      internalID: -1772199822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_59
+      rect:
+        serializedVersion: 2
+        x: 860
+        y: 8
+        width: 73
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d2f2749c68d2d54284103803c6d3c62
+      internalID: -1424257569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_60
+      rect:
+        serializedVersion: 2
+        x: 1116
+        y: 7
+        width: 73
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 473b3c69f0bb67a43b3e69f72085c55a
+      internalID: -1588146386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_61
+      rect:
+        serializedVersion: 2
+        x: 1372
+        y: 7
+        width: 73
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac78e92202590494fac714272e307f03
+      internalID: -1003423693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_62
+      rect:
+        serializedVersion: 2
+        x: 1628
+        y: 7
+        width: 73
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 506dc92e2561420498b2f313e4b072b9
+      internalID: -2067551448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: backside_63
+      rect:
+        serializedVersion: 2
+        x: 1884
+        y: 7
+        width: 73
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 500b9ca1191cb534f901bc6260caa502
+      internalID: -582724667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 911fca14ba540764493a43a220732308
     internalID: 0
     vertices: []
     indices: 
@@ -108,8 +1516,74 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
-    nameFileIdTable: {}
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      backside_0: 1442017070
+      backside_1: 1582115523
+      backside_10: -952560815
+      backside_11: 34139319
+      backside_12: -1126289215
+      backside_13: -333458151
+      backside_14: 103810586
+      backside_15: -868103753
+      backside_16: 525627484
+      backside_17: 1697066650
+      backside_18: 1880585044
+      backside_19: 205501789
+      backside_2: 60555067
+      backside_20: -1568204208
+      backside_21: -227103431
+      backside_22: 23392178
+      backside_23: 131048327
+      backside_24: -1186363821
+      backside_25: 1788808358
+      backside_26: -995539954
+      backside_27: -610076734
+      backside_28: 2119617414
+      backside_29: -343224364
+      backside_3: 480630967
+      backside_30: -737926895
+      backside_31: -2091664156
+      backside_32: -1289587532
+      backside_33: -1654180613
+      backside_34: 1523186378
+      backside_35: 867237945
+      backside_36: -639875418
+      backside_37: 2043025630
+      backside_38: -49777445
+      backside_39: 1647890417
+      backside_4: 1509955730
+      backside_40: -1102794438
+      backside_41: -1398498251
+      backside_42: 1858895482
+      backside_43: -1634912491
+      backside_44: -267783722
+      backside_45: -1931957254
+      backside_46: -1690603596
+      backside_47: -199030395
+      backside_48: -240334566
+      backside_49: 890534008
+      backside_5: -675908690
+      backside_50: 1566375733
+      backside_51: 137959865
+      backside_52: 221090205
+      backside_53: -1992521618
+      backside_54: 600011973
+      backside_55: -1898954793
+      backside_56: 1331556057
+      backside_57: 1437643262
+      backside_58: -1772199822
+      backside_59: -1424257569
+      backside_6: 261990375
+      backside_60: -1588146386
+      backside_61: -1003423693
+      backside_62: -2067551448
+      backside_63: -582724667
+      backside_7: -122251775
+      backside_8: 302848949
+      backside_9: 1165150870
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
