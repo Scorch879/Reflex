@@ -9,16 +9,34 @@ public class PatrolState : IEnemyState
 
     public void OnEnter()
     {
-        _enemy.spriteRenderer.color = Color.white;
-        
-        Vector3 randomDirection = Random.insideUnitSphere * _enemy.patrolRadius;
-        randomDirection += _enemy.GetHomePosition();
-
-        NavMeshHit hit;
-        // Find the closest valid spot on the NavMesh within the radius
-        if (NavMesh.SamplePosition(randomDirection, out hit, _enemy.patrolRadius, 1))
+        if (_enemy.spriteRenderer != null)
         {
-            _enemy.agent.SetDestination(hit.position);
+            _enemy.spriteRenderer.color = Color.white;
+        }
+
+        EnemyController elite = SwarmManager.GetElite(_enemy.enemyType);
+        if (elite != null && elite != _enemy && SwarmManager.GetAllEnemies(_enemy.enemyType).Count > 1)
+        {
+            // Swarm around the elite
+            Vector3 offset = Random.insideUnitSphere * 5f; // 5 units radius around elite
+            offset.y = 0;
+            Vector3 target = elite.transform.position + offset;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(target, out hit, 5f, 1))
+            {
+                _enemy.agent.SetDestination(hit.position);
+            }
+        }
+        else
+        {
+            // Original random patrol
+            Vector3 randomDirection = Random.insideUnitSphere * _enemy.patrolRadius;
+            randomDirection += _enemy.GetHomePosition();
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomDirection, out hit, _enemy.patrolRadius, 1))
+            {
+                _enemy.agent.SetDestination(hit.position);
+            }
         }
     }
 
