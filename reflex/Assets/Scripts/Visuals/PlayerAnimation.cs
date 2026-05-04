@@ -49,10 +49,6 @@ public class PlayerAnimation : MonoBehaviour
         if (playerAnim == null) return;
         Debug.Log($"Attack {comboIndex}");
         playerAnim.Play($"Attack {comboIndex}", 0, 0f);
-        if ( comboIndex>= playerManager.weaponData.comboChain.Length)
-        {
-            playerManager.currentComboIndex = 0;
-        }
     }
     
     public void UpdateAnimatorStates()
