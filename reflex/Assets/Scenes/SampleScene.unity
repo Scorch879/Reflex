@@ -331,7 +331,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 5
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 885425862, guid: 7a718082aa53b4743969bd54d242c6ec, type: 3}
+  m_Sprite: {fileID: 1768921658, guid: 7a718082aa53b4743969bd54d242c6ec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -354,9 +354,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteResolver
   m_CategoryHash: 0.0000000011157371
-  m_labelHash: 0.0000000029606484
+  m_labelHash: 0.7544174
   m_SpriteKey: 0
-  m_SpriteHash: 131335892
+  m_SpriteHash: 384924684
 --- !u!114 &51322937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3601,9 +3601,9 @@ MonoBehaviour:
   chaseLeashRange: 15
   lastKnownPlayerPosition: {x: 0, y: 0, z: 0}
   detectionLayers:
-    serializedVersion: 2
     m_Bits: 8
   patrolRadius: 10
+  _homePosition: {x: 0, y: 0, z: 0}
   controller: {fileID: 0}
   player: {fileID: 0}
   spriteRenderer: {fileID: 0}
@@ -3613,6 +3613,9 @@ MonoBehaviour:
   currentHealth: 0
   attackRange: 2
   attackCooldown: 1.5
+  _verticalVelocity: 0
+  _lastPosition: {x: 0, y: 0, z: 0}
+  _stuckTimer: 0
   enemyType: 
   isElite: 0
   laserLine: {fileID: 0}
@@ -26456,54 +26459,18 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1605194403}
-  - component: {fileID: 1605194402}
-  - component: {fileID: 1605194401}
-  - component: {fileID: 1605194400}
   - component: {fileID: 1605194399}
   - component: {fileID: 1605194398}
+  - component: {fileID: 1605194402}
   - component: {fileID: 1605194397}
   - component: {fileID: 1605194396}
-  - component: {fileID: 1605194395}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BigEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1605194395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1605194394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adaa96ffa8c6cae4bb0eb379cad2e0f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  animator: {fileID: 0}
-  visionRange: 8
-  visionAngle: 90
-  chaseLeashRange: 15
-  lastKnownPlayerPosition: {x: 0, y: 0, z: 0}
-  detectionLayers:
-    serializedVersion: 2
-    m_Bits: 8
-  patrolRadius: 10
-  controller: {fileID: 1605194401}
-  player: {fileID: 204850541}
-  spriteRenderer: {fileID: 1605194402}
-  agent: {fileID: 1605194400}
-  speed: 2
-  maxHealth: 100
-  currentHealth: 100
-  attackRange: 2
-  attackCooldown: 1.5
-  enemyType: 
-  isElite: 0
-  laserLine: {fileID: 0}
 --- !u!114 &1605194396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26517,9 +26484,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PerspectiveChanger
   cameraObj: {fileID: 330585545}
-  spriteSwapLib: []
+  spriteSwapLib:
+  - {fileID: 7108339969198208228, guid: 98b18f0d951d8d2438a4ee9239b61397, type: 3}
+  - {fileID: 7108339969198208228, guid: 53b11046f5f23aa40b7ee7fc7b72a289, type: 3}
+  - {fileID: 7108339969198208228, guid: 717b59eb09adf864292a74c77b4b2ed2, type: 3}
+  - {fileID: 7108339969198208228, guid: 49658e43e5c3d5346841e2533de3b9a3, type: 3}
+  - {fileID: 7108339969198208228, guid: e5a0d44d0ce42074c807258a8fb589d0, type: 3}
+  - {fileID: 7108339969198208228, guid: 277d22ce2e48f6f4ea84e56da7578a88, type: 3}
+  - {fileID: 7108339969198208228, guid: 051f31cf40934014c8e8009808cc4e7d, type: 3}
+  - {fileID: 7108339969198208228, guid: 00d090549100df14ba11f531bc58fe3a, type: 3}
   spriteLib: {fileID: 1605194399}
-  orientationSource: {fileID: 0}
+  orientationSource: {fileID: 1605194403}
   dirIndexDisplay: 0
 --- !u!114 &1605194397
 MonoBehaviour:
@@ -26534,7 +26509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Billboarding
   cameraObj: {fileID: 330585545}
-  xRotate: 30
+  xRotate: 0
 --- !u!114 &1605194398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26548,9 +26523,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteResolver
   m_CategoryHash: 0.009161512
-  m_labelHash: 0.72775185
+  m_labelHash: 2.67273e-30
   m_SpriteKey: 0
-  m_SpriteHash: 446710479
+  m_SpriteHash: 944083822
 --- !u!114 &1605194399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26564,54 +26539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrary
   m_Library: []
-  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: f2c1794e74c432442a81de2b8b8b1d9a, type: 3}
---- !u!195 &1605194400
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1605194394}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.44
-  m_Speed: 3.5
-  m_Acceleration: 30
-  avoidancePriority: 50
-  m_AngularSpeed: 0
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1.93
-  m_BaseOffset: 0.965
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
---- !u!143 &1605194401
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1605194394}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 1.93
-  m_Radius: 0.44
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 717b59eb09adf864292a74c77b4b2ed2, type: 3}
 --- !u!212 &1605194402
 SpriteRenderer:
   serializedVersion: 2
@@ -26661,7 +26589,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -1506818191, guid: 9be39db4d90182f4099c360144cc90ba, type: 3}
+  m_Sprite: {fileID: 488671902, guid: afbaf7a95627c924e876f8e5d52b938a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
