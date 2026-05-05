@@ -6,7 +6,7 @@ TextureImporter:
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -37,24 +37,24 @@ TextureImporter:
     filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
+    wrapU: 1
+    wrapV: 1
     wrapW: 0
-  nPOTScale: 1
+  nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 0
+  spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 0
+  textureType: 8
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -95,12 +95,1090 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: FrontRight_0
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 1805
+        width: 76
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40a761ee8a2d7f14cbce5fae4b74fe1e
+      internalID: -1637652316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_1
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 1805
+        width: 76
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff18f6b4d3be4c944aafc63967f18da0
+      internalID: -504844452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_2
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 1805
+        width: 77
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ede47b38da817984a8974d33f5d29134
+      internalID: -743188610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_3
+      rect:
+        serializedVersion: 2
+        x: 856
+        y: 1805
+        width: 81
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ebe9e3e80289694aa1dd3a3a4942d7c
+      internalID: 1329671929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_4
+      rect:
+        serializedVersion: 2
+        x: 1109
+        y: 1805
+        width: 85
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ea424c15bc1e9e43892204e904c8c99
+      internalID: -1349259357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_5
+      rect:
+        serializedVersion: 2
+        x: 1362
+        y: 1805
+        width: 89
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d34761d1b72ddc4ea93de1a7bbe6727
+      internalID: 1949537473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_6
+      rect:
+        serializedVersion: 2
+        x: 1615
+        y: 1805
+        width: 92
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fd60783b4a71eb46aaf1b278dcca516
+      internalID: -53430267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_7
+      rect:
+        serializedVersion: 2
+        x: 1868
+        y: 1805
+        width: 96
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c18a4e8199abdef4eac07c4caadb013c
+      internalID: -1949605127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_8
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 1549
+        width: 100
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e96a7ceffbb0674982ca58a167c3acd
+      internalID: 1318428002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_9
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 1549
+        width: 104
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e3d17af309ebbe4490d18760502e2a4
+      internalID: -1865865945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_10
+      rect:
+        serializedVersion: 2
+        x: 580
+        y: 1549
+        width: 107
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d1d5bdd9b562c14a86800c0b72b4307
+      internalID: 766401570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_11
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 1549
+        width: 109
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 913318ef1393921408d34be4219f8e2d
+      internalID: -1985371770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_12
+      rect:
+        serializedVersion: 2
+        x: 1090
+        y: 1549
+        width: 111
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c84cc3e153eacb47b088901d7780d63
+      internalID: -183581048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_13
+      rect:
+        serializedVersion: 2
+        x: 1345
+        y: 1549
+        width: 114
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1842327eecbb1c40a24d489c9848fbc
+      internalID: -142573383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_14
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 1549
+        width: 116
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85a5649441ed17449ad8a72559644368
+      internalID: -235917628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_15
+      rect:
+        serializedVersion: 2
+        x: 1855
+        y: 1549
+        width: 119
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0467f5b06e29f744fa327c420350c372
+      internalID: -1082953859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_16
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 1293
+        width: 120
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7ca448be078fe44f8dbf863e68d5dcc
+      internalID: -1991023622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_17
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 1293
+        width: 120
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 407cefaa6b32e084fa20f1677b527232
+      internalID: -1584096634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_18
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 1293
+        width: 121
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9366e5cfb4448674d9f5a2accbdc09c3
+      internalID: 1985703283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_19
+      rect:
+        serializedVersion: 2
+        x: 833
+        y: 1293
+        width: 121
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 416818254b4feef4482afc87575fa371
+      internalID: 1562758033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_20
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 1293
+        width: 122
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bae56b1b7f16304da756c42d70c97ba
+      internalID: 634437575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_21
+      rect:
+        serializedVersion: 2
+        x: 1346
+        y: 1293
+        width: 121
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48e8a5138906c424385f80ed8414e036
+      internalID: -1901545861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_22
+      rect:
+        serializedVersion: 2
+        x: 1603
+        y: 1293
+        width: 120
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd2c0a739b0347e47a3cf0a4c5eebd26
+      internalID: -627093655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_23
+      rect:
+        serializedVersion: 2
+        x: 1861
+        y: 1293
+        width: 117
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb7d7652b335e9547b51125135222357
+      internalID: 1492188288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_24
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 1037
+        width: 117
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa90359c757f4bc49ad8c42860432dd9
+      internalID: -191331793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_25
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 1037
+        width: 116
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1c1f5854ea029c44aa3789aa04606d3
+      internalID: 1809544085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_26
+      rect:
+        serializedVersion: 2
+        x: 597
+        y: 1037
+        width: 109
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bfeea41ae885c74d9636ff9dfd189b2
+      internalID: -1513869721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_27
+      rect:
+        serializedVersion: 2
+        x: 862
+        y: 1038
+        width: 100
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c042d7b5abbdd64a8ac96b133334ac2
+      internalID: 1496282147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_28
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 1046
+        width: 97
+        height: 158
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9df7dbe71945ae428ca99ce6a1195f2
+      internalID: -1746382987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_29
+      rect:
+        serializedVersion: 2
+        x: 1377
+        y: 1045
+        width: 95
+        height: 161
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc172517181530a4db7c72360a18780a
+      internalID: 470361937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_30
+      rect:
+        serializedVersion: 2
+        x: 1633
+        y: 1043
+        width: 93
+        height: 165
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: faab3f364f892fb43a2aee487e8a3ca2
+      internalID: -1427352817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_31
+      rect:
+        serializedVersion: 2
+        x: 1889
+        y: 1041
+        width: 92
+        height: 169
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 879586bd948e8da4b99110b09acfd090
+      internalID: 1528478439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_32
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 784
+        width: 90
+        height: 172
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63f839781019b004496fb27e42b3aecd
+      internalID: -1574483745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_33
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 783
+        width: 89
+        height: 175
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3edd6389f72126449a2b3883665349bf
+      internalID: -1138105317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_34
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 783
+        width: 86
+        height: 184
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb4685332d3526945b1f2a6fd43e8dca
+      internalID: 1812553013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_35
+      rect:
+        serializedVersion: 2
+        x: 862
+        y: 783
+        width: 84
+        height: 190
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9090e9bc10940014685d5d50b0e1eac6
+      internalID: -951659407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_36
+      rect:
+        serializedVersion: 2
+        x: 1117
+        y: 783
+        width: 81
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a1b80b255f4e6142ace08c6d58009d2
+      internalID: -1235304062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_37
+      rect:
+        serializedVersion: 2
+        x: 1372
+        y: 782
+        width: 78
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1efbde392ab44da4981fd2a875dd9cea
+      internalID: -2088468523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_38
+      rect:
+        serializedVersion: 2
+        x: 1628
+        y: 782
+        width: 78
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab04ed9e6cc5bc94cb83dd7b327f2274
+      internalID: -597017189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_39
+      rect:
+        serializedVersion: 2
+        x: 1884
+        y: 782
+        width: 80
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de4180efe6f8eb34c9a5dcebcc2128fd
+      internalID: -1951180745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_40
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 526
+        width: 81
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88873d13c3c2384488bafc9ae3162e93
+      internalID: -1134055454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_41
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 526
+        width: 82
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3870f7502e88c0a4198c0ca422b7d6ea
+      internalID: 1103749362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_42
+      rect:
+        serializedVersion: 2
+        x: 604
+        y: 526
+        width: 83
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48f067ac21001934da2a308a3340ae85
+      internalID: 1191172180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_43
+      rect:
+        serializedVersion: 2
+        x: 860
+        y: 511
+        width: 83
+        height: 210
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a3ec79a097e3d04cb5e73e1fb8dc9bf
+      internalID: 1197316141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_44
+      rect:
+        serializedVersion: 2
+        x: 1116
+        y: 511
+        width: 84
+        height: 210
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 413da25a4eed089468f94cedf42c4a56
+      internalID: 1065046753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_45
+      rect:
+        serializedVersion: 2
+        x: 1372
+        y: 525
+        width: 84
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ff6f70b80038034cafb3374cefbd7d6
+      internalID: 305435107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_46
+      rect:
+        serializedVersion: 2
+        x: 1628
+        y: 525
+        width: 83
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c573a5f7bee04341add135a13e9a28a
+      internalID: 1329328966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_47
+      rect:
+        serializedVersion: 2
+        x: 1884
+        y: 525
+        width: 82
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c76f40c7d1353140be4d162b4908a4b
+      internalID: 1281304669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrontRight_48
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 269
+        width: 81
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0da5bc2fb41e7804c8b6f707012d1d9f
+      internalID: -1767697817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 2f998c5e40a25f9478aea1f6a571d64f
     internalID: 0
     vertices: []
     indices: 
@@ -108,8 +1186,59 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
-    nameFileIdTable: {}
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      FrontRight_0: -1637652316
+      FrontRight_1: -504844452
+      FrontRight_10: 766401570
+      FrontRight_11: -1985371770
+      FrontRight_12: -183581048
+      FrontRight_13: -142573383
+      FrontRight_14: -235917628
+      FrontRight_15: -1082953859
+      FrontRight_16: -1991023622
+      FrontRight_17: -1584096634
+      FrontRight_18: 1985703283
+      FrontRight_19: 1562758033
+      FrontRight_2: -743188610
+      FrontRight_20: 634437575
+      FrontRight_21: -1901545861
+      FrontRight_22: -627093655
+      FrontRight_23: 1492188288
+      FrontRight_24: -191331793
+      FrontRight_25: 1809544085
+      FrontRight_26: -1513869721
+      FrontRight_27: 1496282147
+      FrontRight_28: -1746382987
+      FrontRight_29: 470361937
+      FrontRight_3: 1329671929
+      FrontRight_30: -1427352817
+      FrontRight_31: 1528478439
+      FrontRight_32: -1574483745
+      FrontRight_33: -1138105317
+      FrontRight_34: 1812553013
+      FrontRight_35: -951659407
+      FrontRight_36: -1235304062
+      FrontRight_37: -2088468523
+      FrontRight_38: -597017189
+      FrontRight_39: -1951180745
+      FrontRight_4: -1349259357
+      FrontRight_40: -1134055454
+      FrontRight_41: 1103749362
+      FrontRight_42: 1191172180
+      FrontRight_43: 1197316141
+      FrontRight_44: 1065046753
+      FrontRight_45: 305435107
+      FrontRight_46: 1329328966
+      FrontRight_47: 1281304669
+      FrontRight_48: -1767697817
+      FrontRight_5: 1949537473
+      FrontRight_6: -53430267
+      FrontRight_7: -1949605127
+      FrontRight_8: 1318428002
+      FrontRight_9: -1865865945
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
