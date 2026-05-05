@@ -7,7 +7,6 @@ public class Billboarding : MonoBehaviour
     [SerializeField] private float xRotate;
 
 
-
     // Update is called once per frame
     void LateUpdate()
     {

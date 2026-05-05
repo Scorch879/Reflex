@@ -85,14 +85,6 @@ public class EnemyController : MonoBehaviour
             animator = GetComponentInChildren<Animator>();
         }
 
-        // If this enemy uses a 2D Animation SpriteResolver, drive its facing/perspective automatically.
-        // Safe no-op for enemies that are meshes or don't have a SpriteResolver in their hierarchy.
-        var hasSpriteResolver = GetComponentInChildren<UnityEngine.U2D.Animation.SpriteResolver>() != null;
-        if (hasSpriteResolver && GetComponent<BigEnemyPerspective>() == null)
-        {
-            gameObject.AddComponent<BigEnemyPerspective>();
-        }
-
         SwarmManager.RegisterEnemy(enemyType, this);
         ChangeState(new IdleState(this));
     }
