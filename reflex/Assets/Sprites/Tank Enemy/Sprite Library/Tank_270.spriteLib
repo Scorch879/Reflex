@@ -1,0 +1,448 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrarySourceAsset
+  m_Library:
+  - m_Name: Idle
+    m_Hash: 1008081451
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Tank Idle_0
+      m_Hash: 732632365
+      m_Sprite: {fileID: -744026586, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -744026586, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+    - m_Name: Tank Idle_1
+      m_Hash: 481043899
+      m_Sprite: {fileID: 239335961, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 239335961, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+    - m_Name: Tank Idle_2
+      m_Hash: 94729217
+      m_Sprite: {fileID: -1198709045, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1198709045, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+    - m_Name: Tank Idle_3
+      m_Hash: 849495191
+      m_Sprite: {fileID: 1153779492, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1153779492, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+    - m_Name: Tank Idle_4
+      m_Hash: 751227188
+      m_Sprite: {fileID: -1825098471, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1825098471, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+    - m_Name: Tank Idle_5
+      m_Hash: 465691042
+      m_Sprite: {fileID: 545141218, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 545141218, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+    - m_Name: Tank Idle_6
+      m_Hash: 46706712
+      m_Sprite: {fileID: -622958226, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -622958226, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+    - m_Name: Tank Idle_7
+      m_Hash: 902791310
+      m_Sprite: {fileID: 654663760, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 654663760, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+    - m_Name: Tank Idle_8
+      m_Hash: 628137247
+      m_Sprite: {fileID: -1227366327, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1227366327, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+    - m_Name: Tank Idle_9
+      m_Hash: 309833097
+      m_Sprite: {fileID: 41698373, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 41698373, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+    - m_Name: Tank Idle_10
+      m_Hash: 674502912
+      m_Sprite: {fileID: -1664556951, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1664556951, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+    - m_Name: Tank Idle_11
+      m_Hash: 523446678
+      m_Sprite: {fileID: 1966721616, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1966721616, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+    - m_Name: Tank Idle_12
+      m_Hash: 104495148
+      m_Sprite: {fileID: 1377417815, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1377417815, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+    - m_Name: Tank Idle_13
+      m_Hash: 826099898
+      m_Sprite: {fileID: 1500493105, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1500493105, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+    - m_Name: Tank Idle_14
+      m_Hash: 794418457
+      m_Sprite: {fileID: 714145107, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 714145107, guid: adeb418aa91cac2469d96c588834f911, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 15
+  - m_Name: Walk
+    m_Hash: 765711723
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Tank Walk_0
+      m_Hash: 269079740
+      m_Sprite: {fileID: 550905076, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 550905076, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+    - m_Name: Tank Walk_1
+      m_Hash: 655287338
+      m_Sprite: {fileID: -1340290197, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1340290197, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+    - m_Name: Tank Walk_2
+      m_Hash: 1040692624
+      m_Sprite: {fileID: -1609928456, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1609928456, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+    - m_Name: Tank Walk_3
+      m_Hash: 151028998
+      m_Sprite: {fileID: 2046424970, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 2046424970, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+    - m_Name: Tank Walk_4
+      m_Hash: 392433829
+      m_Sprite: {fileID: -1439031510, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1439031510, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+    - m_Name: Tank Walk_5
+      m_Hash: 543367219
+      m_Sprite: {fileID: -367822354, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -367822354, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+    - m_Name: Tank Walk_6
+      m_Hash: 963277193
+      m_Sprite: {fileID: 2033331220, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 2033331220, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+    - m_Name: Tank Walk_7
+      m_Hash: 242041119
+      m_Sprite: {fileID: -2015581412, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2015581412, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+    - m_Name: Tank Walk_8
+      m_Hash: 517102734
+      m_Sprite: {fileID: -1330808299, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1330808299, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+    - m_Name: Tank Walk_9
+      m_Hash: 701852696
+      m_Sprite: {fileID: -700197346, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -700197346, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+    - m_Name: Tank Walk_10
+      m_Hash: 801576979
+      m_Sprite: {fileID: 1446021758, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1446021758, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+    - m_Name: Tank Walk_11
+      m_Hash: 415246469
+      m_Sprite: {fileID: 1427354390, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1427354390, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+    - m_Name: Tank Walk_12
+      m_Hash: 29980991
+      m_Sprite: {fileID: -1856545133, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1856545133, guid: 84d28a82ebfba5e46bc9bb6bcba5b51c, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 13
+  - m_Name: Attack
+    m_Hash: 7088141
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Tank Attack_0
+      m_Hash: 603902306
+      m_Sprite: {fileID: -378593307, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -378593307, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_1
+      m_Hash: 351920628
+      m_Sprite: {fileID: -148338278, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -148338278, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_2
+      m_Hash: 233877582
+      m_Sprite: {fileID: -1360200002, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1360200002, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_3
+      m_Hash: 989298904
+      m_Sprite: {fileID: -1738732067, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1738732067, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_4
+      m_Hash: 613619067
+      m_Sprite: {fileID: -2061076538, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2061076538, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_5
+      m_Hash: 328476141
+      m_Sprite: {fileID: 1305852922, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1305852922, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_6
+      m_Hash: 178091095
+      m_Sprite: {fileID: 1245511822, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1245511822, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_7
+      m_Hash: 1033520321
+      m_Sprite: {fileID: -203446975, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -203446975, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_8
+      m_Hash: 757422416
+      m_Sprite: {fileID: -1991349546, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1991349546, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_9
+      m_Hash: 438462918
+      m_Sprite: {fileID: -374501975, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -374501975, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_10
+      m_Hash: 236916933
+      m_Sprite: {fileID: -2056873154, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2056873154, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_11
+      m_Hash: 957882451
+      m_Sprite: {fileID: -956264924, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -956264924, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_12
+      m_Hash: 538014185
+      m_Sprite: {fileID: 1931220209, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1931220209, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_13
+      m_Hash: 387334527
+      m_Sprite: {fileID: -518985366, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -518985366, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_14
+      m_Hash: 158520540
+      m_Sprite: {fileID: 735116924, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 735116924, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_15
+      m_Hash: 1047913546
+      m_Sprite: {fileID: -1234192129, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1234192129, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_16
+      m_Hash: 662484464
+      m_Sprite: {fileID: -229570082, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -229570082, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_17
+      m_Hash: 276530534
+      m_Sprite: {fileID: 518790434, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 518790434, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_18
+      m_Hash: 12884215
+      m_Sprite: {fileID: -445169214, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -445169214, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_19
+      m_Hash: 935569505
+      m_Sprite: {fileID: 216517462, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 216517462, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_20
+      m_Hash: 624050950
+      m_Sprite: {fileID: -1923637403, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1923637403, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_21
+      m_Hash: 305492880
+      m_Sprite: {fileID: 1357593443, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1357593443, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_22
+      m_Hash: 188490282
+      m_Sprite: {fileID: -970628385, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -970628385, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_23
+      m_Hash: 1010504380
+      m_Sprite: {fileID: -892511170, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -892511170, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    - m_Name: Tank Attack_24
+      m_Hash: 576685855
+      m_Sprite: {fileID: -518308666, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -518308666, guid: 48b502fb9567ef140a5b2e7738deb327, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 25
+  - m_Name: Hurt
+    m_Hash: 666872612
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Tank Hurt_0
+      m_Hash: 274043217
+      m_Sprite: {fileID: -1065742058, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1065742058, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+    - m_Name: Tank Hurt_1
+      m_Hash: 659726791
+      m_Sprite: {fileID: -134504155, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -134504155, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+    - m_Name: Tank Hurt_2
+      m_Hash: 1046212733
+      m_Sprite: {fileID: 52630506, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 52630506, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+    - m_Name: Tank Hurt_3
+      m_Hash: 157073643
+      m_Sprite: {fileID: 1075113522, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1075113522, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+    - m_Name: Tank Hurt_4
+      m_Hash: 389567816
+      m_Sprite: {fileID: 1602512059, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1602512059, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+    - m_Name: Tank Hurt_5
+      m_Hash: 541025758
+      m_Sprite: {fileID: 38775197, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 38775197, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+    - m_Name: Tank Hurt_6
+      m_Hash: 959853668
+      m_Sprite: {fileID: 1175669548, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1175669548, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+    - m_Name: Tank Hurt_7
+      m_Hash: 238093554
+      m_Sprite: {fileID: -1377161308, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1377161308, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+    - m_Name: Tank Hurt_8
+      m_Hash: 512629091
+      m_Sprite: {fileID: -936883159, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -936883159, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+    - m_Name: Tank Hurt_9
+      m_Hash: 696855029
+      m_Sprite: {fileID: 845296818, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 845296818, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+    - m_Name: Tank Hurt_10
+      m_Hash: 834460307
+      m_Sprite: {fileID: -503303548, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -503303548, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+    - m_Name: Tank Hurt_11
+      m_Hash: 112978437
+      m_Sprite: {fileID: -188427876, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -188427876, guid: bb70fa3effdc357499e56810f9213201, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 12
+  - m_Name: Death
+    m_Hash: 646380074
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Tank Death_0
+      m_Hash: 147909138
+      m_Sprite: {fileID: -568030701, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -568030701, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+    - m_Name: Tank Death_1
+      m_Hash: 1071110788
+      m_Sprite: {fileID: 1754987340, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1754987340, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+    - m_Name: Tank Death_2
+      m_Hash: 652118846
+      m_Sprite: {fileID: 1113923911, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1113923911, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+    - m_Name: Tank Death_3
+      m_Hash: 299482024
+      m_Sprite: {fileID: -1986433582, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1986433582, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+    - m_Name: Tank Death_4
+      m_Hash: 264056331
+      m_Sprite: {fileID: 644994165, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 644994165, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+    - m_Name: Tank Death_5
+      m_Hash: 951721629
+      m_Sprite: {fileID: -925530321, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -925530321, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+    - m_Name: Tank Death_6
+      m_Hash: 565399335
+      m_Sprite: {fileID: -472820035, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -472820035, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+    - m_Name: Tank Death_7
+      m_Hash: 380927921
+      m_Sprite: {fileID: 292456936, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 292456936, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+    - m_Name: Tank Death_8
+      m_Hash: 101409312
+      m_Sprite: {fileID: 675282686, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 675282686, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+    - m_Name: Tank Death_9
+      m_Hash: 822891190
+      m_Sprite: {fileID: -221055522, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -221055522, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+    - m_Name: Tank Death_10
+      m_Hash: 514936770
+      m_Sprite: {fileID: -1776767792, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1776767792, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+    - m_Name: Tank Death_11
+      m_Hash: 699826004
+      m_Sprite: {fileID: 1674972954, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1674972954, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+    - m_Name: Tank Death_12
+      m_Hash: 817835758
+      m_Sprite: {fileID: -1161430319, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1161430319, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+    - m_Name: Tank Death_13
+      m_Hash: 129506936
+      m_Sprite: {fileID: 151176345, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 151176345, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+    - m_Name: Tank Death_14
+      m_Hash: 433884123
+      m_Sprite: {fileID: -1500333183, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1500333183, guid: fbcfdbd53776db34c9009e550449f93f, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 15
+  m_PrimaryLibraryGUID: 
+  m_ModificationHash: 639136859953989739
+  m_Version: 1

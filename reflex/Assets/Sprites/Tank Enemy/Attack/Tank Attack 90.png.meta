@@ -1,0 +1,694 @@
+fileFormatVersion: 2
+guid: 2c98b90b33478c34e9cb65f906528943
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 52
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Tank Attack_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 932
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a28297958ee8ce4eba094ff48759734
+      internalID: 1522602512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_1
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 932
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba676b2883428cc45b608ed5b8eb4df1
+      internalID: -417393651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_2
+      rect:
+        serializedVersion: 2
+        x: 578
+        y: 932
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 660383cb153868b448959e16bf86beeb
+      internalID: 1741239408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_3
+      rect:
+        serializedVersion: 2
+        x: 867
+        y: 932
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76ba86c56d824624f876c6537272f168
+      internalID: 333584617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_4
+      rect:
+        serializedVersion: 2
+        x: 1156
+        y: 932
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4b675b4956473841b94cf98b88847c7
+      internalID: -1274528223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 699
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f28fa72cff191a4494773aef57a7f63
+      internalID: 535653722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_6
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 699
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a54d29d04d22afb44a614b879721a770
+      internalID: 260168283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_7
+      rect:
+        serializedVersion: 2
+        x: 578
+        y: 699
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b261b371b0104b14da8dbe8466e93df7
+      internalID: 1823311683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_8
+      rect:
+        serializedVersion: 2
+        x: 867
+        y: 699
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90856bcf0af97db4699f46e56a6422fd
+      internalID: 689171645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_9
+      rect:
+        serializedVersion: 2
+        x: 1156
+        y: 699
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69f2db1f7df0b5f4fb3f0a86a21ac657
+      internalID: -529083096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 466
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48b89546d84b73345ae7c52d7b9c0513
+      internalID: 694657911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_11
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 466
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47b50e41fc1ee6d4c9729e1deb1e16c1
+      internalID: 389502121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_12
+      rect:
+        serializedVersion: 2
+        x: 578
+        y: 466
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bec2b63cc6e14049b8300513ac21286
+      internalID: 2076731806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_13
+      rect:
+        serializedVersion: 2
+        x: 867
+        y: 466
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8dac1e423afe48e449b346ed7a6db35a
+      internalID: 919666728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_14
+      rect:
+        serializedVersion: 2
+        x: 1156
+        y: 466
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff8ddb9d5cdfd9a4fba46b15b5cc5748
+      internalID: -550123946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 233
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 752ac421764145f479ba132f7ae29cd0
+      internalID: -1813464280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_16
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 233
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ece0c70e6a74dd4a90b7fc6a1111e5a
+      internalID: -1757803623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_17
+      rect:
+        serializedVersion: 2
+        x: 578
+        y: 233
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c8c2a0025ee2334cb6679bb6c01a894
+      internalID: 355390828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_18
+      rect:
+        serializedVersion: 2
+        x: 867
+        y: 233
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc55ef1aaa3fd7442a93a13d0d00e1fa
+      internalID: 62479643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_19
+      rect:
+        serializedVersion: 2
+        x: 1156
+        y: 233
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebbee4b5490a2c34fbe6ad12722cf87c
+      internalID: -1661607914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 312edadacfc3be3409c439e83315866e
+      internalID: -863263968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_21
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 0
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90fcd3df2b38b164e991624fa0aa0e5d
+      internalID: 126660683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_22
+      rect:
+        serializedVersion: 2
+        x: 578
+        y: 0
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31601a1761b680b49b58ec312c379fa0
+      internalID: -1751135226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_23
+      rect:
+        serializedVersion: 2
+        x: 867
+        y: 0
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7782944fcfc7ac94884081f7452c569f
+      internalID: -2002417933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank Attack_24
+      rect:
+        serializedVersion: 2
+        x: 1156
+        y: 0
+        width: 289
+        height: 233
+      alignment: 9
+      pivot: {x: 0.54, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a7ed35b72ab3284e975bc370ed40545
+      internalID: -1143996581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 4c31d1f083de8964cba587afcffe02f6
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":5.0,"y":5.0},"gridSpriteSize":{"x":289.0,"y":233.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5400000214576721,"y":0.41999998688697817},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":1,"spriteAlignment":9,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Tank Attack_0: 1522602512
+      Tank Attack_1: -417393651
+      Tank Attack_10: 694657911
+      Tank Attack_11: 389502121
+      Tank Attack_12: 2076731806
+      Tank Attack_13: 919666728
+      Tank Attack_14: -550123946
+      Tank Attack_15: -1813464280
+      Tank Attack_16: -1757803623
+      Tank Attack_17: 355390828
+      Tank Attack_18: 62479643
+      Tank Attack_19: -1661607914
+      Tank Attack_2: 1741239408
+      Tank Attack_20: -863263968
+      Tank Attack_21: 126660683
+      Tank Attack_22: -1751135226
+      Tank Attack_23: -2002417933
+      Tank Attack_24: -1143996581
+      Tank Attack_3: 333584617
+      Tank Attack_4: -1274528223
+      Tank Attack_5: 535653722
+      Tank Attack_6: 260168283
+      Tank Attack_7: 1823311683
+      Tank Attack_8: 689171645
+      Tank Attack_9: -529083096
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

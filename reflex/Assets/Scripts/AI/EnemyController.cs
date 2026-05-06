@@ -32,7 +32,6 @@ public class EnemyController : MonoBehaviour
     public float currentHealth;
     public float attackRange = 2f;
     public float attackCooldown = 1.5f;
-    private float _verticalVelocity;
     private Vector3 _lastPosition;
     private float _stuckTimer;
 
@@ -113,7 +112,7 @@ public class EnemyController : MonoBehaviour
         if (agent != null && agent.velocity.sqrMagnitude > 0.1f)
         {
             Vector3 direction = agent.velocity.normalized;
-            direction.y = 0; // Keep the enemy upright
+            // direction.y = 0; // Keep the enemy upright
             transform.rotation = Quaternion.LookRotation(direction);
         }
 
