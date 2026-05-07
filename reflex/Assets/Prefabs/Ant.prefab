@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 2814649068311555292}
   - component: {fileID: 5999197315839024440}
   - component: {fileID: 5643715564538084897}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hurt Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4685,7 +4685,7 @@ MonoBehaviour:
   lastKnownPlayerPosition: {x: 0, y: 0, z: 0}
   detectionLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8
   patrolRadius: 20
   controller: {fileID: 0}
   player: {fileID: 0}

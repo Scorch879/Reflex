@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 3174698306167666340}
   - component: {fileID: 8429160800543292710}
   - component: {fileID: 1825178576600820223}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hurtbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -749,15 +749,15 @@ MonoBehaviour:
   lastKnownPlayerPosition: {x: 0, y: 0, z: 0}
   detectionLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8
   patrolRadius: 10
   controller: {fileID: 0}
   player: {fileID: 0}
   spriteRenderer: {fileID: 0}
   agent: {fileID: 2396923652644325528}
-  speed: 3
-  maxHealth: 100
-  currentHealth: 100
+  speed: 5
+  maxHealth: 10
+  currentHealth: 10
   attackRange: 5
   attackCooldown: 1.5
   enemyType: 
