@@ -54,9 +54,10 @@ public class EnemySpawner : MonoBehaviour
     {
         _currentEnemies.Clear();
         _waveClearReported = false;
-        EmotionEngine.Instance.BeginRoom();
 
         int adjustedSpawnCount = EmotionEngine.Instance.GetRecommendedSpawnCount(spawnCount);
+        EmotionEngine.Instance.BeginRoom(spawnCount, adjustedSpawnCount);
+
         for (int i = 0; i < adjustedSpawnCount; i++)
         {
             Vector3 offset = Random.insideUnitSphere * spawnRadius;
