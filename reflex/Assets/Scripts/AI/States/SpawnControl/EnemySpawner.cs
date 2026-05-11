@@ -55,7 +55,7 @@ public class EnemySpawner : MonoBehaviour
         _currentEnemies.Clear();
         _waveClearReported = false;
 
-        int adjustedSpawnCount = EmotionEngine.Instance.GetRecommendedSpawnCount(spawnCount);
+        int adjustedSpawnCount = EmotionDirector.Instance.GetRecommendedSpawnCount(spawnCount);
         EmotionEngine.Instance.BeginRoom(spawnCount, adjustedSpawnCount);
 
         for (int i = 0; i < adjustedSpawnCount; i++)
@@ -73,6 +73,6 @@ public class EnemySpawner : MonoBehaviour
         }
 
         _timer = respawnDelay;
-        Debug.Log($"<color=green>SPAWNED WAVE OF {adjustedSpawnCount} ENEMIES ({EmotionEngine.Instance.CurrentEmotion})</color>");
+        Debug.Log($"<color=green>SPAWNED WAVE OF {adjustedSpawnCount} ENEMIES ({EmotionDirector.Instance.CurrentDirective.strategy})</color>");
     }
 }

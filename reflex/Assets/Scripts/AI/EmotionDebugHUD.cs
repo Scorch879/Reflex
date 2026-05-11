@@ -63,16 +63,27 @@ public class EmotionDebugHUD : MonoBehaviour
         EnsureStyles();
 
         EmotionEngine engine = EmotionEngine.Instance;
+        EmotionDirectorDirective directive = EmotionDirector.Instance.CurrentDirective;
         EmotionProfileSnapshot snapshot = engine.CurrentSnapshot;
         EmotionRoomReport lastRoom = engine.LastRoomReport;
 
-        Rect area = new Rect(Padding, Padding, Width, lastRoom.roomNumber > 0 ? 430f : 330f);
+        Rect area = new Rect(Padding, Padding, Width, lastRoom.roomNumber > 0 ? 530f : 430f);
         GUILayout.BeginArea(area, GUIContent.none, _panelStyle);
 
         GUILayout.Label("EMOTION ENGINE", _titleStyle);
         DrawLine($"Profile: {snapshot.state}");
         DrawLine($"Aggression: {snapshot.aggressionScore:0.00}");
         DrawLine($"Room active: {(engine.IsRoomActive ? "yes" : "no")}");
+        GUILayout.Space(6f);
+
+        GUILayout.Label("Director", _mutedStyle);
+        DrawLine($"Strategy: {directive.strategy}");
+        DrawLine($"Spawn x{directive.spawnMultiplier:0.00}");
+        DrawLine($"Enemy speed x{directive.enemySpeedMultiplier:0.00}");
+        DrawLine($"Enemy cooldown x{directive.enemyAttackCooldownMultiplier:0.00}");
+        DrawLine($"Vision x{directive.enemyVisionMultiplier:0.00}");
+        DrawLine($"Attack delay: {directive.attackOpeningDelay:0.00}s");
+        DrawLine($"Standoff / retreat: {directive.chaseStandoffDistance:0.0} / {directive.retreatDistance:0.0}");
         GUILayout.Space(6f);
 
         GUILayout.Label("Live totals", _mutedStyle);

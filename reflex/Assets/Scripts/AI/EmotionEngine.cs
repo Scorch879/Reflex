@@ -142,6 +142,8 @@ public class EmotionEngine : MonoBehaviour
         {
             EmotionDebugHUD.EnsureExists();
         }
+
+        _ = EmotionDirector.Instance;
     }
 
     private void Update()
@@ -307,6 +309,7 @@ public class EmotionEngine : MonoBehaviour
         LastRoomReport = default;
         CurrentEmotion = startingEmotion;
         AggressionScore = startingEmotion == PlayerEmotionState.Aggressive ? aggressiveThreshold : calmThreshold;
+        EmotionChanged?.Invoke(CurrentEmotion, BuildSnapshot());
     }
 
     private EmotionRoomReport BuildRoomReport(float clearDuration)

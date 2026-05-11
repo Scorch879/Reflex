@@ -36,16 +36,13 @@ public class EnemyController : MonoBehaviour
     private float _stuckTimer;
 
     [Header("Emotion Adaptation")]
-    public float aggressiveSpeedMultiplier = 0.9f;
-    public float aggressiveAttackCooldownMultiplier = 1.25f;
-    public float aggressiveVisionRangeMultiplier = 1.15f;
-    public float calmSpeedMultiplier = 1.2f;
-    public float calmAttackCooldownMultiplier = 0.85f;
-    public float calmVisionRangeMultiplier = 0.95f;
+    public bool useEmotionDirector = true;
 
     [Header("Swarm Settings")]
     public string enemyType;
     [HideInInspector] public bool isElite = false;
+    public PlayerEmotionState CurrentEmotionState { get; private set; }
+    public EmotionDirectorDirective CurrentDirective { get; private set; }
     private float _baseSpeed;
     private float _baseAttackCooldown;
     private float _baseVisionRange;
@@ -55,7 +52,7 @@ public class EnemyController : MonoBehaviour
 
     void OnEnable()
     {
-        EmotionEngine.EmotionChanged += HandleEmotionChanged;
+        EmotionDirector.DirectiveChanged += HandleDirectorDirectiveChanged;
     }
 
     void Start()
@@ -102,7 +99,7 @@ public class EnemyController : MonoBehaviour
         }
 
         CacheBaseStats();
-        ApplyEmotionProfile(EmotionEngine.Instance.CurrentEmotion);
+        ApplyDirectorDirective(EmotionDirector.Instance.CurrentDirective);
         SwarmManager.RegisterEnemy(enemyType, this);
         ChangeState(new IdleState(this));
     }
@@ -276,9 +273,54 @@ public class EnemyController : MonoBehaviour
         if (laserLine != null) laserLine.enabled = false;
     }
 
-    private void HandleEmotionChanged(PlayerEmotionState emotionState, EmotionProfileSnapshot snapshot)
+    public Vector3 GetDirectorChaseDestination(Vector3 playerPosition)
     {
-        ApplyEmotionProfile(emotionState);
+        if (!useEmotionDirector || CurrentDirective.strategy != EmotionDirectorStrategy.AggressionContainment)
+        {
+            return playerPosition;
+        }
+
+        Vector3 enemyPosition = transform.position;
+        float distanceToPlayer = Vector3.Distance(enemyPosition, playerPosition);
+
+        if (distanceToPlayer < CurrentDirective.retreatDistance)
+        {
+            Vector3 awayFromPlayer = (enemyPosition - playerPosition).normalized;
+            if (awayFromPlayer.sqrMagnitude < 0.01f)
+            {
+                awayFromPlayer = -transform.forward;
+            }
+
+            Vector3 retreatTarget = enemyPosition + awayFromPlayer * CurrentDirective.retreatDistance;
+            if (UnityEngine.AI.NavMesh.SamplePosition(retreatTarget, out UnityEngine.AI.NavMeshHit hit, 3f, UnityEngine.AI.NavMesh.AllAreas))
+            {
+                return hit.position;
+            }
+
+            return retreatTarget;
+        }
+
+        if (distanceToPlayer < CurrentDirective.chaseStandoffDistance && distanceToPlayer > attackRange)
+        {
+            return enemyPosition;
+        }
+
+        return playerPosition;
+    }
+
+    public float GetDirectorAttackOpeningDelay()
+    {
+        if (!useEmotionDirector)
+        {
+            return 0f;
+        }
+
+        return CurrentDirective.attackOpeningDelay;
+    }
+
+    private void HandleDirectorDirectiveChanged(EmotionDirectorDirective directive)
+    {
+        ApplyDirectorDirective(directive);
     }
 
     private void CacheBaseStats()
@@ -294,21 +336,17 @@ public class EnemyController : MonoBehaviour
         _baseStatsCached = true;
     }
 
-    private void ApplyEmotionProfile(PlayerEmotionState emotionState)
+    private void ApplyDirectorDirective(EmotionDirectorDirective directive)
     {
         CacheBaseStats();
+        CurrentDirective = directive;
+        CurrentEmotionState = directive.sourceEmotion;
 
-        if (emotionState == PlayerEmotionState.Aggressive)
+        if (useEmotionDirector)
         {
-            speed = _baseSpeed * aggressiveSpeedMultiplier;
-            attackCooldown = _baseAttackCooldown * aggressiveAttackCooldownMultiplier;
-            visionRange = _baseVisionRange * aggressiveVisionRangeMultiplier;
-        }
-        else
-        {
-            speed = _baseSpeed * calmSpeedMultiplier;
-            attackCooldown = _baseAttackCooldown * calmAttackCooldownMultiplier;
-            visionRange = _baseVisionRange * calmVisionRangeMultiplier;
+            speed = _baseSpeed * directive.enemySpeedMultiplier;
+            attackCooldown = _baseAttackCooldown * directive.enemyAttackCooldownMultiplier;
+            visionRange = _baseVisionRange * directive.enemyVisionMultiplier;
         }
 
         if (agent != null)
@@ -338,7 +376,7 @@ public class EnemyController : MonoBehaviour
 
     void OnDisable()
     {
-        EmotionEngine.EmotionChanged -= HandleEmotionChanged;
+        EmotionDirector.DirectiveChanged -= HandleDirectorDirectiveChanged;
         SwarmManager.UnregisterEnemy(enemyType, this);
     }
 

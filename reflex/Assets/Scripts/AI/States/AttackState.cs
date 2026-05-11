@@ -16,16 +16,24 @@ public class AttackState : IEnemyState
         Debug.Log("ENTERED ATTACK STATE");
         _enemy.agent.isStopped = true;
 
-        // Set to 0 so the very first bite happens instantly
-        _attackTimer = 0f;
+        _attackTimer = _enemy.GetDirectorAttackOpeningDelay();
     }
 
     public void Tick()
     {
+        if (_enemy.player == null)
+        {
+            _enemy.ChangeState(new SearchState(_enemy));
+            return;
+        }
+
         // 1. Keep looking at player while standing still
         Vector3 dirToPlayer = (_enemy.player.position - _enemy.transform.position).normalized;
         dirToPlayer.y = 0;
-        _enemy.transform.rotation = Quaternion.LookRotation(dirToPlayer);
+        if (dirToPlayer.sqrMagnitude > 0.01f)
+        {
+            _enemy.transform.rotation = Quaternion.LookRotation(dirToPlayer);
+        }
 
         // 2. Handle the swing timer
         _attackTimer -= Time.deltaTime;

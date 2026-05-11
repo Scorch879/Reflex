@@ -51,10 +51,20 @@ public class ChaseState : IEnemyState
         if (hasLineOfSight)
         {
             _lostSightTimer = 0f;
-            _enemy.agent.SetDestination(_enemy.player.position);
+            Vector3 chaseDestination = _enemy.GetDirectorChaseDestination(_enemy.player.position);
+            if (Vector3.Distance(chaseDestination, _enemy.transform.position) <= 0.05f)
+            {
+                _enemy.agent.ResetPath();
+            }
+            else
+            {
+                _enemy.agent.SetDestination(chaseDestination);
+            }
+
             _enemy.DrawLaser(_enemy.player.position, true); // Show we are locked on
 
-            if (Vector3.Distance(_enemy.transform.position, _enemy.player.position) <= _enemy.attackRange)
+            float distanceToPlayer = Vector3.Distance(_enemy.transform.position, _enemy.player.position);
+            if (distanceToPlayer <= _enemy.attackRange)
             {
                 _enemy.ChangeState(new AttackState(_enemy));
                 return;
