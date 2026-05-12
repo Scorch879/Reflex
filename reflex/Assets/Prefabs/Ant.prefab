@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 5643715564538084897}
   m_Layer: 6
   m_Name: Hurt Box
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4600,7 +4600,7 @@ GameObject:
   - component: {fileID: 250757942604162551}
   m_Layer: 0
   m_Name: Ant
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4691,17 +4691,14 @@ MonoBehaviour:
   player: {fileID: 0}
   spriteRenderer: {fileID: 0}
   agent: {fileID: 5377144085699869061}
+  EnemyStatData: {fileID: 11400000, guid: ca24cdb355fe90e40badbbd754a6e7b1, type: 2}
   speed: 5
   maxHealth: 10
-  currentHealth: 10
+  attackDamage: 0
   attackRange: 3
   attackCooldown: 1.5
-  aggressiveSpeedMultiplier: 0.9
-  aggressiveAttackCooldownMultiplier: 1.25
-  aggressiveVisionRangeMultiplier: 1.15
-  calmSpeedMultiplier: 1.2
-  calmAttackCooldownMultiplier: 0.85
-  calmVisionRangeMultiplier: 0.95
+  currentHealth: 10
+  useEmotionDirector: 1
   enemyType: Ant
   isElite: 0
   laserLine: {fileID: 0}

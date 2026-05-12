@@ -292,7 +292,7 @@ GameObject:
   - component: {fileID: 1825178576600820223}
   m_Layer: 6
   m_Name: Hurt Box
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -664,7 +664,7 @@ GameObject:
   - component: {fileID: -7622507968253989827}
   m_Layer: 0
   m_Name: Drone
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -755,12 +755,15 @@ MonoBehaviour:
   player: {fileID: 0}
   spriteRenderer: {fileID: 0}
   agent: {fileID: 2396923652644325528}
+  EnemyStatData: {fileID: 11400000, guid: 59ce66bd3fa6d9b4e9d2f6a8a8404f22, type: 2}
   speed: 5
   maxHealth: 10
-  currentHealth: 10
+  attackDamage: 0
   attackRange: 5
   attackCooldown: 1.5
-  enemyType: 
+  currentHealth: 10
+  useEmotionDirector: 1
+  enemyType: Drone
   isElite: 0
   laserLine: {fileID: 0}
 --- !u!1 &8842317418687533145

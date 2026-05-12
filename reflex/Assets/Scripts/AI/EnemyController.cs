@@ -26,12 +26,17 @@ public class EnemyController : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public UnityEngine.AI.NavMeshAgent agent;
 
-    [Header("Settings")]
-    public float speed = 3f;
-    public float maxHealth = 100f;
-    public float currentHealth;
-    public float attackRange = 2f;
-    public float attackCooldown = 1.5f;
+    [Header("Enemy Stats")]
+    public EnemyData EnemyStatData; // The ScriptableObject blueprint
+    // Runtime values (we keep these here so the Emotion Director can modify them safely)
+    [HideInInspector] public float speed;
+    [HideInInspector] public float maxHealth;
+    [HideInInspector] public float attackDamage;
+    [HideInInspector] public float attackRange;
+    [HideInInspector] public float attackCooldown;
+    [HideInInspector] public float currentHealth;
+
+
     private Vector3 _lastPosition;
     private float _stuckTimer;
 
@@ -44,6 +49,7 @@ public class EnemyController : MonoBehaviour
     public PlayerEmotionState CurrentEmotionState { get; private set; }
     public EmotionDirectorDirective CurrentDirective { get; private set; }
     private float _baseSpeed;
+    private float _baseAttackDamage;
     private float _baseAttackCooldown;
     private float _baseVisionRange;
     private bool _baseStatsCached;
@@ -57,9 +63,12 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
-
+        attackDamage = EnemyStatData.attackDamage;
         _homePosition = transform.position; // Remember where we started
-        currentHealth = maxHealth;
+        currentHealth = EnemyStatData.maxHealth;
+        speed = EnemyStatData.speed;
+        attackDamage = EnemyStatData.attackDamage;
+        attackCooldown = EnemyStatData.attackCooldown;
 
         if (agent == null)
         {
@@ -171,14 +180,13 @@ public class EnemyController : MonoBehaviour
         // 4. Loop through everything we hit and check if it's the Player
         foreach (Collider hit in hitObjects)
         {
-            if (hit.CompareTag("Player"))
-            {
-                // The Ant's teeth connected with the player's Capsule Collider!
-                Debug.Log("<color=orange>ANT BIT THE PLAYER!</color>");
+             PlayerManager pm=hit.GetComponent<PlayerManager>();
 
-                // NOTE: Once you build a PlayerHealth script, you will trigger the damage here like this:
-                // PlayerHealth pHealth = hit.GetComponent<PlayerHealth>();
-                // if (pHealth != null) pHealth.TakeDamage(20f);
+            if (pm!=null)
+            {
+               pm.TakeDamage(attackDamage);
+               Debug.Log("<color=orange>ANT BIT THE PLAYER!</color>");
+              
             }
         }
     }
@@ -336,6 +344,7 @@ public class EnemyController : MonoBehaviour
         _baseSpeed = speed;
         _baseAttackCooldown = attackCooldown;
         _baseVisionRange = visionRange;
+        _baseAttackDamage = attackDamage;
         _baseStatsCached = true;
     }
 
@@ -350,6 +359,7 @@ public class EnemyController : MonoBehaviour
             speed = _baseSpeed * directive.enemySpeedMultiplier;
             attackCooldown = _baseAttackCooldown * directive.enemyAttackCooldownMultiplier;
             visionRange = _baseVisionRange * directive.enemyVisionMultiplier;
+            attackDamage = _baseAttackDamage; //Jorho please update this to also include attack damage
         }
 
         if (agent != null)
@@ -362,6 +372,7 @@ public class EnemyController : MonoBehaviour
     public void TakeDamage(float amount)
     {
         // Don't take further damage or change states if already dead
+        Debug.Log($"<color=yellow> CurrentHP : {currentHealth}");
         if (currentHealth <= 0) return;
 
         currentHealth -= amount;

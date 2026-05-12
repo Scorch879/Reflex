@@ -185,6 +185,7 @@ public class WeaponManager : MonoBehaviour
             EnemyHurtbox hurtbox = enemy.GetComponent<EnemyHurtbox>();
             if (hurtbox != null)
             {
+                Debug.Log($"<color=red>Enemy Took {finalDamage} ");
                 hurtbox.ReceiveDamage(finalDamage);
                 EmotionEngine.Instance.RecordEnemyHit(finalDamage);
             }
