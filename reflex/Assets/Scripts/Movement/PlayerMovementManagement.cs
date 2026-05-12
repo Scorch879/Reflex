@@ -6,6 +6,7 @@ using System.Collections;
 public class PlayerMovementManagement : MonoBehaviour
 {
     [SerializeField] private DefaultMovementStats movementVariables;
+    [SerializeField] private Collider playerCollider;
     [SerializeField] private CharacterController playerController;
     [SerializeField] private new CinemachinePositionComposer camera;
     [SerializeField] private PlayerManager playerManager;
@@ -77,6 +78,7 @@ public class PlayerMovementManagement : MonoBehaviour
     {
         isDashing = true;
         lastDashTime = Time.time;
+        playerCollider.enabled = false; // Disable collider to prevent collisions during dash
 
         if (dashTrail != null) dashTrail.emitting = true;
 
@@ -95,6 +97,7 @@ public class PlayerMovementManagement : MonoBehaviour
         if (dashTrail != null) dashTrail.emitting = false;
         isDashing = false;
         currentVelocity = dashDir * GetCurrentSpeed();
+        playerCollider.enabled = true; // Re-enable collider after dash
     }
 
     private void MovePlayer()
