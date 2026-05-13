@@ -202,6 +202,30 @@ public class WeaponManager : MonoBehaviour
         StartResetTime();
     }
 
+    public void CancelAttackForDash()
+    {
+        if (!playerManager.isAttacking && playerManager.canAttack)
+        {
+            return;
+        }
+
+        if (hitboxVisual != null)
+        {
+            hitboxVisual.SetActive(false);
+        }
+
+        playerManager.canAttack = true;
+        playerManager.isAttacking = false;
+        playerManager.currentComboIndex = 0;
+        playerManager.comboTime = 0f;
+        startResetTime = false;
+
+        if (playerVisuals != null)
+        {
+            playerVisuals.CancelAttackAnimation();
+        }
+    }
+
     private void ApplyAttackAssist(AttackStep step)
     {
         if (!TryGetAttackAssistTarget(step, out Collider targetCollider))

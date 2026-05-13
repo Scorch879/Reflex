@@ -9,6 +9,7 @@ public class PlayerMovementManagement : MonoBehaviour
     [SerializeField] private CharacterController playerController;
     [SerializeField] private new CinemachinePositionComposer camera;
     [SerializeField] private PlayerManager playerManager;
+    [SerializeField] private WeaponManager weaponManager;
 
     [Header("Movement Settings")]
     [SerializeField] private float rotationSpeed = 10f;
@@ -32,6 +33,10 @@ public class PlayerMovementManagement : MonoBehaviour
     {
 
         userInput = GetComponent<PlayerInput>();
+        if (weaponManager == null)
+        {
+            weaponManager = GetComponent<WeaponManager>();
+        }
 
         // Initialize and Enable Actions
         moveAction = userInput.actions.FindAction("Move");
@@ -47,12 +52,16 @@ public class PlayerMovementManagement : MonoBehaviour
     void Update()
     {
         if (isDashing) return;
+
+        ReadInputs();
+        if (isDashing) return;
+
         if (playerManager.isAttacking)
         {
             currentVelocity = Vector3.zero;
             return;
         }
-        ReadInputs();
+
         MovePlayer();
         FOVChangeWhenRunning();
     }
@@ -63,6 +72,11 @@ public class PlayerMovementManagement : MonoBehaviour
 
         if (dashAction.triggered && CanDash())
         {
+            if (playerManager.isAttacking && weaponManager != null)
+            {
+                weaponManager.CancelAttackForDash();
+            }
+
             StartCoroutine(PerformDash());
         }
 

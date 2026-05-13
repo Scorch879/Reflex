@@ -50,6 +50,12 @@ public class PlayerAnimation : MonoBehaviour
         Debug.Log($"Attack {comboIndex}");
         playerAnim.Play($"Attack {comboIndex}", 0, 0f);
     }
+
+    public void CancelAttackAnimation()
+    {
+        if (playerAnim == null) return;
+        playerAnim.Play("Idle", 0, 0f);
+    }
     
     public void UpdateAnimatorStates()
     {
