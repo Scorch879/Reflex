@@ -31,6 +31,7 @@ Transform:
   m_Children:
   - {fileID: 2199469322337171927}
   - {fileID: 4497638026620825654}
+  - {fileID: 1499716830720860322}
   m_Father: {fileID: 3569697015160886219}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &721078681424659620
@@ -123,6 +124,51 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &772759956315112491
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1499716830720860322}
+  - component: {fileID: 516448537985835338}
+  m_Layer: 0
+  m_Name: Hit Box
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1499716830720860322
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772759956315112491}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.34236908, y: -1.35, z: 0.23190975}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4911970107442623936}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &516448537985835338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772759956315112491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e170588b0170a84c9c4b0f15dcf8013, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHitbox
+  enemyController: {fileID: -7622507968253989827}
 --- !u!1 &2026264460492293523
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,7 +802,7 @@ MonoBehaviour:
   player: {fileID: 0}
   spriteRenderer: {fileID: 0}
   agent: {fileID: 2396923652644325528}
-  enemyHitbox: {fileID: 0}
+  enemyHitbox: {fileID: 772759956315112491}
   EnemyStatData: {fileID: 11400000, guid: 59ce66bd3fa6d9b4e9d2f6a8a8404f22, type: 2}
   speed: 5
   maxHealth: 10
@@ -767,7 +813,6 @@ MonoBehaviour:
   useEmotionDirector: 1
   enemyType: Drone
   isElite: 0
-  isAtkFinish: 1
   laserLine: {fileID: 0}
 --- !u!1 &8842317418687533145
 GameObject:

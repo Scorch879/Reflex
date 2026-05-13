@@ -14,7 +14,6 @@ public class EnemyHitbox : MonoBehaviour
             if (playerManager != null)
             {
                 playerManager.TakeDamage(enemyController.attackDamage);
-                Debug.Log($"{enemyController.name} hit the player!");
                 enemyController.HitboxOff(); // Turn off the hitbox after hitting
             }
         }

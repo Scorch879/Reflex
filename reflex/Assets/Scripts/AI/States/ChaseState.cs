@@ -14,7 +14,6 @@ public class ChaseState : IEnemyState
 
     public void OnEnter()
     {
-        Debug.Log("ENTERED CHASE STATE!");
         _enemy.agent.speed = _enemy.speed;
 
         if (_enemy.spriteRenderer != null)

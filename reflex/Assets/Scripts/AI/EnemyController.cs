@@ -165,7 +165,6 @@ public class EnemyController : MonoBehaviour
     public void PrintCurrentState()
     {
         enemyStateDislpay = _currentState != null ? _currentState.GetType().Name : "None";
-        Debug.Log($"{name} is currently in state: {enemyStateDislpay}");
     }
 
 

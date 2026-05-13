@@ -16,8 +16,6 @@ public class HurtState : IEnemyState
     public void OnEnter()
     {
         _stunTimer = _activeStunDuration;
-
-        Debug.Log("Enemy hit! Entering HURT STATE.");
         
         // Stop movement while hurt
         if (_enemy.agent != null && _enemy.agent.isActiveAndEnabled && _enemy.agent.isOnNavMesh)

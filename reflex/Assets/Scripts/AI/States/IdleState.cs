@@ -22,7 +22,6 @@ public class IdleState : IEnemyState
             _enemy.spriteRenderer.color = Color.white;
         }
         
-        Debug.Log("Enemy is resting...");
     }
 
     public void Tick()
@@ -46,6 +45,6 @@ public class IdleState : IEnemyState
 
     public void OnExit()
     {
-        Debug.Log("Enemy leaving IDLE state.");
+        
     }
 }

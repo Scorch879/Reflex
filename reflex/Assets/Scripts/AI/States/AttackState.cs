@@ -13,7 +13,6 @@ public class AttackState : IEnemyState
 
     public void OnEnter()
     {
-        Debug.Log("ENTERED ATTACK STATE");
         _enemy.agent.isStopped = true;
 
         _attackTimer = _enemy.GetDirectorAttackOpeningDelay();

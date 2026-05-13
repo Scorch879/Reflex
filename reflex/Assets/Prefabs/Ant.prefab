@@ -1910,7 +1910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e170588b0170a84c9c4b0f15dcf8013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  enemyController: {fileID: 0}
+  enemyController: {fileID: 250757942604162551}
 --- !u!1 &3057149810869898891
 GameObject:
   m_ObjectHideFlags: 0
@@ -4706,7 +4706,7 @@ MonoBehaviour:
   player: {fileID: 0}
   spriteRenderer: {fileID: 0}
   agent: {fileID: 5377144085699869061}
-  enemyHitbox: {fileID: 0}
+  enemyHitbox: {fileID: 3040293972377082802}
   EnemyStatData: {fileID: 11400000, guid: ca24cdb355fe90e40badbbd754a6e7b1, type: 2}
   speed: 5
   maxHealth: 10
@@ -4717,7 +4717,6 @@ MonoBehaviour:
   useEmotionDirector: 1
   enemyType: Ant
   isElite: 0
-  isAtkFinish: 1
   laserLine: {fileID: 0}
 --- !u!1 &6844343322861162365
 GameObject:
