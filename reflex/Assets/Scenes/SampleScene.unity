@@ -1030,6 +1030,7 @@ MonoBehaviour:
   playerController: {fileID: 204850544}
   camera: {fileID: 786249934}
   playerManager: {fileID: 204850548}
+  weaponManager: {fileID: 0}
   rotationSpeed: 15
   dashTrail: {fileID: 2133123461}
 --- !u!114 &204850543
@@ -1144,6 +1145,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  attackAssistMaxStepDistance: 0.45
+  attackAssistReachPadding: 0.15
+  attackAssistSearchPadding: 0.6
 --- !u!114 &204850548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1163,7 +1167,7 @@ MonoBehaviour:
   canAttack: 1
   canGoToIdle: 1
   isVulnerable: 1
-  isImmortal: 1
+  isImmortal: 0
   currentComboIndex: 0
   comboTime: 0
   weaponData: {fileID: 11400000, guid: 59bc94e2d26edbe4d8e20e062a55949d, type: 2}
@@ -1210,7 +1214,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -10719,7 +10723,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2794070336112507877, guid: 7c568165dea999542b4dcb8a7407bb21, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2794070336112507877, guid: 7c568165dea999542b4dcb8a7407bb21, type: 3}
       propertyPath: m_TagString
@@ -16488,7 +16492,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7944521560814825142, guid: 3f16148ceae8dc64d84d129c75fdc81a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
