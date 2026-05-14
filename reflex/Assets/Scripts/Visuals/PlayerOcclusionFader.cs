@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [DisallowMultipleComponent]
 public class PlayerOcclusionFader : MonoBehaviour
@@ -17,7 +18,7 @@ public class PlayerOcclusionFader : MonoBehaviour
     [SerializeField, Range(0.1f, 1f)] private float playerHeightSampleScale = 0.35f;
     [SerializeField, Min(0f)] private float playerBackPadding = 0.15f;
     [SerializeField, Min(0f)] private float targetContactGraceDistance = 0.2f;
-    [SerializeField, Range(1, 5)] private int requiredBlockedSamples = 3;
+    [SerializeField, Range(1, 5)] private int requiredBlockedSamples = 1;
     [SerializeField] private bool requireCenterSampleBlocked = true;
     [SerializeField, Min(0.01f)] private float scanInterval = 0.08f;
     [SerializeField, Min(0.1f)] private float occluderRefreshInterval = 0.5f;
@@ -94,6 +95,42 @@ public class PlayerOcclusionFader : MonoBehaviour
     private int uiLayer = -1;
     private int ignoreRaycastLayer = -1;
     private int dashingPlayerLayer = -1;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    private static void BootstrapOnSceneLoad()
+    {
+        SceneManager.sceneLoaded -= HandleSceneLoaded;
+        SceneManager.sceneLoaded += HandleSceneLoaded;
+        EnsureFaderOnPlayer();
+    }
+
+    private static void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        EnsureFaderOnPlayer();
+    }
+
+    private static void EnsureFaderOnPlayer()
+    {
+        if (FindFirstObjectByType<PlayerOcclusionFader>() != null)
+        {
+            return;
+        }
+
+        GameObject playerObject;
+        try
+        {
+            playerObject = GameObject.FindGameObjectWithTag("Player");
+        }
+        catch (UnityException)
+        {
+            return;
+        }
+
+        if (playerObject != null && playerObject.GetComponent<PlayerOcclusionFader>() == null)
+        {
+            playerObject.AddComponent<PlayerOcclusionFader>();
+        }
+    }
 
     private void Awake()
     {
