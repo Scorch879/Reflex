@@ -8540,7 +8540,7 @@ GameObject:
   - component: {fileID: 880356212}
   - component: {fileID: 880356211}
   - component: {fileID: 880356210}
-  m_Layer: 3
+  m_Layer: 9
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
