@@ -46,6 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   enemyPrefab: {fileID: 7718681091217661635, guid: d08830adefeaced45858e30a24bd8b9f, type: 3}
   spawnCount: 5
-  spawnRadius: 5
+  spawnRadius: 10
   spawnHeight: 0
   respawnDelay: 3

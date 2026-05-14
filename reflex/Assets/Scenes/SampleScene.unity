@@ -1003,7 +1003,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 330585546}
   - {fileID: 1964602098}
   - {fileID: 1489690236}
   - {fileID: 51322934}
@@ -1034,7 +1033,7 @@ MonoBehaviour:
   rotationSpeed: 15
   dashCollisionMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 65
   dashCollisionBuffer: 0.05
   dashTrail: {fileID: 2133123461}
 --- !u!114 &204850543
@@ -1568,11 +1567,11 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.27781588, y: 0.36497167, z: -0.1150751, w: 0.8811196}
-  m_LocalPosition: {x: -14.480701, y: 14.339408, z: -14.480699}
+  m_LocalPosition: {x: 56.1393, y: 15.2794075, z: 0.7193012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 204850541}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 25, y: 44.66, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
@@ -29887,6 +29886,7 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 6991494836676995977}
   - {fileID: 786249933}
+  - {fileID: 330585546}
   - {fileID: 204850541}
   - {fileID: 864611028}
   - {fileID: 3295946009192153033}
