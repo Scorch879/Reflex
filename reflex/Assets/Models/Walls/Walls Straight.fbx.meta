@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b47720eccb3f2cd4dbb4ec3b0ef8bf01
+guid: 092d3e65a02cf6c4ab9572cd0e7575fb
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -7,53 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Door Inner Frame.png
-    second: {fileID: 2100000, guid: 638962d3365d7bf41836f9111a12b747, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Door.png
-    second: {fileID: 2100000, guid: ac5b9b428e9694f4da439ce9ffceb68c, type: 2}
+      name: Texture Glass Glow.png
+    second: {fileID: 2100000, guid: 0c5117ad86094a74fad174f8b7b942aa, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Texture.png
-    second: {fileID: 2100000, guid: e47f2c05f8058bf4f8da371001a53393, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: door frame
-    second: {fileID: 2100000, guid: 69b8a47dfdd9be249927743dc2fdf81a, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: door frame.png
-    second: {fileID: 2100000, guid: 6f71d0845fb24ac4b89819f62458c0db, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: tablet
-    second: {fileID: 2100000, guid: 89889dba1ac5692408ad1836682e960a, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: tablet.png
-    second: {fileID: 2100000, guid: 3979c908535b95d439fec946be1c6cef, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: texture
-    second: {fileID: 2100000, guid: a264122ac2066444dae862b3cc8e7ba4, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: texture_1
-    second: {fileID: 2100000, guid: b761631566c49f3439eba9ecb612deea, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: texture_3
-    second: {fileID: 2100000, guid: c7635f6129940624599f67eabfb01615, type: 2}
+    second: {fileID: 2100000, guid: c5ddc7dede548b34dadf3edf2c8f3c15, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -85,7 +45,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importPhysicalCameras: 1
