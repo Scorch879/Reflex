@@ -904,6 +904,11 @@ public class PlayerOcclusionFader : MonoBehaviour
             MaterialPropertyBlock fillPropertyBlock,
             MaterialPropertyBlock outlinePropertyBlock)
         {
+            if (root == null)
+            {
+                return;
+            }
+
             bool visible = amount > 0.001f && IsSourceVisible();
             root.SetActive(visible);
             if (!visible)
