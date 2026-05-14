@@ -13,6 +13,8 @@ public class PlayerMovementManagement : MonoBehaviour
 
     [Header("Movement Settings")]
     [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] private LayerMask dashCollisionMask = ~0;
+    [SerializeField] private float dashCollisionBuffer = 0.05f;
     
     [Header("VFX")]
     public TrailRenderer dashTrail;
@@ -106,13 +108,85 @@ public class PlayerMovementManagement : MonoBehaviour
 
         while (Time.time < startTime + movementVariables.dashDuration)
         {
-            playerController.Move(dashDir * totalDashSpeed * Time.deltaTime);
+            Vector3 dashStep = dashDir * totalDashSpeed * Time.deltaTime;
+            CollisionFlags collisionFlags = MoveDashStep(dashStep);
+            if ((collisionFlags & CollisionFlags.Sides) != 0)
+            {
+                break;
+            }
+
             yield return null;
         }
         if (dashTrail != null) dashTrail.emitting = false;
         gameObject.layer = originalLayer;
         isDashing = false;
         currentVelocity = dashDir * GetCurrentSpeed();
+    }
+
+    private CollisionFlags MoveDashStep(Vector3 movement)
+    {
+        if (movement.sqrMagnitude <= Mathf.Epsilon)
+        {
+            return CollisionFlags.None;
+        }
+
+        Vector3 horizontalMovement = new Vector3(movement.x, 0f, movement.z);
+        if (horizontalMovement.sqrMagnitude <= Mathf.Epsilon)
+        {
+            return playerController.Move(movement);
+        }
+
+        Vector3 direction = horizontalMovement.normalized;
+        float distance = horizontalMovement.magnitude;
+
+        if (TryGetDashBlockedDistance(direction, distance, out float blockedDistance))
+        {
+            float safeDistance = Mathf.Max(0f, blockedDistance - dashCollisionBuffer);
+            if (safeDistance > 0f)
+            {
+                playerController.Move(direction * safeDistance);
+            }
+
+            return CollisionFlags.Sides;
+        }
+
+        return playerController.Move(movement);
+    }
+
+    private bool TryGetDashBlockedDistance(Vector3 direction, float distance, out float blockedDistance)
+    {
+        blockedDistance = 0f;
+
+        Vector3 center = transform.TransformPoint(playerController.center);
+        float radius = Mathf.Max(0.01f, playerController.radius);
+        float halfHeight = Mathf.Max(radius, playerController.height * 0.5f);
+        Vector3 capsuleOffset = Vector3.up * (halfHeight - radius);
+        Vector3 bottom = center - capsuleOffset;
+        Vector3 top = center + capsuleOffset;
+
+        RaycastHit[] hits = Physics.CapsuleCastAll(bottom, top, radius, direction, distance + dashCollisionBuffer, dashCollisionMask, QueryTriggerInteraction.Ignore);
+        float closestDistance = Mathf.Infinity;
+
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.collider.transform == transform || hit.collider.transform.IsChildOf(transform))
+            {
+                continue;
+            }
+
+            if (hit.distance < closestDistance)
+            {
+                closestDistance = hit.distance;
+            }
+        }
+
+        if (float.IsInfinity(closestDistance))
+        {
+            return false;
+        }
+
+        blockedDistance = closestDistance;
+        return true;
     }
 
     private void MovePlayer()
