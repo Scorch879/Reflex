@@ -9,6 +9,7 @@ public class WeaponManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private PlayerAnimation playerVisuals;
     [SerializeField] private PlayerManager playerManager;
+    [SerializeField] private PlayerMovementManagement playerMovement;
 
     public GameObject hitboxVisual;
     public LayerMask enemyLayer;
@@ -29,6 +30,7 @@ public class WeaponManager : MonoBehaviour
     void Start()
     {
         playerController = GetComponent<CharacterController>();
+        playerMovement = GetComponent<PlayerMovementManagement>();
 
         if (playerManager.playerInput != null)
         {
@@ -96,20 +98,6 @@ public class WeaponManager : MonoBehaviour
         playerManager.canAttack = true;
         startResetTime = false;
     }
-    // only use this in animation events
-    private void CanAttackEvent()
-    {
-        if (playerManager.weaponData == null) return;
-        playerManager.canAttack = !playerManager.canAttack;
-    }
-
-    // use this to call publicly
-    public bool CanAttackLocal(bool attack)
-    {
-        if (playerManager.weaponData == null) return false;
-        playerManager.canAttack = attack;
-        return playerManager.canAttack;
-    }
 
     private void ExecuteAttack()
     {
@@ -171,10 +159,6 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-
-    
-
-
     private void UpdateHitboxTransform(AttackStep step)
     {
         hitboxVisual.transform.localScale = new Vector3(step.attackWidth, step.verticalScale, step.attackRange);
@@ -185,6 +169,11 @@ public class WeaponManager : MonoBehaviour
     //             v
     public void HitboxOn()
     {
+        if (playerMovement.isDashing)
+        {
+            HitboxOff();
+            return;
+        }
         hitboxVisual.SetActive(true);
         Vector3 center = hitboxVisual.transform.position;
         Vector3 halfExtents = hitboxVisual.transform.lossyScale / 2f;
