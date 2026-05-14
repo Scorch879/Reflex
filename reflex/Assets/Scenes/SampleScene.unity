@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 51322935}
   - component: {fileID: 51322938}
   - component: {fileID: 51322939}
-  m_Layer: 3
+  m_Layer: 9
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1036,6 +1036,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   dashCollisionBuffer: 0.05
   dashTrail: {fileID: 2133123461}
+  isDashing: 0
 --- !u!114 &204850543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1144,6 +1145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
   playerVisuals: {fileID: 204850546}
   playerManager: {fileID: 204850548}
+  playerMovement: {fileID: 0}
   hitboxVisual: {fileID: 271341581}
   enemyLayer:
     serializedVersion: 2
