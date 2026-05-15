@@ -414,7 +414,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5067572061958089776}
   m_Layer: 0
-  m_Name: Obstacle 2
+  m_Name: Glass Obstacle 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
