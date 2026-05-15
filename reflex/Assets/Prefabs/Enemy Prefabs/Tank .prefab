@@ -208,7 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteResolver
   m_CategoryHash: 0.009161512
-  m_labelHash: 1.2156158e-12
+  m_labelHash: 5.6507247e-12
   m_SpriteKey: 0
   m_SpriteHash: 732315933
 --- !u!212 &3285696197889860646
