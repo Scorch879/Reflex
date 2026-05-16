@@ -112,6 +112,7 @@ Assets/
    PlayerOcclusionFader.cs
    UI/InGameUIManager.cs
  TutorialInfo/Scripts/Readme.cs
+ Unity.VisualScripting.Generated/VisualScripting.Core/AotStubs.cs
 Temp/obj/Assembly-CSharp/.NETStandard,Version=v2.1.AssemblyAttributes.cs
 
 [metadataReferences]
