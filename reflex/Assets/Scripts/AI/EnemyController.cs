@@ -80,6 +80,7 @@ public class EnemyController : MonoBehaviour
         if (agent == null)
         {
             agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+            agent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;
             if (agent == null)
             {
                 Debug.LogWarning($"{name}: No NavMeshAgent found on enemy.");

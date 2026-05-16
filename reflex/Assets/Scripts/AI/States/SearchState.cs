@@ -28,10 +28,14 @@ public class SearchState : IEnemyState
     public void OnEnter()
     {
         _searchTimer = SearchDuration;
-        _currentPointIndex = 0;
         _waitingAtPoint = false;
         _waitTimer = 0f;
+        
+        // 1. Build points with unique spreads per enemy
         _searchPoints = BuildSearchPoints();
+
+        // 2. FIX JITTER: Randomize the starting point index so they don't all march to point [0] first!
+        _currentPointIndex = Random.Range(0, _searchPoints.Count);
 
         Debug.Log("ENTERING SEARCH STATE");
         if (_enemy.spriteRenderer != null)
@@ -54,7 +58,6 @@ public class SearchState : IEnemyState
         _searchTimer -= Time.deltaTime;
         if (_searchTimer <= 0f)
         {
-            Debug.Log("Search timer expired. Returning to patrol.");
             _enemy.ChangeState(new PatrolState(_enemy));
             return;
         }
@@ -71,9 +74,13 @@ public class SearchState : IEnemyState
             return;
         }
 
-        if (!_enemy.agent.pathPending && _enemy.agent.remainingDistance <= _enemy.agent.stoppingDistance)
+        // 3. NAVMESH SAFETY: Added safety check to prevent remainingDistance runtime crashes
+        if (_enemy.agent.isActiveAndEnabled && _enemy.agent.isOnNavMesh)
         {
-            BeginPointWait();
+            if (!_enemy.agent.pathPending && _enemy.agent.remainingDistance <= _enemy.agent.stoppingDistance)
+            {
+                BeginPointWait();
+            }
         }
     }
 
@@ -86,6 +93,10 @@ public class SearchState : IEnemyState
         {
             center = _enemy.transform.position;
         }
+
+        // 4. FIX JITTER: Shift the center slightly for this unique unit so their paths diverge
+        Vector3 searchSpread = new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
+        center += searchSpread;
 
         for (int i = 0; i < SearchPointCount; i++)
         {
@@ -116,8 +127,12 @@ public class SearchState : IEnemyState
             return;
         }
 
-        _enemy.agent.SetDestination(_searchPoints[_currentPointIndex]);
-        _enemy.DrawLaser(_searchPoints[_currentPointIndex], false);
+        // 5. Check protection to make sure we don't issue commands to a broken agent
+        if (_enemy.agent.isActiveAndEnabled && _enemy.agent.isOnNavMesh)
+        {
+            _enemy.agent.SetDestination(_searchPoints[_currentPointIndex]);
+            _enemy.DrawLaser(_searchPoints[_currentPointIndex], false);
+        }
 
         _currentPointIndex = (_currentPointIndex + 1) % _searchPoints.Count;
     }
