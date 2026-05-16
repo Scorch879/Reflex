@@ -1,7 +1,10 @@
 using UnityEngine;
+using System;
 
 public class EnemyController : MonoBehaviour
 {
+    public static event Action<EnemyController> EnemyDefeated;
+
     private IEnemyState _currentState;
     public string enemyStateDislpay;
 
@@ -391,6 +394,7 @@ public class EnemyController : MonoBehaviour
         if (currentHealth <= 0)
         {
             SwarmManager.UnregisterEnemy(enemyType, this);
+            EnemyDefeated?.Invoke(this);
             ChangeState(new DeathState(this));
         }
         else

@@ -12,6 +12,17 @@ public class PlayerInteraction : MonoBehaviour
 
     void Start()
     {
+        if (playerManager == null)
+        {
+            playerManager = GetComponent<PlayerManager>();
+        }
+
+        if (playerManager == null || playerManager.playerInput == null)
+        {
+            enabled = false;
+            return;
+        }
+
         interactAction = playerManager.playerInput.actions.FindAction("Interact");
         interactAction?.Enable();
     }
@@ -20,43 +31,61 @@ public class PlayerInteraction : MonoBehaviour
     {
         FindBestInteractable();
 
-        if (currentInteractable != null && interactAction.triggered)
+        if (currentInteractable != null && interactAction != null && interactAction.triggered)
         {
             currentInteractable.Interact(playerManager);
         }
     }
 
     private void FindBestInteractable()
-{
-    Collider[] colliders = Physics.OverlapSphere(transform.position, interactRange);
-    IInteractable closest = null;
-    float minDistance = float.MaxValue;
-    GameObject closestObj = null; // Track the physical object too
-
-    foreach (var col in colliders)
     {
-        if (col.TryGetComponent<IInteractable>(out IInteractable interactable))
+        Collider[] colliders = Physics.OverlapSphere(transform.position, interactRange);
+        IInteractable closest = null;
+        float minDistance = float.MaxValue;
+        Transform closestTransform = null;
+
+        foreach (var col in colliders)
         {
-            float dist = Vector3.Distance(transform.position, col.transform.position);
+            IInteractable interactable;
+            if (!col.TryGetComponent(out interactable))
+            {
+                interactable = col.GetComponentInParent<IInteractable>();
+            }
+
+            if (interactable == null)
+            {
+                continue;
+            }
+
+            Component interactableComponent = interactable as Component;
+            Transform promptTransform = interactableComponent != null ? interactableComponent.transform : col.transform;
+            float dist = Vector3.Distance(transform.position, promptTransform.position);
+
             if (dist < minDistance)
             {
                 minDistance = dist;
                 closest = interactable;
-                closestObj = col.gameObject; // Store the object reference
+                closestTransform = promptTransform;
+            }
+        }
+
+        if (closest != null && closestTransform != null)
+        {
+            currentInteractable = closest;
+
+            if (uiElement != null)
+            {
+                uiElement.Show(closest.GetInteractionText(), closestTransform.position);
+            }
+        }
+        else
+        {
+            currentInteractable = null;
+
+            if (uiElement != null)
+            {
+                uiElement.Hide();
             }
         }
     }
-
-    if (closest != null && closestObj != null)
-    {
-        currentInteractable = closest;
-        // Pass the text AND the position of the object
-        uiElement.Show(closest.GetInteractionText(), closestObj.transform.position); 
-    }
-    else
-    {
-        currentInteractable = null;
-        uiElement.Hide();
-    }
-}
 }

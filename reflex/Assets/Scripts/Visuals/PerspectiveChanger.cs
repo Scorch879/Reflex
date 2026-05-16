@@ -17,9 +17,19 @@ public class PerspectiveChanger : MonoBehaviour
     public int dirIndexDisplay;
     private readonly string[] directionNames = { "Front", "Front-Right", "Right", "Back-Right", "Back", "Back-Left", "Left", "Front-Left" };
 
+    public void SetCamera(Camera sceneCamera)
+    {
+        cameraObj = sceneCamera;
+    }
+
     private void LateUpdate()
     {
         // Always perform billboarding if the camera is set
+        if (cameraObj == null || !cameraObj.isActiveAndEnabled)
+        {
+            cameraObj = Camera.main;
+        }
+
         if(cameraObj == null) return;
         UpdatePerspective();
     }

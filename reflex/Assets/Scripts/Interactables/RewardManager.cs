@@ -1,9 +1,24 @@
-using UnityEngine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.InputSystem;
 using System.Collections;
-using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+[Serializable]
+public struct LevelRewardContext
+{
+    public int nodeId;
+    public int floorDepth;
+    public int levelNumber;
+    public int stageNumber;
+    public string sceneName;
+    public int kills;
+    public int soulEssenceAwarded;
+    public float levelMultiplier;
+
+    public string LevelStageLabel => levelNumber + "-" + stageNumber;
+}
 
 public class RewardManager : MonoBehaviour
 {
@@ -14,9 +29,38 @@ public class RewardManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float fadeInDuration = 0.5f;
     [SerializeField] private float fadeOutDuration = 0.5f;
+    [SerializeField] private bool openCardRewardsOnLevelClear = true;
 
     [Header("Card Pool")]
     [SerializeField] private BuffCardData[] allAvailableCards;
+
+    [Header("Soul Essence Rewards")]
+    [SerializeField, Min(1)] private int stagesPerLevel = 5;
+    [SerializeField, Min(0)] private int baseEssencePerClear = 5;
+    [SerializeField, Min(0)] private int essencePerKill = 2;
+    [SerializeField, Min(0)] private int essencePerFloor = 1;
+    [SerializeField, Min(0f)] private float levelRewardMultiplierStep = 0.1f;
+
+    public event Action<LevelRewardContext> LevelRewardGranted;
+
+    public LevelRewardContext LastRewardContext { get; private set; }
+
+    private int _killsThisLevel;
+    private bool _rewardScreenOpen;
+
+    private void OnEnable()
+    {
+        LevelRunManager.LevelEntered += HandleLevelEntered;
+        LevelRunManager.LevelCleared += HandleLevelCleared;
+        EnemyController.EnemyDefeated += HandleEnemyDefeated;
+    }
+
+    private void OnDisable()
+    {
+        LevelRunManager.LevelEntered -= HandleLevelEntered;
+        LevelRunManager.LevelCleared -= HandleLevelCleared;
+        EnemyController.EnemyDefeated -= HandleEnemyDefeated;
+    }
 
     void Update()
     {
@@ -29,20 +73,34 @@ public class RewardManager : MonoBehaviour
 
     public void OpenRewardScreen()
     {
+        if (_rewardScreenOpen || rewardCanvasGroup == null || cardUI == null || cardUI.Length == 0)
+        {
+            return;
+        }
+
+        _rewardScreenOpen = true;
         StartCoroutine(FadeInUI());
 
         foreach (var card in cardUI)
         {
-            card.ClearBuffText();
+            if (card != null)
+            {
+                card.ClearBuffText();
+            }
         }
 
         // Pick 3 unique random cards
-        var choices = allAvailableCards.OrderBy(x => Random.value).Take(3).ToList();
+        var choices = allAvailableCards != null
+            ? allAvailableCards.Where(card => card != null).OrderBy(x => UnityEngine.Random.value).Take(cardUI.Length).ToList()
+            : new List<BuffCardData>();
 
         // assign each card to a socket
         for (int i = 0; i < choices.Count; i++)
         {
-            cardUI[i].Setup(choices[i]);
+            if (cardUI[i] != null)
+            {
+                cardUI[i].Setup(choices[i]);
+            }
         }
     }
 
@@ -82,10 +140,24 @@ public class RewardManager : MonoBehaviour
             yield return null;
         }
         rewardCanvasGroup.alpha = 0f;
+        _rewardScreenOpen = false;
     }
 
     public void SelectCard(BuffCardData card)
     {
+        if (card == null)
+        {
+            return;
+        }
+
+        EnsurePlayerManager();
+
+        if (playerManager == null)
+        {
+            StartCoroutine(FadeOutUI());
+            return;
+        }
+
         // Apply the additive bonuses to PlayerManager
         playerManager.cardAtkBonus += card.atkBonus;
         playerManager.cardCritChance += card.critBonus;
@@ -100,5 +172,74 @@ public class RewardManager : MonoBehaviour
         if (card.isGlassCannon) playerManager.ApplyGlassCannon();
 
         StartCoroutine(FadeOutUI());
+    }
+
+    private void HandleLevelEntered(int nodeId, int floorDepth, string sceneName)
+    {
+        _killsThisLevel = 0;
+    }
+
+    private void HandleEnemyDefeated(EnemyController enemy)
+    {
+        _killsThisLevel++;
+    }
+
+    private void HandleLevelCleared(int nodeId, int floorDepth, string sceneName)
+    {
+        if (floorDepth <= 0)
+        {
+            return;
+        }
+
+        EnsurePlayerManager();
+
+        LevelRewardContext context = BuildRewardContext(nodeId, floorDepth, sceneName);
+        LastRewardContext = context;
+
+        if (playerManager != null)
+        {
+            playerManager.AddSoulEssence(context.soulEssenceAwarded);
+        }
+
+        LevelRewardGranted?.Invoke(context);
+
+        if (openCardRewardsOnLevelClear)
+        {
+            OpenRewardScreen();
+        }
+    }
+
+    private LevelRewardContext BuildRewardContext(int nodeId, int floorDepth, string sceneName)
+    {
+        int levelNumber = ((floorDepth - 1) / stagesPerLevel) + 1;
+        int stageNumber = ((floorDepth - 1) % stagesPerLevel) + 1;
+        float levelMultiplier = 1f + ((levelNumber - 1) * levelRewardMultiplierStep);
+        int rawEssence = baseEssencePerClear + (_killsThisLevel * essencePerKill) + (floorDepth * essencePerFloor);
+        int essenceAwarded = Mathf.Max(0, Mathf.RoundToInt(rawEssence * levelMultiplier * GetPlayerEssenceMultiplier()));
+
+        return new LevelRewardContext
+        {
+            nodeId = nodeId,
+            floorDepth = floorDepth,
+            levelNumber = levelNumber,
+            stageNumber = stageNumber,
+            sceneName = sceneName,
+            kills = _killsThisLevel,
+            soulEssenceAwarded = essenceAwarded,
+            levelMultiplier = levelMultiplier
+        };
+    }
+
+    private float GetPlayerEssenceMultiplier()
+    {
+        return playerManager != null ? Mathf.Max(0f, playerManager.FinalEssenceMultiplier) : 1f;
+    }
+
+    private void EnsurePlayerManager()
+    {
+        if (playerManager == null)
+        {
+            playerManager = FindFirstObjectByType<PlayerManager>();
+        }
     }
 }

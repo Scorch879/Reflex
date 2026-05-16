@@ -1,8 +1,12 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class PlayerManager : MonoBehaviour
 {
+    public event Action<int, int> SoulEssenceChanged;
+
     [Header("State Flags")]
     public bool isRunning = false;
     public bool isAttacking = false;
@@ -18,11 +22,13 @@ public class PlayerManager : MonoBehaviour
     public float comboTime;
     public WeaponData weaponData;
     public PlayerInput playerInput;
+    public InputAction pauseAction;
 
     [Header("Data References")]
     public PlayerData stats; // Reference to your base ScriptableObject
 
     [Header("Permanent Upgrades (Essence)")]
+    public int soulEssence = 0;
     public float permanentAtkBonus = 0f;    // e.g., 0.1 for +10%
     public float permanentMaxHPBonus = 0f;
     public float permanentCritBonus = 0f;
@@ -55,6 +61,15 @@ public class PlayerManager : MonoBehaviour
     // Essence Multiplier: 1 (Base) + Card Bonus
     public float FinalEssenceMultiplier => 1f + cardEssenceMult;
 
+    private void Awake()
+    {
+        pauseAction = playerInput.actions.FindAction("Pause");
+        if (pauseAction == null)
+        {
+            Debug.LogError("Pause action not found in PlayerInput actions. Please check your Input Actions setup.");
+        }
+    }
+
     private void Start()
     {
         if (stats != null)
@@ -68,7 +83,18 @@ public class PlayerManager : MonoBehaviour
         CheckIfIdle();
         CheckIfAttacking();
         CheckComboTime();
+        //OnPause();
+        InGameUIManager.Instance.UpdateHPText(currentHealth, MaxHealth);
     }
+
+    // public void OnPause()
+    // {
+    //     if(pauseAction.WasPressedThisFrame())
+    //     {
+    //         Debug.Log("Pause button pressed. Toggling pause state.");
+    //         PauseManager.Instance.TogglePause();
+    //     }
+    // }
 
     // --- COMBAT LOGIC ---
 
@@ -91,6 +117,7 @@ public class PlayerManager : MonoBehaviour
             isVulnerable = false; // Start invulnerability timer
             Invoke(nameof(ResetVulnerability), stats.invulnerabilityDuration);
         }
+        InGameUIManager.Instance.UpdateHealth(currentHealth, MaxHealth);
     }
 
     private void ResetVulnerability()
@@ -101,6 +128,35 @@ public class PlayerManager : MonoBehaviour
     public void Heal(float amount)
     {
         currentHealth = Mathf.Min(currentHealth + amount, MaxHealth);
+    }
+
+    public void AddSoulEssence(int amount)
+    {
+        int safeAmount = Mathf.Max(0, amount);
+        if (safeAmount <= 0)
+        {
+            return;
+        }
+
+        soulEssence += safeAmount;
+        SoulEssenceChanged?.Invoke(soulEssence, safeAmount);
+    }
+
+    public void ResetTemporaryRunState()
+    {
+        cardAtkBonus = 0f;
+        cardCritChance = 0f;
+        cardEssenceMult = 0f;
+        cardVampChance = 0f;
+        cardComboWindowBonus = 0f;
+        cardDashCDReduction = 0f;
+        cardDashDistanceBonus = 0f;
+        glassCannonHPModifier = 1f;
+
+        if (stats != null)
+        {
+            currentHealth = MaxHealth;
+        }
     }
 
     private void Die()

@@ -67,12 +67,7 @@ public class PlayerMovementManagement : MonoBehaviour
 
     void Start()
     {
-
-        userInput = GetComponent<PlayerInput>();
-        if (weaponManager == null)
-        {
-            weaponManager = GetComponent<WeaponManager>();
-        }
+        RefreshSceneReferences();
 
         // Initialize and Enable Actions
         moveAction = userInput.actions.FindAction("Move");
@@ -82,7 +77,16 @@ public class PlayerMovementManagement : MonoBehaviour
         moveAction.Enable();
         dashAction.Enable();
         sprintAction?.Enable();
-        dashTrail.emitting = false;
+        if (dashTrail != null) dashTrail.emitting = false;
+    }
+
+    public void RefreshSceneReferences()
+    {
+        if (userInput == null) userInput = GetComponent<PlayerInput>();
+        if (weaponManager == null) weaponManager = GetComponent<WeaponManager>();
+        if (playerController == null) playerController = GetComponent<CharacterController>();
+        if (playerManager == null) playerManager = GetComponent<PlayerManager>();
+        camera = FindFirstObjectByType<CinemachinePositionComposer>();
     }
 
     void Update()
@@ -516,7 +520,8 @@ public class PlayerMovementManagement : MonoBehaviour
     private void MovePlayer()
     {
         // 1. Get the direction relative to your 2.5D camera view using your static logic
-        Vector3 moveDirection = CameraDirectionLogic.GetRelativeDirection(moveInput, Camera.main);
+        Camera mainCamera = Camera.main;
+        Vector3 moveDirection = CameraDirectionLogic.GetRelativeDirection(moveInput, mainCamera);
         Vector3 targetVelocity = moveDirection * GetCurrentSpeed();
 
         isOnGround = playerController.isGrounded;
@@ -581,6 +586,11 @@ public class PlayerMovementManagement : MonoBehaviour
 
     private void FOVChangeWhenRunning()
     {
+        if (camera == null)
+        {
+            return;
+        }
+
         camera.DeadZoneDepth = isSprinting ? movementVariables.deadZone : 0.0f;
     }
 }

@@ -196,6 +196,39 @@ public class PlayerOcclusionFader : MonoBehaviour
         RefreshTargets();
     }
 
+    public void RefreshForScene(Camera sceneCamera)
+    {
+        occlusionCamera = sceneCamera != null ? sceneCamera : Camera.main;
+        nextScanTime = 0f;
+        nextTargetRefreshTime = 0f;
+        nextOccluderRefreshTime = 0f;
+        occluderCacheValid = false;
+
+        for (int i = 0; i < silhouetteTargets.Count; i++)
+        {
+            silhouetteTargets[i].Destroy();
+        }
+
+        silhouetteTargets.Clear();
+        targetsByRoot.Clear();
+        rootsSeenThisRefresh.Clear();
+        boundsOnlyOccluders.Clear();
+        visibleBoundsOnlyOccluders.Clear();
+        occluderColliderList.Clear();
+        occluderColliderLookup.Clear();
+        occludersByCollider.Clear();
+        RestoreWallDitherGroupsImmediately();
+        wallDitherGroups.Clear();
+        wallDitherGroupsByRoot.Clear();
+        pendingWallDitherGroups.Clear();
+        pendingWallDitherGroupLookup.Clear();
+        wallGroupsMarkedThisScan.Clear();
+
+        RefreshTargets();
+        RefreshOcclusionStates();
+        UpdateSilhouetteVisuals();
+    }
+
     private void OnDisable()
     {
         for (int i = 0; i < silhouetteTargets.Count; i++)

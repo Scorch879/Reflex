@@ -19,12 +19,18 @@ public class BuffCardUI : MonoBehaviour
 
     public void ClearBuffText()
     {
+        cardData = null;
         nameText.text = "";
         descriptionText.text = "";
     }
 
     public void OnCardClicked()
     {
+        if (cardData == null)
+        {
+            return;
+        }
+
         manager.SelectCard(cardData);
     }
 }
