@@ -5800,7 +5800,17 @@ MonoBehaviour:
   comboTime: 0
   weaponData: {fileID: 11400000, guid: d0abc0b86a659514a80faf42f6f17388, type: 2}
   playerInput: {fileID: 1163733304}
+  pauseAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4d6434cd-acf7-4488-8842-78dfcedfafaf
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   stats: {fileID: 11400000, guid: 99dc67199f639ba47a150587df7b0e19, type: 2}
+  soulEssence: 0
   permanentAtkBonus: 0
   permanentMaxHPBonus: 0
   permanentCritBonus: 0
@@ -5827,6 +5837,7 @@ MonoBehaviour:
   playerVisuals: {fileID: 1163733301}
   playerManager: {fileID: 1163733299}
   playerMovement: {fileID: 0}
+  hitSparkPrefab: {fileID: 0}
   hitboxVisual: {fileID: 316462347}
   enemyLayer:
     serializedVersion: 2
@@ -46625,6 +46636,8 @@ GameObject:
   - component: {fileID: 1864375517}
   - component: {fileID: 1864375516}
   - component: {fileID: 1864375515}
+  - component: {fileID: 1864375519}
+  - component: {fileID: 1864375518}
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -46721,6 +46734,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 35, y: 45, z: 0}
+--- !u!114 &1864375518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864375514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05cf338d0c25256409d7d543b8bdfc78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraManager
+--- !u!114 &1864375519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864375514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineBasicMultiChannelPerlin
+  NoiseProfile: {fileID: 11400000, guid: e9ce97b7a206dc64d90931ea044e0c72, type: 2}
+  PivotOffset: {x: 0, y: 0, z: 0}
+  AmplitudeGain: 0
+  FrequencyGain: 1
+  m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &1867140417
 GameObject:
   m_ObjectHideFlags: 0

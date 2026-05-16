@@ -44,11 +44,11 @@ public class LevelRunManager : MonoBehaviour
     [Header("Scene Pool")]
     [SerializeField] private string lobbySceneName = "Lobby";
     [SerializeField] private string[] roomSceneNames =
-    {
+    {   
         "Level_1_Scene",
         "Level_2_Scene",
         "Level_3_Scene",
-        "Room_2"
+        "Level_4_scene",
     };
 
     [Header("Generated Run")]
