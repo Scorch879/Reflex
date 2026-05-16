@@ -2,6 +2,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerMovementManagement : MonoBehaviour
 {
@@ -34,10 +35,35 @@ public class PlayerMovementManagement : MonoBehaviour
     private Coroutine knockbackRoutine;
     private float nextHazardKnockbackTime;
     private readonly Collider[] dashHazardResults = new Collider[16];
+    private readonly List<Collider> ignoredDashColliders = new List<Collider>();
+    private readonly HashSet<Collider> ignoredDashColliderSet = new HashSet<Collider>();
+    private int activeDashOriginalLayer = -1;
     private PlayerInput userInput;
     private InputAction moveAction;
     private InputAction dashAction;
     private InputAction sprintAction;
+
+    private void Awake()
+    {
+        int dashingPlayerLayer = LayerMask.NameToLayer("DashingPlayer");
+        int enemyLayer = LayerMask.NameToLayer("Enemy");
+
+        if (dashingPlayerLayer >= 0 && enemyLayer >= 0)
+        {
+            Physics.IgnoreLayerCollision(dashingPlayerLayer, enemyLayer, true);
+        }
+    }
+
+    private void OnDisable()
+    {
+        RestoreDashPassThroughCollisions();
+
+        if (activeDashOriginalLayer >= 0)
+        {
+            gameObject.layer = activeDashOriginalLayer;
+            activeDashOriginalLayer = -1;
+        }
+    }
 
     void Start()
     {
@@ -99,11 +125,16 @@ public class PlayerMovementManagement : MonoBehaviour
     }
     private IEnumerator PerformDash()
     {
-        weaponManager.HitboxOff();
+        weaponManager?.HitboxOff();
         isDashing = true;
         lastDashTime = Time.time;
         int originalLayer = gameObject.layer;
-        gameObject.layer = LayerMask.NameToLayer("DashingPlayer");
+        activeDashOriginalLayer = originalLayer;
+        int dashingPlayerLayer = LayerMask.NameToLayer("DashingPlayer");
+        if (dashingPlayerLayer >= 0)
+        {
+            gameObject.layer = dashingPlayerLayer;
+        }
 
         if (dashTrail != null) dashTrail.emitting = true;
 
@@ -113,11 +144,7 @@ public class PlayerMovementManagement : MonoBehaviour
         float totalDashSpeed = movementVariables.dashSpeed + playerManager.cardDashDistanceBonus;
         float dashDuration = movementVariables.dashDuration;
         float totalDashDistance = totalDashSpeed * dashDuration;
-
-        // PHASE LOGIC: Check if the end position is clear.
-        // If it is clear, we phase through everything in between.
-        // If it's blocked, the obstacle is "thicker" than our dash, so we collide normally.
-        bool canPhase = !IsDestinationBlocked(dashDir, totalDashDistance);
+        PrepareDashPassThroughCollisions(dashDir, totalDashDistance + dashCollisionBuffer);
 
         float startTime = Time.time;
         while (Time.time < startTime + dashDuration && !isKnockedBack)
@@ -128,24 +155,18 @@ public class PlayerMovementManagement : MonoBehaviour
             {
                 break;
             }
-            
-            if (canPhase)
-            {
-                // Rely on the Physics Matrix (DashingPlayer vs Obstacles) to glide through.
-                playerController.Move(dashStep);
-            }
-            else
-            {
-                // Manual collision check to stop in front of thick obstacles.
-                CollisionFlags collisionFlags = MoveDashStep(dashStep);
-                if ((collisionFlags & CollisionFlags.Sides) != 0) break;
-            }
+
+            PrepareDashPassThroughCollisions(dashDir, dashStep.magnitude + dashCollisionBuffer);
+            CollisionFlags collisionFlags = MoveDashStep(dashStep);
+            if ((collisionFlags & CollisionFlags.Sides) != 0) break;
 
             yield return null;
         }
 
         if (dashTrail != null) dashTrail.emitting = false;
+        RestoreDashPassThroughCollisions();
         gameObject.layer = originalLayer;
+        activeDashOriginalLayer = -1;
         isDashing = false;
         currentVelocity = isKnockedBack ? Vector3.zero : dashDir * GetCurrentSpeed();
     }
@@ -215,29 +236,6 @@ public class PlayerMovementManagement : MonoBehaviour
         knockbackRoutine = null;
     }
 
-    private bool IsDestinationBlocked(Vector3 direction, float distance)
-    {
-        Vector3 targetPos = transform.position + direction * distance;
-        Vector3 center = targetPos + playerController.center;
-
-        float radius = playerController.radius;
-        float halfHeight = playerController.height * 0.5f;
-        float offset = Mathf.Max(0, halfHeight - radius);
-        
-        // Offset the bottom slightly to avoid hitting the floor.
-        float verticalBuffer = playerController.stepOffset;
-        Vector3 top = center + Vector3.up * offset;
-        Vector3 bottom = center - Vector3.up * (offset - verticalBuffer);
-        
-        Collider[] hits = Physics.OverlapCapsule(bottom, top, radius * 0.9f, dashCollisionMask, QueryTriggerInteraction.Ignore);
-        
-        foreach (var hit in hits)
-        {
-            if (hit.transform != transform && !hit.transform.IsChildOf(transform)) return true;
-        }
-        return false;
-    }
-
     private CollisionFlags MoveDashStep(Vector3 movement)
     {
         if (movement.sqrMagnitude <= Mathf.Epsilon) return CollisionFlags.None;
@@ -262,12 +260,12 @@ public class PlayerMovementManagement : MonoBehaviour
         Vector3 bottom = center - Vector3.up * (halfHeight - radius);
         Vector3 top = center + Vector3.up * (halfHeight - radius);
 
-        RaycastHit[] hits = Physics.CapsuleCastAll(bottom, top, radius, direction, distance + dashCollisionBuffer, dashCollisionMask, QueryTriggerInteraction.Ignore);
+        RaycastHit[] hits = Physics.CapsuleCastAll(bottom, top, radius, direction, distance + dashCollisionBuffer, GetDashCollisionMask(), QueryTriggerInteraction.Ignore);
         float closest = Mathf.Infinity;
 
         foreach (var hit in hits)
         {
-            if (hit.collider.transform == transform || hit.collider.transform.IsChildOf(transform)) continue;
+            if (ShouldIgnoreDashCollision(hit.collider)) continue;
             if (hit.distance < closest) closest = hit.distance;
         }
 
@@ -390,6 +388,89 @@ public class PlayerMovementManagement : MonoBehaviour
     private bool IsOwnCollider(Collider hit)
     {
         return hit.transform == transform || hit.transform.IsChildOf(transform);
+    }
+
+    private int GetDashCollisionMask()
+    {
+        int mask = dashCollisionMask.value;
+        RemoveLayerFromMask(ref mask, gameObject.layer);
+        RemoveLayerFromMask(ref mask, LayerMask.NameToLayer("Player"));
+        RemoveLayerFromMask(ref mask, LayerMask.NameToLayer("DashingPlayer"));
+        RemoveLayerFromMask(ref mask, LayerMask.NameToLayer("Enemy"));
+        return mask;
+    }
+
+    private static void RemoveLayerFromMask(ref int mask, int layer)
+    {
+        if (layer < 0) return;
+        mask &= ~(1 << layer);
+    }
+
+    private bool ShouldIgnoreDashCollision(Collider hit)
+    {
+        if (hit == null || IsOwnCollider(hit))
+        {
+            return true;
+        }
+
+        return IsEnemyCollider(hit);
+    }
+
+    private static bool IsEnemyCollider(Collider hit)
+    {
+        return hit.CompareTag("Enemy") || hit.GetComponentInParent<EnemyController>() != null;
+    }
+
+    private void PrepareDashPassThroughCollisions(Vector3 direction, float distance)
+    {
+        if (playerController == null)
+        {
+            return;
+        }
+
+        GetControllerCapsuleAt(transform.position, out Vector3 bottom, out Vector3 top, out float radius);
+        Collider[] overlappingHits = Physics.OverlapCapsule(bottom, top, radius, ~0, QueryTriggerInteraction.Collide);
+        for (int i = 0; i < overlappingHits.Length; i++)
+        {
+            TryIgnoreDashCollider(overlappingHits[i]);
+        }
+
+        if (distance <= 0f || direction.sqrMagnitude <= 0.0001f)
+        {
+            return;
+        }
+
+        RaycastHit[] pathHits = Physics.CapsuleCastAll(bottom, top, radius, direction.normalized, distance, ~0, QueryTriggerInteraction.Collide);
+        for (int i = 0; i < pathHits.Length; i++)
+        {
+            TryIgnoreDashCollider(pathHits[i].collider);
+        }
+    }
+
+    private void TryIgnoreDashCollider(Collider hit)
+    {
+        if (hit == null || IsOwnCollider(hit) || !IsEnemyCollider(hit) || !ignoredDashColliderSet.Add(hit))
+        {
+            return;
+        }
+
+        Physics.IgnoreCollision(playerController, hit, true);
+        ignoredDashColliders.Add(hit);
+    }
+
+    private void RestoreDashPassThroughCollisions()
+    {
+        for (int i = 0; i < ignoredDashColliders.Count; i++)
+        {
+            Collider ignoredCollider = ignoredDashColliders[i];
+            if (ignoredCollider != null && playerController != null)
+            {
+                Physics.IgnoreCollision(playerController, ignoredCollider, false);
+            }
+        }
+
+        ignoredDashColliders.Clear();
+        ignoredDashColliderSet.Clear();
     }
 
     private void MovePlayer()
