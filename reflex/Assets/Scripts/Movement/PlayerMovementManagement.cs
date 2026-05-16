@@ -295,8 +295,10 @@ public class PlayerMovementManagement : MonoBehaviour
         RaycastHit[] hits = Physics.CapsuleCastAll(bottom, top, radius, incomingDirection.normalized, castDistance, dashHazardMask, QueryTriggerInteraction.Collide);
         LazerKnockback closestHazard = null;
         DmgArea closestDamageArea = null;
+        LazerStateController closestStateController = null;
         float closestDistance = Mathf.Infinity;
         float closestDamageDistance = Mathf.Infinity;
+        float closestStateDistance = Mathf.Infinity;
 
         foreach (RaycastHit hit in hits)
         {
@@ -312,6 +314,18 @@ public class PlayerMovementManagement : MonoBehaviour
                 closestDamageDistance = hit.distance;
             }
 
+            LazerStateController stateController = hit.collider.GetComponentInParent<LazerStateController>();
+            if (stateController == null && hit.collider.TryGetComponent(out LazerPassThroughTrigger passThroughTrigger))
+            {
+                stateController = passThroughTrigger.Controller;
+            }
+
+            if (stateController != null && hit.distance < closestStateDistance)
+            {
+                closestStateController = stateController;
+                closestStateDistance = hit.distance;
+            }
+
             LazerKnockback hazard = hit.collider.GetComponentInParent<LazerKnockback>();
             if (hazard == null || hit.distance >= closestDistance)
             {
@@ -323,7 +337,13 @@ public class PlayerMovementManagement : MonoBehaviour
         }
 
         closestDamageArea?.TryApplyDashDamage(playerManager);
-        return closestHazard != null && closestHazard.TryKnockback(playerManager, incomingDirection, true);
+        bool appliedKnockback = closestHazard != null && closestHazard.TryKnockback(playerManager, incomingDirection, true);
+        if (!appliedKnockback)
+        {
+            closestStateController?.NotifyPlayerPassedThrough(playerManager);
+        }
+
+        return appliedKnockback;
     }
 
     private bool TryTriggerOverlappingHazard(Vector3 incomingDirection)
@@ -332,8 +352,10 @@ public class PlayerMovementManagement : MonoBehaviour
         int hitCount = Physics.OverlapCapsuleNonAlloc(bottom, top, radius, dashHazardResults, dashHazardMask, QueryTriggerInteraction.Collide);
         LazerKnockback closestHazard = null;
         DmgArea closestDamageArea = null;
+        LazerStateController closestStateController = null;
         float closestDistance = Mathf.Infinity;
         float closestDamageDistance = Mathf.Infinity;
+        float closestStateDistance = Mathf.Infinity;
         Vector3 center = transform.TransformPoint(playerController.center);
 
         for (int i = 0; i < hitCount; i++)
@@ -355,6 +377,18 @@ public class PlayerMovementManagement : MonoBehaviour
                 closestDamageDistance = distance;
             }
 
+            LazerStateController stateController = hit.GetComponentInParent<LazerStateController>();
+            if (stateController == null && hit.TryGetComponent(out LazerPassThroughTrigger passThroughTrigger))
+            {
+                stateController = passThroughTrigger.Controller;
+            }
+
+            if (stateController != null && distance < closestStateDistance)
+            {
+                closestStateController = stateController;
+                closestStateDistance = distance;
+            }
+
             LazerKnockback hazard = hit.GetComponentInParent<LazerKnockback>();
             if (hazard == null)
             {
@@ -371,7 +405,13 @@ public class PlayerMovementManagement : MonoBehaviour
         }
 
         closestDamageArea?.TryApplyDashDamage(playerManager);
-        return closestHazard != null && closestHazard.TryKnockback(playerManager, incomingDirection, true);
+        bool appliedKnockback = closestHazard != null && closestHazard.TryKnockback(playerManager, incomingDirection, true);
+        if (!appliedKnockback)
+        {
+            closestStateController?.NotifyPlayerPassedThrough(playerManager);
+        }
+
+        return appliedKnockback;
     }
 
     private void GetControllerCapsuleAt(Vector3 position, out Vector3 bottom, out Vector3 top, out float radius)

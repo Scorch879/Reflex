@@ -38,7 +38,7 @@ public class DmgArea : MonoBehaviour
 
     public bool TryApplyDashDamage(PlayerManager player)
     {
-        if (player == null)
+        if (!isActiveAndEnabled || player == null)
         {
             return false;
         }

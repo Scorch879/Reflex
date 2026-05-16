@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 2193687730700787559}
   - component: {fileID: 852850730507619547}
   m_Layer: 0
-  m_Name: cylinder_1
+  m_Name: Lazer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -284,6 +284,7 @@ GameObject:
   - component: {fileID: -1209032971340013307}
   - component: {fileID: 437550821578498897}
   - component: {fileID: 7460000000000000001}
+  - component: {fileID: 7460000000000000002}
   m_Layer: 0
   m_Name: lazer
   m_TagString: Untagged
@@ -368,3 +369,39 @@ MonoBehaviour:
   fallbackAwayFromLazer: 1
   minimumIncomingSpeed: 0.1
   searchParentForPlayer: 1
+--- !u!114 &7460000000000000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7060193230435016090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7f2d34e4fdf49d29fa0119f65db3dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LazerStateController
+  activeOnStart: 1
+  hideRenderersWhenOff: 1
+  rendererToggleMode: 2
+  rendererNameContains: Lazer
+  materialNameContains: Glow
+  refreshRenderersOnStateChange: 1
+  damageAreas: []
+  knockbackAreas: []
+  renderersToToggle: []
+  turnOffWhen: 0
+  turnOffDelay: 3
+  turnOnWhen: 0
+  turnOnDelay: 3
+  enemiesToWatch: []
+  searchSceneEnemiesWhenListEmpty: 1
+  sceneEnemyRefreshInterval: 0.5
+  searchParentForPlayer: 1
+  playerPassTriggerMoment: 0
+  usePassThroughTriggerColliders: 1
+  passThroughTriggerColliders: []
+  autoFindPassThroughTriggersWhenEmpty: 1
+  passThroughTriggerNameContains: Cube
+  autoAddPassThroughTriggerComponents: 1
+  forcePassThroughCollidersToTrigger: 1

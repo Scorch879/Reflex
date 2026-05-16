@@ -43,7 +43,7 @@ public class LazerKnockback : MonoBehaviour
 
     public bool TryKnockback(PlayerManager player, Vector3 incomingDirection, bool ignoreCooldown = false)
     {
-        if (player == null)
+        if (!isActiveAndEnabled || player == null)
         {
             return false;
         }
