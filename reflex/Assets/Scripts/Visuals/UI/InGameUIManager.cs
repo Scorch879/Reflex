@@ -20,8 +20,16 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] private CanvasGroup inGameUICanvasGroup;
     [SerializeField] private CanvasGroup PauseUICanvasGroup;
 
+    [Header("Status Messaging")]
+    [SerializeField] private TextMeshProUGUI statusMessageText;
+    [SerializeField] private CanvasGroup statusMessageCanvasGroup;
+    [SerializeField] private float statusMessageFadeInDuration = 0.1f;
+    [SerializeField] private float statusMessageHoldDuration = 1.8f;
+    [SerializeField] private float statusMessageFadeOutDuration = 0.35f;
+
 
     private Coroutine healthAnimationCoroutine;
+    private Coroutine statusMessageCoroutine;
 
     private void Awake()
     {
@@ -110,5 +118,57 @@ public class InGameUIManager : MonoBehaviour
         PauseUICanvasGroup.alpha = 0f;
         PauseUICanvasGroup.interactable = false;
         PauseUICanvasGroup.blocksRaycasts = false;
+    }
+
+    public void ShowStatusMessage(string message, Color color)
+    {
+        if (statusMessageText == null || statusMessageCanvasGroup == null || string.IsNullOrWhiteSpace(message))
+        {
+            return;
+        }
+
+        if (statusMessageCoroutine != null)
+        {
+            StopCoroutine(statusMessageCoroutine);
+        }
+
+        statusMessageCoroutine = StartCoroutine(StatusMessageRoutine(message, color));
+    }
+
+    private IEnumerator StatusMessageRoutine(string message, Color color)
+    {
+        statusMessageText.text = message;
+        statusMessageText.color = color;
+
+        float fadeInDuration = Mathf.Max(0.01f, statusMessageFadeInDuration);
+        float holdDuration = Mathf.Max(0f, statusMessageHoldDuration);
+        float fadeOutDuration = Mathf.Max(0.01f, statusMessageFadeOutDuration);
+
+        statusMessageCanvasGroup.alpha = 0f;
+
+        float elapsed = 0f;
+        while (elapsed < fadeInDuration)
+        {
+            statusMessageCanvasGroup.alpha = Mathf.Lerp(0f, 1f, elapsed / fadeInDuration);
+            elapsed += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        statusMessageCanvasGroup.alpha = 1f;
+        if (holdDuration > 0f)
+        {
+            yield return new WaitForSecondsRealtime(holdDuration);
+        }
+
+        elapsed = 0f;
+        while (elapsed < fadeOutDuration)
+        {
+            statusMessageCanvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsed / fadeOutDuration);
+            elapsed += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        statusMessageCanvasGroup.alpha = 0f;
+        statusMessageCoroutine = null;
     }
 }

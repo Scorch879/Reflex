@@ -100,6 +100,7 @@ public class EmotionDebugHUD : MonoBehaviour
         GUILayout.Label("Director", _mutedStyle);
         DrawLine($"Strategy: {directive.strategy}");
         DrawLine($"Blend / confidence: {directive.aggressionBlend:0.00} / {directive.confidence:0.00}");
+        DrawLine($"Calm relief: {(EmotionDirector.Instance.IsCalmReliefActive ? "active" : "inactive")} (charges: {EmotionDirector.Instance.PendingCalmReliefCharges})");
         DrawLine($"Spawn x{directive.spawnMultiplier:0.00}");
         DrawLine($"Enemy speed x{directive.enemySpeedMultiplier:0.00}");
         DrawLine($"Enemy cooldown x{directive.enemyAttackCooldownMultiplier:0.00}");
@@ -113,6 +114,7 @@ public class EmotionDebugHUD : MonoBehaviour
         DrawLine($"Deaths: {snapshot.deathCount}");
         DrawLine($"Enemies seen: {snapshot.enemiesEncountered}");
         DrawLine($"Attacks / hits: {snapshot.attacksPerformed} / {snapshot.enemyHits}");
+        DrawLine($"Effective hits: {snapshot.effectiveEnemyHits:0.00}");
         DrawLine($"Running / idle: {snapshot.timeRunning:0.0}s / {snapshot.timeIdle:0.0}s");
         DrawLine($"Avg speed: {snapshot.averageMovementSpeed:0.00}");
         DrawLine($"Current room: {snapshot.currentRoomTime:0.0}s");

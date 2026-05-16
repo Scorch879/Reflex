@@ -80,17 +80,34 @@ public class EmotionDirector : MonoBehaviour
     [SerializeField] private bool useContinuousBlend = true;
     [SerializeField, Range(0f, 1f)] private float confidenceBlendFloor = 0.3f;
 
+    [Header("Calm Relief Rewards")]
+    [SerializeField] private bool enableCalmReliefRewards = true;
+    [SerializeField, Min(0)] private int maxCalmReliefCharges = 2;
+    [SerializeField, Range(0f, 1f)] private float calmRewardScoreThreshold = 0.42f;
+    [SerializeField, Min(0f)] private float calmRewardMaxDamageTaken = 14f;
+    [SerializeField, Min(0)] private int calmRewardMaxDeaths = 0;
+    [SerializeField, Min(0)] private int calmRewardMinAttacks = 4;
+    [SerializeField, Range(0.1f, 2f)] private float calmReliefSpawnMultiplier = 0.82f;
+    [SerializeField, Range(0.1f, 2f)] private float calmReliefEnemySpeedMultiplier = 0.92f;
+    [SerializeField, Range(0.1f, 2f)] private float calmReliefEnemyAttackCooldownMultiplier = 1.15f;
+    [SerializeField, Range(0.1f, 2f)] private float calmReliefEnemyVisionMultiplier = 0.9f;
+    [SerializeField, Min(0f)] private float calmReliefAttackOpeningDelayBonus = 0.15f;
+
     [Header("World Tint")]
     [SerializeField] private bool applyWorldTint = true;
     [SerializeField, Range(0f, 1f)] private float ambientTintStrength = 0.2f;
     [SerializeField, Range(0f, 1f)] private float cameraTintStrength = 0.16f;
 
     public EmotionDirectorDirective CurrentDirective { get; private set; }
+    public int PendingCalmReliefCharges => _pendingCalmReliefCharges;
+    public bool IsCalmReliefActive => _calmReliefActive;
     private PlayerEmotionState _lastLoggedEmotion;
     private float _lastLoggedBlend = -1f;
     private bool _hasBaselineAmbientColor;
     private Color _baselineAmbientColor;
     private readonly Dictionary<int, Color> _baselineCameraColors = new Dictionary<int, Color>();
+    private int _pendingCalmReliefCharges;
+    private bool _calmReliefActive;
 
     private void Awake()
     {
@@ -110,6 +127,7 @@ public class EmotionDirector : MonoBehaviour
     {
         EmotionEngine.EmotionChanged += HandleEmotionChanged;
         EmotionEngine.EmotionProfileUpdated += HandleEmotionProfileUpdated;
+        EmotionEngine.RoomStarted += HandleRoomStarted;
         EmotionEngine.RoomEvaluated += HandleRoomEvaluated;
         SceneManager.sceneLoaded += HandleSceneLoaded;
     }
@@ -118,6 +136,7 @@ public class EmotionDirector : MonoBehaviour
     {
         EmotionEngine.EmotionChanged -= HandleEmotionChanged;
         EmotionEngine.EmotionProfileUpdated -= HandleEmotionProfileUpdated;
+        EmotionEngine.RoomStarted -= HandleRoomStarted;
         EmotionEngine.RoomEvaluated -= HandleRoomEvaluated;
         SceneManager.sceneLoaded -= HandleSceneLoaded;
         RestoreVisualBaselines();
@@ -153,7 +172,45 @@ public class EmotionDirector : MonoBehaviour
 
     private void HandleRoomEvaluated(EmotionRoomReport report)
     {
+        _calmReliefActive = false;
+
+        if (enableCalmReliefRewards && IsCalmRewardEligible(report))
+        {
+            _pendingCalmReliefCharges = Mathf.Min(maxCalmReliefCharges, _pendingCalmReliefCharges + 1);
+
+            if (logDirectorDecisions)
+            {
+                Debug.Log($"Emotion Director: calm reward earned in room {report.roomNumber}. Charges: {_pendingCalmReliefCharges}.");
+            }
+        }
+
         RefreshDirective(report.emotionAfter, EmotionEngine.Instance.CurrentSnapshot, $"room {report.roomNumber} evaluated");
+    }
+
+    private void HandleRoomStarted(EmotionRoomStartReport report)
+    {
+        if (!enableCalmReliefRewards)
+        {
+            _calmReliefActive = false;
+            return;
+        }
+
+        if (_pendingCalmReliefCharges > 0)
+        {
+            _pendingCalmReliefCharges--;
+            _calmReliefActive = true;
+
+            if (logDirectorDecisions)
+            {
+                Debug.Log($"Emotion Director: calm relief active for room {report.roomNumber}. Remaining charges: {_pendingCalmReliefCharges}.");
+            }
+        }
+        else
+        {
+            _calmReliefActive = false;
+        }
+
+        RefreshDirective(report.emotionState, EmotionEngine.Instance.CurrentSnapshot, $"room {report.roomNumber} started");
     }
 
     private void RefreshDirective(PlayerEmotionState emotionState, EmotionProfileSnapshot snapshot, string reason)
@@ -201,22 +258,64 @@ public class EmotionDirector : MonoBehaviour
             ? "Player is forceful, so the game applies containment pressure with safer enemy spacing and controlled tempo."
             : "Player is controlled, so enemies press faster to force higher commitment.";
 
+        float spawnMultiplier = Mathf.Lerp(calmSpawnMultiplier, aggressiveSpawnMultiplier, blend);
+        float enemySpeedMultiplier = Mathf.Lerp(calmEnemySpeedMultiplier, aggressiveEnemySpeedMultiplier, blend);
+        float enemyAttackCooldownMultiplier = Mathf.Lerp(calmEnemyAttackCooldownMultiplier, aggressiveEnemyAttackCooldownMultiplier, blend);
+        float enemyVisionMultiplier = Mathf.Lerp(calmEnemyVisionMultiplier, aggressiveEnemyVisionMultiplier, blend);
+        float attackOpeningDelay = Mathf.Lerp(calmAttackOpeningDelay, aggressiveAttackOpeningDelay, blend);
+
+        if (_calmReliefActive)
+        {
+            spawnMultiplier *= calmReliefSpawnMultiplier;
+            enemySpeedMultiplier *= calmReliefEnemySpeedMultiplier;
+            enemyAttackCooldownMultiplier *= calmReliefEnemyAttackCooldownMultiplier;
+            enemyVisionMultiplier *= calmReliefEnemyVisionMultiplier;
+            attackOpeningDelay += calmReliefAttackOpeningDelayBonus;
+        }
+
         return new EmotionDirectorDirective
         {
             sourceEmotion = emotionState,
             strategy = strategy,
             aggressionBlend = blend,
             confidence = Mathf.Clamp01(snapshot.confidence),
-            spawnMultiplier = Mathf.Lerp(calmSpawnMultiplier, aggressiveSpawnMultiplier, blend),
-            enemySpeedMultiplier = Mathf.Lerp(calmEnemySpeedMultiplier, aggressiveEnemySpeedMultiplier, blend),
-            enemyAttackCooldownMultiplier = Mathf.Lerp(calmEnemyAttackCooldownMultiplier, aggressiveEnemyAttackCooldownMultiplier, blend),
-            enemyVisionMultiplier = Mathf.Lerp(calmEnemyVisionMultiplier, aggressiveEnemyVisionMultiplier, blend),
-            attackOpeningDelay = Mathf.Lerp(calmAttackOpeningDelay, aggressiveAttackOpeningDelay, blend),
+            spawnMultiplier = Mathf.Max(0.2f, spawnMultiplier),
+            enemySpeedMultiplier = Mathf.Max(0.2f, enemySpeedMultiplier),
+            enemyAttackCooldownMultiplier = Mathf.Max(0.2f, enemyAttackCooldownMultiplier),
+            enemyVisionMultiplier = Mathf.Max(0.2f, enemyVisionMultiplier),
+            attackOpeningDelay = Mathf.Max(0f, attackOpeningDelay),
             chaseStandoffDistance = Mathf.Lerp(calmStandoffDistance, aggressiveStandoffDistance, blend),
             retreatDistance = Mathf.Lerp(calmRetreatDistance, aggressiveRetreatDistance, blend),
             worldTint = Color.Lerp(calmWorldTint, aggressiveWorldTint, blend),
-            explanation = explanation
+            explanation = _calmReliefActive
+                ? explanation + " Calm mastery reward active: lighter enemy pressure this room."
+                : explanation
         };
+    }
+
+    private bool IsCalmRewardEligible(EmotionRoomReport report)
+    {
+        if (report.scoreAfter > calmRewardScoreThreshold)
+        {
+            return false;
+        }
+
+        if (report.damageTaken > calmRewardMaxDamageTaken)
+        {
+            return false;
+        }
+
+        if (report.deathCount > calmRewardMaxDeaths)
+        {
+            return false;
+        }
+
+        if (report.attacksPerformed < calmRewardMinAttacks)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     private float ComputeAggressionBlend(EmotionProfileSnapshot snapshot)

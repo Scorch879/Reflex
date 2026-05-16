@@ -21,6 +21,10 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 - Debug HUD now exposes adaptation blend/confidence.
 - Chase behavior now consumes director standoff/retreat tactical destination.
 - World tint is now applied in scene visuals (ambient + camera background).
+- Calm relief charges now provide tactical pressure reduction in the next room after calm clears.
+- Composure room clears now award bonus Soul Essence with quality scaling.
+- Emotion hit scoring now mitigates stacked multi-hit aggression spikes via effective-hit diminishing returns.
+- Emotion aggression tempo now uses slower rise / faster fall with passive calm decay after short combat inactivity.
 
 ## Active Priorities
 - Playtest full path: Lobby -> L1 -> L2 -> L3 -> L4 -> L5 -> Boss -> Lobby.
@@ -30,9 +34,23 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
   - `confidenceBlendFloor`
   - `profileUpdateLogBlendDelta`
   - `respawnRateConfidenceFloor`
+- Tune calm motivation fields:
+  - Calm relief eligibility thresholds and effect multipliers
+  - Composure essence bonus thresholds and payout curve
+- Tune anti-spike fields:
+  - `multiHitBurstWindow`
+  - `additionalHitFalloff`
+  - `maxEffectiveHitsPerAttack`
+- Tune tempo fields:
+  - `aggressionRiseSmoothing`
+  - `aggressionFallSmoothing`
+  - `calmDecayDelay`
+  - `calmDecayPerSecond`
+  - `attackIntentScale`
+  - `hitIntentScale`
 
 ## Remaining Tasks
-- Create dedicated `Level_4` and `Level_5` scenes to replace temporary scene reuse in the fixed run path.
+- Create a dedicated `Level_5` scene to replace temporary scene reuse (`Room_2`) in the fixed run path.
 - Playtest calm-to-aggressive transitions and aggressive-to-calm recovery.
 - Validate that room pacing remains readable at high spawn density.
 - Confirm enemy containment behavior still feels intentional under blended values.

@@ -41,6 +41,16 @@ public class RewardManager : MonoBehaviour
     [SerializeField, Min(0)] private int essencePerFloor = 1;
     [SerializeField, Min(0f)] private float levelRewardMultiplierStep = 0.1f;
 
+    [Header("Composure Rewards")]
+    [SerializeField] private bool awardComposureEssenceBonus = true;
+    [SerializeField, Min(0)] private int composureBonusBaseEssence = 4;
+    [SerializeField, Min(0)] private int composureBonusMaxEssence = 12;
+    [SerializeField, Range(0f, 1f)] private float composureBonusScoreThreshold = 0.42f;
+    [SerializeField, Min(0f)] private float composureBonusMaxDamageTaken = 14f;
+    [SerializeField, Min(0)] private int composureBonusMaxDeaths = 0;
+    [SerializeField, Min(0)] private int composureBonusMinAttacks = 4;
+    [SerializeField] private Color composureMessageColor = new Color(0.55f, 1f, 0.75f);
+
     public event Action<LevelRewardContext> LevelRewardGranted;
 
     public LevelRewardContext LastRewardContext { get; private set; }
@@ -53,6 +63,7 @@ public class RewardManager : MonoBehaviour
         LevelRunManager.LevelEntered += HandleLevelEntered;
         LevelRunManager.LevelCleared += HandleLevelCleared;
         EnemyController.EnemyDefeated += HandleEnemyDefeated;
+        EmotionEngine.RoomEvaluated += HandleRoomEvaluated;
     }
 
     private void OnDisable()
@@ -60,6 +71,7 @@ public class RewardManager : MonoBehaviour
         LevelRunManager.LevelEntered -= HandleLevelEntered;
         LevelRunManager.LevelCleared -= HandleLevelCleared;
         EnemyController.EnemyDefeated -= HandleEnemyDefeated;
+        EmotionEngine.RoomEvaluated -= HandleRoomEvaluated;
     }
 
     void Update()
@@ -209,6 +221,35 @@ public class RewardManager : MonoBehaviour
         }
     }
 
+    private void HandleRoomEvaluated(EmotionRoomReport report)
+    {
+        if (!awardComposureEssenceBonus || !IsComposureBonusEligible(report))
+        {
+            return;
+        }
+
+        EnsurePlayerManager();
+        if (playerManager == null)
+        {
+            return;
+        }
+
+        int bonus = CalculateComposureBonus(report);
+        if (bonus <= 0)
+        {
+            return;
+        }
+
+        playerManager.AddSoulEssence(bonus);
+
+        if (InGameUIManager.Instance != null)
+        {
+            InGameUIManager.Instance.ShowStatusMessage($"+{bonus} Soul Essence (Composure)", composureMessageColor);
+        }
+
+        Debug.Log($"Composure reward: +{bonus} Soul Essence (room {report.roomNumber}, score {report.scoreAfter:0.00}, damage {report.damageTaken:0.0}).");
+    }
+
     private LevelRewardContext BuildRewardContext(int nodeId, int floorDepth, string sceneName)
     {
         int levelNumber = ((floorDepth - 1) / stagesPerLevel) + 1;
@@ -233,6 +274,40 @@ public class RewardManager : MonoBehaviour
     private float GetPlayerEssenceMultiplier()
     {
         return playerManager != null ? Mathf.Max(0f, playerManager.FinalEssenceMultiplier) : 1f;
+    }
+
+    private bool IsComposureBonusEligible(EmotionRoomReport report)
+    {
+        if (report.scoreAfter > composureBonusScoreThreshold)
+        {
+            return false;
+        }
+
+        if (report.damageTaken > composureBonusMaxDamageTaken)
+        {
+            return false;
+        }
+
+        if (report.deathCount > composureBonusMaxDeaths)
+        {
+            return false;
+        }
+
+        if (report.attacksPerformed < composureBonusMinAttacks)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private int CalculateComposureBonus(EmotionRoomReport report)
+    {
+        float scoreQuality = 1f - Mathf.Clamp01(report.scoreAfter);
+        float damageQuality = 1f - Mathf.Clamp01(report.damageTaken / Mathf.Max(1f, composureBonusMaxDamageTaken));
+        float quality = Mathf.Clamp01((scoreQuality * 0.65f) + (damageQuality * 0.35f));
+        int scaledBonus = Mathf.RoundToInt(composureBonusBaseEssence * (1f + quality));
+        return Mathf.Clamp(scaledBonus, 0, composureBonusMaxEssence);
     }
 
     private void EnsurePlayerManager()
