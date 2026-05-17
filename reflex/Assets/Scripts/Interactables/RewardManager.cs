@@ -22,9 +22,33 @@ public struct LevelRewardContext
     public string sceneName;
     public int kills;
     public int soulEssenceAwarded;
+    public int baseEssenceComponent;
+    public int killEssenceComponent;
+    public int floorEssenceComponent;
+    public int rawEssenceBeforeMultipliers;
     public float levelMultiplier;
+    public float playerEssenceMultiplier;
+    public float combinedEssenceMultiplier;
 
     public string LevelStageLabel => levelNumber + "-" + stageNumber;
+}
+
+public struct RunRewardSummary
+{
+    public float runtimeSeconds;
+    public int floorReached;
+    public int stageReached;
+    public int stagesCleared;
+    public int enemiesDefeated;
+    public int essencePerKill;
+    public int totalEssenceEarned;
+    public int stageRewardEssence;
+    public int composureBonusEssence;
+    public int rawBaseEssence;
+    public int rawKillEssence;
+    public int rawFloorEssence;
+    public int rawEssenceBeforeMultipliers;
+    public float effectiveCombinedMultiplier;
 }
 
 public enum StageCardRewardTriggerMode
@@ -48,7 +72,6 @@ public class RewardManager : MonoBehaviour
     [SerializeField] private float fadeOutDuration = 0.5f;
     [SerializeField] private bool openCardRewardsOnLevelClear = true;
     [SerializeField] private StageCardRewardTriggerMode stageCardRewardTrigger = StageCardRewardTriggerMode.AnyStageClear;
-    [SerializeField] private bool clearPreviousStageCardOnNewSelection = true;
 
     [Header("Card Pool")]
     [SerializeField] private BuffCardData[] allAvailableCards;
@@ -76,7 +99,22 @@ public class RewardManager : MonoBehaviour
 
     public LevelRewardContext LastRewardContext { get; private set; }
 
+    private sealed class ActiveCardBuff
+    {
+        public ActiveCardBuff(BuffCardData sourceCard, int remainingStageClears)
+        {
+            card = sourceCard;
+            stagesRemaining = remainingStageClears;
+        }
+
+        public BuffCardData card;
+        public int stagesRemaining; // -1 means whole run.
+    }
+
     private int _killsThisLevel;
+    private readonly List<ActiveCardBuff> _activeCardBuffs = new List<ActiveCardBuff>();
+    private readonly HashSet<BuffCardData> _selectedSpecialCards = new HashSet<BuffCardData>();
+    private readonly HashSet<BuffCardData> _blockedCards = new HashSet<BuffCardData>();
     private bool _rewardScreenOpen;
     private bool _usingRuntimeRewardUI;
     private Button[] _runtimeCardButtons;
@@ -86,6 +124,20 @@ public class RewardManager : MonoBehaviour
     private readonly List<BuffCardData> _runtimeGeneratedCards = new List<BuffCardData>();
     private Coroutine _fadeInCoroutine;
     private Coroutine _fadeOutCoroutine;
+    private PlayerManager _subscribedPlayerManager;
+    private bool _runSummaryInitialized;
+    private float _runStartRealtime;
+    private int _runTotalEnemiesDefeated;
+    private int _runTotalStagesCleared;
+    private int _runLastClearedFloor;
+    private int _runLastClearedStage;
+    private int _runBaseEssenceComponentTotal;
+    private int _runKillEssenceComponentTotal;
+    private int _runFloorEssenceComponentTotal;
+    private int _runRawEssenceBeforeMultiplierTotal;
+    private int _runStageRewardEssenceTotal;
+    private int _runComposureBonusEssenceTotal;
+    private int _runTotalEssenceEarned;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Bootstrap()
@@ -125,6 +177,8 @@ public class RewardManager : MonoBehaviour
     private void OnEnable()
     {
         EnsureRewardUIAndCardPoolReady();
+        EnsurePlayerManager();
+        BindPlayerEvents();
         LevelRunManager.LevelEntered += HandleLevelEntered;
         LevelRunManager.LevelClearedDetailed += HandleLevelCleared;
         EnemyController.EnemyDefeated += HandleEnemyDefeated;
@@ -139,6 +193,7 @@ public class RewardManager : MonoBehaviour
         EnemyController.EnemyDefeated -= HandleEnemyDefeated;
         EmotionEngine.RoomEvaluated -= HandleRoomEvaluated;
         SceneManager.sceneUnloaded -= HandleSceneUnloaded;
+        UnbindPlayerEvents();
         ForceCloseRewardScreenImmediate();
     }
 
@@ -306,23 +361,22 @@ public class RewardManager : MonoBehaviour
             return;
         }
 
-        if (clearPreviousStageCardOnNewSelection)
+        if (!IsCardSelectable(card))
         {
-            playerManager.ClearTemporaryCardBuffs();
+            StartFadeOut();
+            return;
         }
 
-        // Apply the additive bonuses to PlayerManager
-        playerManager.cardAtkBonus += card.atkBonus;
-        playerManager.cardCritChance += card.critBonus;
-        playerManager.cardEssenceMult += card.essenceBonus;
-        playerManager.cardVampChance += card.vampiricBonus;
-        playerManager.cardComboWindowBonus += card.comboWindowBonus;
+        int duration = card.buffDurationStages > 0 ? card.buffDurationStages : -1;
+        _activeCardBuffs.Add(new ActiveCardBuff(card, duration));
 
-        // Fleet Foot (Dash) bonuses[cite: 1]
-        playerManager.cardDashCDReduction += card.dashCDReduction;
-        playerManager.cardDashDistanceBonus += card.dashDistanceBonus;
+        if (card.isSpecialCard)
+        {
+            _selectedSpecialCards.Add(card);
+            RegisterCardBlocks(card);
+        }
 
-        if (card.isGlassCannon) playerManager.ApplyGlassCannon();
+        ReapplyActiveCardBuffsToPlayer();
 
         StartFadeOut();
     }
@@ -330,11 +384,28 @@ public class RewardManager : MonoBehaviour
     private void HandleLevelEntered(int nodeId, int floorDepth, string sceneName)
     {
         _killsThisLevel = 0;
+        EnsurePlayerManager();
+        BindPlayerEvents();
+
+        if (nodeId > 0)
+        {
+            if (_runSummaryInitialized && floorDepth == 1 && _runTotalStagesCleared > 0)
+            {
+                ResetRunStateForFreshStart();
+            }
+
+            EnsureRunSummaryInitialized();
+            ReapplyActiveCardBuffsToPlayer();
+        }
     }
 
     private void HandleEnemyDefeated(EnemyController enemy)
     {
         _killsThisLevel++;
+        if (_runSummaryInitialized)
+        {
+            _runTotalEnemiesDefeated++;
+        }
     }
 
     private void HandleLevelCleared(LevelClearContext clearContext)
@@ -348,28 +419,36 @@ public class RewardManager : MonoBehaviour
             return;
         }
 
+        EnsureRunSummaryInitialized();
+        _runTotalStagesCleared++;
+        UpdateLastClearedProgress(floorDepth);
+
         bool calmClear = clearContext.hasRoomReport && clearContext.roomReport.emotionAfter == PlayerEmotionState.Calm;
-        if (!ShouldGrantStageCardReward(clearContext, calmClear))
+        bool shouldGrantReward = ShouldGrantStageCardReward(clearContext, calmClear);
+
+        if (shouldGrantReward)
         {
-            return;
+            EnsurePlayerManager();
+            BindPlayerEvents();
+
+            LevelRewardContext context = BuildRewardContext(nodeId, floorDepth, sceneName);
+            LastRewardContext = context;
+            AddContextToRunSummary(context);
+
+            if (playerManager != null)
+            {
+                playerManager.AddSoulEssence(context.soulEssenceAwarded);
+            }
+
+            LevelRewardGranted?.Invoke(context);
+
+            if (openCardRewardsOnLevelClear)
+            {
+                OpenRewardScreen(calmClear);
+            }
         }
 
-        EnsurePlayerManager();
-
-        LevelRewardContext context = BuildRewardContext(nodeId, floorDepth, sceneName);
-        LastRewardContext = context;
-
-        if (playerManager != null)
-        {
-            playerManager.AddSoulEssence(context.soulEssenceAwarded);
-        }
-
-        LevelRewardGranted?.Invoke(context);
-
-        if (openCardRewardsOnLevelClear)
-        {
-            OpenRewardScreen(calmClear);
-        }
+        ConsumeStageLimitedCardDurations();
     }
 
     private void HandleRoomEvaluated(EmotionRoomReport report)
@@ -391,7 +470,9 @@ public class RewardManager : MonoBehaviour
             return;
         }
 
+        EnsureRunSummaryInitialized();
         playerManager.AddSoulEssence(bonus);
+        _runComposureBonusEssenceTotal += bonus;
 
         if (InGameUIManager.Instance != null)
         {
@@ -412,8 +493,13 @@ public class RewardManager : MonoBehaviour
         int levelNumber = ((floorDepth - 1) / configuredStagesPerLevel) + 1;
         int stageNumber = ((floorDepth - 1) % configuredStagesPerLevel) + 1;
         float levelMultiplier = 1f + ((levelNumber - 1) * levelRewardMultiplierStep);
-        int rawEssence = baseEssencePerClear + (_killsThisLevel * essencePerKill) + (floorDepth * essencePerFloor);
-        int essenceAwarded = Mathf.Max(0, Mathf.RoundToInt(rawEssence * levelMultiplier * GetPlayerEssenceMultiplier()));
+        int baseEssenceComponent = baseEssencePerClear;
+        int killEssenceComponent = _killsThisLevel * essencePerKill;
+        int floorEssenceComponent = floorDepth * essencePerFloor;
+        int rawEssence = baseEssenceComponent + killEssenceComponent + floorEssenceComponent;
+        float playerEssenceMultiplier = GetPlayerEssenceMultiplier();
+        float combinedMultiplier = levelMultiplier * playerEssenceMultiplier;
+        int essenceAwarded = Mathf.Max(0, Mathf.RoundToInt(rawEssence * combinedMultiplier));
 
         return new LevelRewardContext
         {
@@ -424,7 +510,13 @@ public class RewardManager : MonoBehaviour
             sceneName = sceneName,
             kills = _killsThisLevel,
             soulEssenceAwarded = essenceAwarded,
-            levelMultiplier = levelMultiplier
+            baseEssenceComponent = baseEssenceComponent,
+            killEssenceComponent = killEssenceComponent,
+            floorEssenceComponent = floorEssenceComponent,
+            rawEssenceBeforeMultipliers = rawEssence,
+            levelMultiplier = levelMultiplier,
+            playerEssenceMultiplier = playerEssenceMultiplier,
+            combinedEssenceMultiplier = combinedMultiplier
         };
     }
 
@@ -499,6 +591,7 @@ public class RewardManager : MonoBehaviour
     private bool EnsureRewardUIAndCardPoolReady()
     {
         EnsureRuntimeCardPoolFallback();
+        ApplyDefaultCardRulesIfMissing();
 
         if (!HasSerializedRewardUIBindings())
         {
@@ -539,16 +632,30 @@ public class RewardManager : MonoBehaviour
 
     private void BuildRuntimeCardPool()
     {
-        _runtimeGeneratedCards.Add(CreateRuntimeCard("Brute Force I", "Increase your strength by 10%.", 24, 0, atkBonus: 0.1f));
-        _runtimeGeneratedCards.Add(CreateRuntimeCard("Precision I", "Increase your crit chance by 1%.", 22, 0, critBonus: 0.01f));
-        _runtimeGeneratedCards.Add(CreateRuntimeCard("Fleet foot", "Sacrifice dash distance for a shorter dash cooldown.", 12, 1, dashCdReduction: 0.5f, dashDistanceBonus: -15f));
-        _runtimeGeneratedCards.Add(CreateRuntimeCard("Glass Cannon", "Double damage taken and dealt.", 6, 0, isGlassCannon: true));
-        _runtimeGeneratedCards.Add(CreateRuntimeCard("Momentum Rhythm", "Extend combo timing to keep pressure between attacks.", 18, 2, comboWindowBonus: 0.3f));
-        _runtimeGeneratedCards.Add(CreateRuntimeCard("Soul Siphon I", "Small chance to lifesteal from hits this stage.", 14, 2, vampiricBonus: 0.12f));
-        _runtimeGeneratedCards.Add(CreateRuntimeCard("Essence Surge I", "Increase Soul Essence gains for the next stage.", 13, 4, essenceBonus: 0.2f));
-        _runtimeGeneratedCards.Add(CreateRuntimeCard("Kinetic Focus", "Boost crit chance and combo control for this stage.", 16, 1, critBonus: 0.03f, comboWindowBonus: 0.15f));
-        _runtimeGeneratedCards.Add(CreateRuntimeCard("Windrunner", "Faster dash cooldown with improved dash reach.", 12, 2, dashCdReduction: 0.25f, dashDistanceBonus: 6f));
-        _runtimeGeneratedCards.Add(CreateRuntimeCard("Berserker Tempo", "A rare burst of damage and crit for one stage.", 7, 0, atkBonus: 0.14f, critBonus: 0.02f));
+        BuffCardData bruteForce = CreateRuntimeCard("Brute Force I", "Increase your strength by 10%.", 24, 0, atkBonus: 0.1f);
+        BuffCardData precision = CreateRuntimeCard("Precision I", "Increase your crit chance by 1%.", 22, 0, critBonus: 0.01f);
+        BuffCardData fleetFoot = CreateRuntimeCard("Fleet foot", "Sacrifice dash distance for a shorter dash cooldown.", 12, 1, dashCdReduction: 0.5f, dashDistanceBonus: -15f, isSpecialCard: true);
+        BuffCardData glassCannon = CreateRuntimeCard("Glass Cannon", "Double damage taken and dealt.", 6, 0, isGlassCannon: true);
+        BuffCardData momentumRhythm = CreateRuntimeCard("Momentum Rhythm", "Extend combo timing to keep pressure between attacks.", 18, 2, comboWindowBonus: 0.3f);
+        BuffCardData soulSiphon = CreateRuntimeCard("Soul Siphon I", "Small chance to lifesteal from hits this stage.", 14, 2, vampiricBonus: 0.12f);
+        BuffCardData essenceSurge = CreateRuntimeCard("Essence Surge I", "Increase Soul Essence gains for the next stage.", 13, 4, essenceBonus: 0.2f);
+        BuffCardData kineticFocus = CreateRuntimeCard("Kinetic Focus", "Boost crit chance and combo control for this stage.", 16, 1, critBonus: 0.03f, comboWindowBonus: 0.15f);
+        BuffCardData windrunner = CreateRuntimeCard("Windrunner", "Faster dash cooldown with improved dash reach.", 12, 2, dashCdReduction: 0.25f, dashDistanceBonus: 6f, isSpecialCard: true);
+        BuffCardData berserkerTempo = CreateRuntimeCard("Berserker Tempo", "A rare burst of damage and crit for one stage.", 7, 0, atkBonus: 0.14f, critBonus: 0.02f, durationStages: 1);
+
+        fleetFoot.blockedCards = new[] { windrunner };
+        windrunner.blockedCards = new[] { fleetFoot };
+
+        _runtimeGeneratedCards.Add(bruteForce);
+        _runtimeGeneratedCards.Add(precision);
+        _runtimeGeneratedCards.Add(fleetFoot);
+        _runtimeGeneratedCards.Add(glassCannon);
+        _runtimeGeneratedCards.Add(momentumRhythm);
+        _runtimeGeneratedCards.Add(soulSiphon);
+        _runtimeGeneratedCards.Add(essenceSurge);
+        _runtimeGeneratedCards.Add(kineticFocus);
+        _runtimeGeneratedCards.Add(windrunner);
+        _runtimeGeneratedCards.Add(berserkerTempo);
     }
 
     private BuffCardData CreateRuntimeCard(
@@ -563,6 +670,8 @@ public class RewardManager : MonoBehaviour
         float dashDistanceBonus = 0f,
         float essenceBonus = 0f,
         float vampiricBonus = 0f,
+        int durationStages = 0,
+        bool isSpecialCard = false,
         bool isGlassCannon = false)
     {
         BuffCardData card = ScriptableObject.CreateInstance<BuffCardData>();
@@ -578,6 +687,8 @@ public class RewardManager : MonoBehaviour
         card.dashDistanceBonus = dashDistanceBonus;
         card.essenceBonus = essenceBonus;
         card.vampiricBonus = vampiricBonus;
+        card.buffDurationStages = Mathf.Max(0, durationStages);
+        card.isSpecialCard = isSpecialCard;
         card.isGlassCannon = isGlassCannon;
         return card;
     }
@@ -627,7 +738,7 @@ public class RewardManager : MonoBehaviour
 
         CreateText("Title", panel, "Select Buff!", 68f, FontStyles.Bold, new Color(0.95f, 0.97f, 1f, 1f),
             new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -84f), new Vector2(900f, 90f), new Vector2(0.5f, 0.5f), TextAlignmentOptions.Center);
-        CreateText("Hint", panel, "Tap a card to claim a temporary stage buff", 34f, FontStyles.Normal, new Color(0.82f, 0.88f, 1f, 0.95f),
+        CreateText("Hint", panel, "Tap a card to claim a buff for this run", 34f, FontStyles.Normal, new Color(0.82f, 0.88f, 1f, 0.95f),
             new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0f, 56f), new Vector2(1200f, 60f), new Vector2(0.5f, 0.5f), TextAlignmentOptions.Center);
 
         _runtimeCardButtons = new Button[3];
@@ -793,7 +904,7 @@ public class RewardManager : MonoBehaviour
         }
 
         List<BuffCardData> pool = allAvailableCards
-            .Where(card => card != null)
+            .Where(card => IsCardSelectable(card))
             .Distinct()
             .ToList();
 
@@ -866,12 +977,313 @@ public class RewardManager : MonoBehaviour
         return baseWeight + Mathf.Max(0, card.calmStateBonusWeight);
     }
 
+    private bool IsCardSelectable(BuffCardData card)
+    {
+        if (card == null)
+        {
+            return false;
+        }
+
+        if (_blockedCards.Contains(card))
+        {
+            return false;
+        }
+
+        return !card.isSpecialCard || !_selectedSpecialCards.Contains(card);
+    }
+
+    private void RegisterCardBlocks(BuffCardData sourceCard)
+    {
+        if (sourceCard == null || sourceCard.blockedCards == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < sourceCard.blockedCards.Length; i++)
+        {
+            BuffCardData blockedCard = sourceCard.blockedCards[i];
+            if (blockedCard != null)
+            {
+                _blockedCards.Add(blockedCard);
+            }
+        }
+    }
+
+    private void ReapplyActiveCardBuffsToPlayer()
+    {
+        EnsurePlayerManager();
+        if (playerManager == null)
+        {
+            return;
+        }
+
+        playerManager.ClearTemporaryCardBuffs();
+
+        for (int i = 0; i < _activeCardBuffs.Count; i++)
+        {
+            ActiveCardBuff activeBuff = _activeCardBuffs[i];
+            if (activeBuff == null || activeBuff.card == null)
+            {
+                continue;
+            }
+
+            BuffCardData card = activeBuff.card;
+            playerManager.cardAtkBonus += card.atkBonus;
+            playerManager.cardCritChance += card.critBonus;
+            playerManager.cardEssenceMult += card.essenceBonus;
+            playerManager.cardVampChance += card.vampiricBonus;
+            playerManager.cardComboWindowBonus += card.comboWindowBonus;
+            playerManager.cardDashCDReduction += card.dashCDReduction;
+            playerManager.cardDashDistanceBonus += card.dashDistanceBonus;
+
+            if (card.isGlassCannon)
+            {
+                playerManager.ApplyGlassCannon();
+            }
+        }
+    }
+
+    private void ConsumeStageLimitedCardDurations()
+    {
+        bool removedAnyCard = false;
+
+        for (int i = _activeCardBuffs.Count - 1; i >= 0; i--)
+        {
+            ActiveCardBuff activeBuff = _activeCardBuffs[i];
+            if (activeBuff == null || activeBuff.card == null)
+            {
+                _activeCardBuffs.RemoveAt(i);
+                removedAnyCard = true;
+                continue;
+            }
+
+            if (activeBuff.stagesRemaining < 0)
+            {
+                continue;
+            }
+
+            activeBuff.stagesRemaining--;
+            if (activeBuff.stagesRemaining <= 0)
+            {
+                _activeCardBuffs.RemoveAt(i);
+                removedAnyCard = true;
+            }
+        }
+
+        if (removedAnyCard)
+        {
+            ReapplyActiveCardBuffsToPlayer();
+        }
+    }
+
+    private void AddContextToRunSummary(LevelRewardContext context)
+    {
+        _runBaseEssenceComponentTotal += Mathf.Max(0, context.baseEssenceComponent);
+        _runKillEssenceComponentTotal += Mathf.Max(0, context.killEssenceComponent);
+        _runFloorEssenceComponentTotal += Mathf.Max(0, context.floorEssenceComponent);
+        _runRawEssenceBeforeMultiplierTotal += Mathf.Max(0, context.rawEssenceBeforeMultipliers);
+        _runStageRewardEssenceTotal += Mathf.Max(0, context.soulEssenceAwarded);
+    }
+
+    private void UpdateLastClearedProgress(int floorDepth)
+    {
+        int configuredStagesPerLevel = stagesPerLevel;
+        if (LevelRunManager.HasInstance)
+        {
+            configuredStagesPerLevel = Mathf.Max(1, LevelRunManager.Instance.StagesPerFloor);
+        }
+
+        _runLastClearedFloor = ((floorDepth - 1) / Mathf.Max(1, configuredStagesPerLevel)) + 1;
+        _runLastClearedStage = ((floorDepth - 1) % Mathf.Max(1, configuredStagesPerLevel)) + 1;
+    }
+
+    private void EnsureRunSummaryInitialized()
+    {
+        if (_runSummaryInitialized)
+        {
+            return;
+        }
+
+        ResetRunSummaryState();
+        _runSummaryInitialized = true;
+        _runStartRealtime = Time.realtimeSinceStartup;
+    }
+
+    private void ResetRunSummaryState()
+    {
+        _runTotalEnemiesDefeated = 0;
+        _runTotalStagesCleared = 0;
+        _runLastClearedFloor = 0;
+        _runLastClearedStage = 0;
+        _runBaseEssenceComponentTotal = 0;
+        _runKillEssenceComponentTotal = 0;
+        _runFloorEssenceComponentTotal = 0;
+        _runRawEssenceBeforeMultiplierTotal = 0;
+        _runStageRewardEssenceTotal = 0;
+        _runComposureBonusEssenceTotal = 0;
+        _runTotalEssenceEarned = 0;
+    }
+
+    private void ResetRunStateForFreshStart()
+    {
+        _activeCardBuffs.Clear();
+        _selectedSpecialCards.Clear();
+        _blockedCards.Clear();
+        ResetRunSummaryState();
+        _runStartRealtime = Time.realtimeSinceStartup;
+        ReapplyActiveCardBuffsToPlayer();
+    }
+
+    private void ApplyDefaultCardRulesIfMissing()
+    {
+        if (allAvailableCards == null || allAvailableCards.Length == 0)
+        {
+            return;
+        }
+
+        BuffCardData fleetFoot = TryGetCardByName("Fleet foot");
+        BuffCardData windrunner = TryGetCardByName("Windrunner");
+        BuffCardData berserkerTempo = TryGetCardByName("Berserker Tempo");
+
+        EnsureMutualBlockPair(fleetFoot, windrunner);
+
+        if (berserkerTempo != null && berserkerTempo.buffDurationStages <= 0)
+        {
+            berserkerTempo.buffDurationStages = 1;
+        }
+    }
+
+    private BuffCardData TryGetCardByName(string cardName)
+    {
+        if (allAvailableCards == null || string.IsNullOrWhiteSpace(cardName))
+        {
+            return null;
+        }
+
+        for (int i = 0; i < allAvailableCards.Length; i++)
+        {
+            BuffCardData candidate = allAvailableCards[i];
+            if (candidate != null && string.Equals(candidate.cardName, cardName, StringComparison.OrdinalIgnoreCase))
+            {
+                return candidate;
+            }
+        }
+
+        return null;
+    }
+
+    private void EnsureMutualBlockPair(BuffCardData first, BuffCardData second)
+    {
+        if (first == null || second == null)
+        {
+            return;
+        }
+
+        first.isSpecialCard = true;
+        second.isSpecialCard = true;
+        first.blockedCards = EnsureCardInBlockList(first.blockedCards, second);
+        second.blockedCards = EnsureCardInBlockList(second.blockedCards, first);
+    }
+
+    private BuffCardData[] EnsureCardInBlockList(BuffCardData[] existingList, BuffCardData cardToAdd)
+    {
+        if (cardToAdd == null)
+        {
+            return existingList ?? Array.Empty<BuffCardData>();
+        }
+
+        if (existingList != null)
+        {
+            for (int i = 0; i < existingList.Length; i++)
+            {
+                if (existingList[i] == cardToAdd)
+                {
+                    return existingList;
+                }
+            }
+        }
+
+        List<BuffCardData> combined = existingList != null
+            ? new List<BuffCardData>(existingList.Where(card => card != null))
+            : new List<BuffCardData>();
+        combined.Add(cardToAdd);
+        return combined.ToArray();
+    }
+
+    private void BindPlayerEvents()
+    {
+        EnsurePlayerManager();
+        if (playerManager == null || _subscribedPlayerManager == playerManager)
+        {
+            return;
+        }
+
+        UnbindPlayerEvents();
+        _subscribedPlayerManager = playerManager;
+        _subscribedPlayerManager.SoulEssenceChanged += HandleSoulEssenceChanged;
+    }
+
+    private void UnbindPlayerEvents()
+    {
+        if (_subscribedPlayerManager == null)
+        {
+            return;
+        }
+
+        _subscribedPlayerManager.SoulEssenceChanged -= HandleSoulEssenceChanged;
+        _subscribedPlayerManager = null;
+    }
+
+    private void HandleSoulEssenceChanged(int totalEssence, int amountAdded)
+    {
+        if (!_runSummaryInitialized)
+        {
+            return;
+        }
+
+        _runTotalEssenceEarned += Mathf.Max(0, amountAdded);
+    }
+
     private void EnsurePlayerManager()
     {
         if (playerManager == null)
         {
             playerManager = FindFirstObjectByType<PlayerManager>();
         }
+    }
+
+    public bool TryGetRunRewardSummary(out RunRewardSummary summary)
+    {
+        if (!_runSummaryInitialized)
+        {
+            summary = default;
+            return false;
+        }
+
+        float runtimeSeconds = Mathf.Max(0f, Time.realtimeSinceStartup - _runStartRealtime);
+        float effectiveMultiplier = _runRawEssenceBeforeMultiplierTotal > 0
+            ? (float)_runStageRewardEssenceTotal / _runRawEssenceBeforeMultiplierTotal
+            : 1f;
+
+        summary = new RunRewardSummary
+        {
+            runtimeSeconds = runtimeSeconds,
+            floorReached = _runLastClearedFloor,
+            stageReached = _runLastClearedStage,
+            stagesCleared = _runTotalStagesCleared,
+            enemiesDefeated = _runTotalEnemiesDefeated,
+            essencePerKill = essencePerKill,
+            totalEssenceEarned = _runTotalEssenceEarned,
+            stageRewardEssence = _runStageRewardEssenceTotal,
+            composureBonusEssence = _runComposureBonusEssenceTotal,
+            rawBaseEssence = _runBaseEssenceComponentTotal,
+            rawKillEssence = _runKillEssenceComponentTotal,
+            rawFloorEssence = _runFloorEssenceComponentTotal,
+            rawEssenceBeforeMultipliers = _runRawEssenceBeforeMultiplierTotal,
+            effectiveCombinedMultiplier = effectiveMultiplier
+        };
+
+        return true;
     }
 
     private void StartFadeIn()

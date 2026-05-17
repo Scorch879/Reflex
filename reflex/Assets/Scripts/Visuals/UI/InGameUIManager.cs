@@ -62,6 +62,30 @@ public class InGameUIManager : MonoBehaviour
         healthAnimationCoroutine = StartCoroutine(HealthBarRoutine(currentHp, maxHp));
     }
 
+    public void SetHealthImmediate(float currentHp, float maxHp)
+    {
+        float safeMaxHp = Mathf.Max(0.01f, maxHp);
+        float targetFill = Mathf.Clamp01(currentHp / safeMaxHp);
+
+        if (healthAnimationCoroutine != null)
+        {
+            StopCoroutine(healthAnimationCoroutine);
+            healthAnimationCoroutine = null;
+        }
+
+        if (greenHPBarFill != null)
+        {
+            greenHPBarFill.fillAmount = targetFill;
+        }
+
+        if (redHPBarFill != null)
+        {
+            redHPBarFill.fillAmount = targetFill;
+        }
+
+        UpdateHPText(currentHp, safeMaxHp);
+    }
+
     private IEnumerator HealthBarRoutine(float currentHp, float maxHp)
     {
         float targetFill = Mathf.Clamp01(currentHp / maxHp);

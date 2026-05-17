@@ -2,9 +2,37 @@ using UnityEngine;
 
 public class UpgradeManager : MonoBehaviour
 {
+    private enum UpgradeType
+    {
+        Health = 0,
+        Damage = 1,
+        Crit = 2
+    }
+
     public static UpgradeManager Instance { get; private set; }
 
+    [Header("Preferred Upgrade Tuning Asset")]
     public UpgradeSettings settings;
+
+    [Header("Fallback Upgrade Tuning (Used when Settings is missing)")]
+    [SerializeField, Min(1)] private int fallbackMaxUpgradeLevel = 10;
+    [SerializeField, Min(0)] private int fallbackBaseUpgradeCost = 50;
+    [SerializeField, Min(1f)] private float fallbackUpgradeCostMultiplier = 1.5f;
+    [SerializeField] private float fallbackHealthPerLevel = 10f;
+    [SerializeField] private float fallbackDamagePerLevel = 0.05f;
+    [SerializeField] private float fallbackCritPerLevel = 0.01f;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void Bootstrap()
+    {
+        if (FindFirstObjectByType<UpgradeManager>() != null)
+        {
+            return;
+        }
+
+        GameObject upgradeManagerObject = new GameObject("UpgradeManager");
+        upgradeManagerObject.AddComponent<UpgradeManager>();
+    }
 
     private void Awake()
     {
@@ -18,92 +46,130 @@ public class UpgradeManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public bool TryUpgradeHealth()
+    public bool TryUpgradeHealth() => TryUpgrade(UpgradeType.Health);
+
+    public bool TryUpgradeDamage() => TryUpgrade(UpgradeType.Damage);
+
+    public bool TryUpgradeCrit() => TryUpgrade(UpgradeType.Crit);
+
+    private bool TryUpgrade(UpgradeType upgradeType)
     {
-        if (settings == null) 
+        if (SaveManager.Instance == null || SaveManager.Instance.currentSave == null)
         {
-            Debug.LogWarning("UpgradeSettings is missing on UpgradeManager!");
+            Debug.LogWarning("SaveManager is not ready. Upgrade request ignored.");
             return false;
         }
 
         SaveData data = SaveManager.Instance.currentSave;
-        
-        if (data.healthUpgradeLevel >= settings.maxUpgradeLevel) return false;
-        
-        int cost = settings.GetUpgradeCost(data.healthUpgradeLevel);
-        if (data.soulEssence >= cost)
+        int currentLevel = GetUpgradeLevel(data, upgradeType);
+        int maxLevel = GetMaxUpgradeLevel();
+        if (currentLevel >= maxLevel)
         {
-            data.soulEssence -= cost;
-            data.healthUpgradeLevel++;
-            SaveManager.Instance.SaveGame();
-            ApplyUpgradesToPlayer();
-            return true;
-        }
-        return false;
-    }
-    
-    public bool TryUpgradeDamage()
-    {
-        if (settings == null) 
-        {
-            Debug.LogWarning("UpgradeSettings is missing on UpgradeManager!");
             return false;
         }
 
-        SaveData data = SaveManager.Instance.currentSave;
-        
-        if (data.damageUpgradeLevel >= settings.maxUpgradeLevel) return false;
-        
-        int cost = settings.GetUpgradeCost(data.damageUpgradeLevel);
-        if (data.soulEssence >= cost)
+        int cost = GetUpgradeCost(currentLevel);
+        if (data.soulEssence < cost)
         {
-            data.soulEssence -= cost;
-            data.damageUpgradeLevel++;
-            SaveManager.Instance.SaveGame();
-            ApplyUpgradesToPlayer();
-            return true;
+            return false;
         }
-        return false;
+
+        data.soulEssence -= cost;
+        SetUpgradeLevel(data, upgradeType, currentLevel + 1);
+        SaveManager.Instance.SaveGame();
+        ApplyUpgradesToPlayer();
+        return true;
     }
 
-    public bool TryUpgradeCrit()
+    public int GetMaxUpgradeLevel()
     {
-        if (settings == null) 
+        return settings != null
+            ? Mathf.Max(1, settings.maxUpgradeLevel)
+            : Mathf.Max(1, fallbackMaxUpgradeLevel);
+    }
+
+    public int GetUpgradeCost(int currentLevel)
+    {
+        if (settings != null)
         {
-            Debug.LogWarning("UpgradeSettings is missing on UpgradeManager!");
-            return false;
+            return settings.GetUpgradeCost(currentLevel);
         }
 
-        SaveData data = SaveManager.Instance.currentSave;
-        
-        if (data.critUpgradeLevel >= settings.maxUpgradeLevel) return false;
-        
-        int cost = settings.GetUpgradeCost(data.critUpgradeLevel);
-        if (data.soulEssence >= cost)
+        int safeLevel = Mathf.Max(0, currentLevel);
+        return Mathf.RoundToInt(fallbackBaseUpgradeCost * Mathf.Pow(fallbackUpgradeCostMultiplier, safeLevel));
+    }
+
+    public float GetHealthPerLevel()
+    {
+        return settings != null ? settings.healthPerLevel : fallbackHealthPerLevel;
+    }
+
+    public float GetDamagePerLevel()
+    {
+        return settings != null ? settings.damagePerLevel : fallbackDamagePerLevel;
+    }
+
+    public float GetCritPerLevel()
+    {
+        return settings != null ? settings.critPerLevel : fallbackCritPerLevel;
+    }
+
+    private static int GetUpgradeLevel(SaveData data, UpgradeType upgradeType)
+    {
+        switch (upgradeType)
         {
-            data.soulEssence -= cost;
-            data.critUpgradeLevel++;
-            SaveManager.Instance.SaveGame();
-            ApplyUpgradesToPlayer();
-            return true;
+            case UpgradeType.Health:
+                return data.healthUpgradeLevel;
+            case UpgradeType.Damage:
+                return data.damageUpgradeLevel;
+            case UpgradeType.Crit:
+                return data.critUpgradeLevel;
+            default:
+                return 0;
         }
-        return false;
+    }
+
+    private static void SetUpgradeLevel(SaveData data, UpgradeType upgradeType, int newLevel)
+    {
+        switch (upgradeType)
+        {
+            case UpgradeType.Health:
+                data.healthUpgradeLevel = newLevel;
+                break;
+            case UpgradeType.Damage:
+                data.damageUpgradeLevel = newLevel;
+                break;
+            case UpgradeType.Crit:
+                data.critUpgradeLevel = newLevel;
+                break;
+        }
     }
 
     public void ApplyUpgradesToPlayer()
     {
+        if (SaveManager.Instance == null || SaveManager.Instance.currentSave == null)
+        {
+            return;
+        }
+
         PlayerManager playerManager = FindFirstObjectByType<PlayerManager>();
-        if (playerManager != null && settings != null)
+        if (playerManager != null)
         {
             SaveData data = SaveManager.Instance.currentSave;
-            playerManager.permanentMaxHPBonus = data.healthUpgradeLevel * settings.healthPerLevel;
-            playerManager.permanentAtkBonus = data.damageUpgradeLevel * settings.damagePerLevel;
-            playerManager.permanentCritBonus = data.critUpgradeLevel * settings.critPerLevel;
-            
-            // Ensure UI updates properly if needed, cap current health to new max
+            playerManager.soulEssence = data.soulEssence;
+            playerManager.permanentMaxHPBonus = data.healthUpgradeLevel * GetHealthPerLevel();
+            playerManager.permanentAtkBonus = data.damageUpgradeLevel * GetDamagePerLevel();
+            playerManager.permanentCritBonus = data.critUpgradeLevel * GetCritPerLevel();
+
+            // Ensure current health stays valid after max-health upgrades or downgrades.
             if (playerManager.currentHealth > playerManager.MaxHealth)
             {
                 playerManager.currentHealth = playerManager.MaxHealth;
+            }
+
+            if (InGameUIManager.Instance != null)
+            {
+                InGameUIManager.Instance.UpdateHealth(playerManager.currentHealth, playerManager.MaxHealth);
             }
         }
     }

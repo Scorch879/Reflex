@@ -21,7 +21,12 @@ public class BuffCardData : ScriptableObject
     [Header("Economy & Utility")]
     public float essenceBonus;
     public float vampiricBonus;
-    
+
+    [Header("Duration")]
+    [Min(0)] public int buffDurationStages;
+
     [Header("Special")]
+    public bool isSpecialCard;
+    public BuffCardData[] blockedCards;
     public bool isGlassCannon;
 }

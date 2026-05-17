@@ -34,6 +34,11 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 - Emotion aggression tempo now uses slower rise / faster fall with passive calm decay after short combat inactivity.
 - Aggression state now uses a more forgiving threshold/weight profile with passive-disengage bias to avoid passive play being misclassified as aggressive.
 - Emotion telemetry now rebases on combat floor entry with stale-room cleanup to keep updates reliable across progression.
+- Upgrade station is now scene-authored in `Lobby` (not runtime-spawned), with interaction collider and visible mesh.
+- HP bar startup sync now initializes both green/red fill correctly at lobby start when HP is full.
+- Buff cards now support run-persistent stacking with per-card stage duration (`buffDurationStages`).
+- Special buff cards now support one-pick-per-run locking and contradiction blocking (`blockedCards`), including Fleet foot vs Windrunner exclusivity.
+- Added a temporary runtime game-over summary overlay with run metrics and soul-essence calculation breakdown on player death.
 
 ## Active Priorities
 - Playtest full path: Lobby (start only) -> Floor 1 stage chain -> Floor 2 stage chain (no lobby return).
@@ -41,6 +46,8 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 - Validate debug HUD readability and placement on multiple editor game-view resolutions.
 - Validate that directional fallback exits in Lobby remain readable and reachable.
 - Validate gameplay feel in Unity Play Mode across multiple rooms.
+- Validate stage-duration expiration behavior for short-duration cards (for example Berserker Tempo).
+- Validate special-card contradiction filtering and one-time pick constraints across long runs.
 - Tune floor scaling fields:
   - `enemyHealthPerFloorStep`
   - `enemyDamagePerFloorStep`
@@ -76,18 +83,18 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 - Playtest calm-to-aggressive transitions and aggressive-to-calm recovery.
 - Validate that room pacing remains readable at high spawn density.
 - Confirm enemy containment behavior still feels intentional under blended values.
+- Replace temporary runtime game-over overlay with final authored UI design once art/UI pass is ready.
 
 ## Known Bugs
-- No new compile errors from this change.
 - Existing warning persists: `PlayerMovementManagement.isSprinting` is never assigned.
 
 ## Known Blockers
-- None on build verification.
 - In-editor playtesting not executed in this session.
 
 ## Systems In Progress
 - Level flow validation and scene progression polish.
 - Emotion engine tuning and pacing balance.
+- Buff-card balance tuning and contradiction-rule coverage.
 
 ## Testing Status
 - Build test: pass (`dotnet build reflex.sln`).

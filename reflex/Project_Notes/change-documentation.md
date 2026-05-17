@@ -1,3 +1,73 @@
+## 2026-05-17 - Temporary Game Over Compile Fix (CS0170)
+
+### Summary
+Fixed a struct definite-assignment compile error in temporary game-over summary rendering.
+
+### Files Affected
+- Assets/Scripts/Visuals/UI/TemporaryGameOverUI.cs
+
+### Systems Affected
+- Temporary game-over UI
+- Run summary fallback/selection flow
+
+### Gameplay/UI Changes
+- `RunRewardSummary` now initializes from fallback first, then gets replaced by runtime summary when available.
+- Removes `CS0170` (`effectiveCombinedMultiplier` possibly unassigned) from game-over text rendering.
+
+### Build/Test
+- `dotnet build reflex.sln` succeeded.
+- Existing unrelated warning remains:
+  - `Assets/Scripts/Movement/PlayerMovementManagement.cs(30,18) CS0649 isSprinting is never assigned`.
+
+## 2026-05-17 - Run-Persistent Buff Cards + Special Card Locks + Temporary Game Over Summary
+
+### Summary
+Changed buff-card behavior from single-stage replacement to run-persistent stacking, added per-card duration and special-card exclusivity rules, and implemented a temporary runtime game-over screen with run-summary calculations.
+
+### Files Affected
+- Assets/Scripts/Data/Buffs Data/BuffCardData.cs
+- Assets/Scripts/Interactables/RewardManager.cs
+- Assets/Scripts/Player/PlayerManager.cs
+- Assets/Scripts/Visuals/UI/TemporaryGameOverUI.cs
+- Assets/Scripts/Visuals/UI/TemporaryGameOverUI.cs.meta
+
+### Systems Affected
+- Buff-card data schema
+- Card-offer filtering and card-lifecycle runtime behavior
+- Run reward telemetry and essence breakdown tracking
+- Player death signaling
+- Game-over UI fallback flow
+
+### Gameplay/UI Changes
+- Buff cards now persist for the run by default and no longer clear automatically when a new card is selected.
+- Added `buffDurationStages` to card data:
+  - `0` means whole-run duration
+  - `1+` means expires after that many stage clears
+- Added special-card fields:
+  - `isSpecialCard`
+  - `blockedCards`
+- Special cards can only be picked once per run.
+- Picked special cards can permanently block contradictory cards from appearing again in that run.
+- Added built-in rule enforcement for `Fleet foot` <-> `Windrunner` mutual exclusivity and default one-stage duration for `Berserker Tempo` when missing.
+- Reward manager now tracks run-level essence breakdown data and exposes a summary snapshot.
+- Added `PlayerManager.PlayerDied` event for death-driven UI flow.
+- Added a temporary runtime game-over overlay that shows:
+  - Game Over title
+  - Runtime
+  - Floor/stage cleared
+  - Enemies killed
+  - Total Soul Essence earned
+  - Calculation breakdown (`kills x essencePerKill`, raw subtotal, effective multiplier, stage total, composure bonus, other sources)
+
+### Build/Test
+- `dotnet build reflex.sln` succeeded.
+- Existing warning remains unrelated:
+  - `Assets/Scripts/Movement/PlayerMovementManagement.cs(30,18) CS0649 isSprinting is never assigned`.
+
+### Known Limitations
+- Temporary game-over UI is runtime-generated placeholder UI and intended to be replaced by final authored UI.
+- Full in-editor Play Mode validation is still required for multi-floor duration edge cases and final pacing feel.
+
 ## 2026-05-17 - One-Time Lobby Entry (No Lobby Between Floors)
 
 ### Summary
@@ -663,3 +733,82 @@ Added persistence for the player's equipped weapon so it can be saved and reload
 
 ### Known Limitations
 - Relies on `SaveManager` being instanced and properly implemented to handle file I/O operations.
+
+## 2026-05-17 - Runtime Upgrade Station + Temporary Upgrade UI Bootstrap
+
+### Summary
+Implemented a fully runtime-bootstrapped upgrade flow so permanent upgrades can be accessed in Lobby without manual scene wiring, and ensured upgrades persist through `SaveManager`.
+
+### Files Affected
+- Assets/Scripts/Data/SaveManager.cs
+- Assets/Scripts/Game/UpgradeManager.cs
+- Assets/Scripts/Interactables/UpgradeStation.cs
+- Assets/Scripts/Visuals/UpgradeUIManager.cs
+
+### Systems Affected
+- Save/load bootstrap lifecycle
+- Permanent upgrade application and stat sync
+- Lobby interactables
+- Upgrade UI fallback flow
+
+### Gameplay/UI Changes
+- `SaveManager` now self-bootstraps at runtime and safely recreates a default save if existing JSON is unreadable.
+- `UpgradeManager` now self-bootstraps at runtime and supports fallback upgrade tuning values when no `UpgradeSettings` asset is assigned.
+- Upgrade purchases now:
+  - spend essence from `SaveManager.currentSave`
+  - save immediately to disk
+  - reapply permanent bonuses to player stats
+  - sync player runtime essence value for HUD correctness
+- `UpgradeUIManager` now self-bootstraps and supports a temporary runtime UI fallback (`OnGUI`) when no scene-authored upgrade panel is assigned.
+- `UpgradeStation` now:
+  - ensures a trigger interaction collider is present
+  - toggles upgrade UI through `UpgradeUIManager.IsOpen`
+  - auto-spawns a runtime station in `Lobby` (with temporary placeholder visuals) when none exists.
+
+### Build/Test
+- Attempted `dotnet build reflex.sln` (elevated) but build validation is currently blocked by project file script-inclusion drift:
+  - `SaveManager` references in `PlayerManager`/`WeaponManager` were unresolved by the generated `.csproj` include list.
+- Unity Play Mode validation is still required for interaction feel and final placement tuning.
+
+### Known Limitations
+- Runtime station currently auto-spawns only in `Lobby`.
+- Temporary upgrade UI uses IMGUI fallback styling and is intended as a placeholder until a scene-authored UI panel is wired.
+
+## 2026-05-17 - Lobby-Only Upgrade Station + HP Bar Start Fill Fix
+
+### Summary
+Converted the upgrade station from runtime auto-spawn behavior to a scene-authored Lobby object, and fixed the HP bar initialization bug where the green bar could start at zero despite full HP text.
+
+### Files Affected
+- Assets/Scripts/Interactables/UpgradeStation.cs
+- Assets/Scenes/Lobby.unity
+- Assets/Scripts/Visuals/UI/InGameUIManager.cs
+- Assets/Scripts/Player/PlayerManager.cs
+
+### Scenes Affected
+- Assets/Scenes/Lobby.unity
+
+### Systems Affected
+- Lobby interactable placement/authoring
+- Upgrade station interaction flow
+- In-game health UI initialization
+
+### Gameplay/UI Changes
+- Removed runtime station auto-spawn logic from `UpgradeStation`.
+- Added a real `Upgrade Station` GameObject to the Lobby scene under `Interactables` with:
+  - `UpgradeStation` component
+  - trigger `BoxCollider` for interaction
+  - visible mesh renderer/filter for clear in-scene presence
+- `UpgradeStation` now focuses on interaction behavior and collider validation only.
+- Added immediate HP fill sync API in `InGameUIManager`:
+  - `SetHealthImmediate(currentHp, maxHp)` sets both red/green fill instantly and updates text.
+- `PlayerManager` now initializes HP bars once UI becomes available at start:
+  - avoids the start-of-lobby case where text shows `100/100` but green fill remains at `0`.
+- `PlayerManager.Heal()` now also updates HP bar visuals immediately.
+
+### Build/Test
+- `dotnet build reflex.sln` succeeded (1 existing unrelated warning).
+- Unity Editor Play Mode validation remains required for final in-game verification.
+
+### Known Limitations
+- Interaction prompt rendering still depends on `PlayerInteraction.uiElement` scene wiring (existing Lobby player instance currently has it unassigned).

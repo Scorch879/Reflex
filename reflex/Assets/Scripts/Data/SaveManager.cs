@@ -24,6 +24,18 @@ public class SaveManager : MonoBehaviour
 
     private string saveFilePath;
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void Bootstrap()
+    {
+        if (FindFirstObjectByType<SaveManager>() != null)
+        {
+            return;
+        }
+
+        GameObject saveManagerObject = new GameObject("SaveManager");
+        saveManagerObject.AddComponent<SaveManager>();
+    }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -52,18 +64,33 @@ public class SaveManager : MonoBehaviour
         {
             string json = File.ReadAllText(saveFilePath);
             currentSave = JsonUtility.FromJson<SaveData>(json);
+            if (currentSave == null)
+            {
+                Debug.LogWarning("Save file exists but was unreadable. Creating a fresh save.");
+                CreateDefaultSave();
+                SaveGame();
+                return;
+            }
+
             Debug.Log("Game Loaded from " + saveFilePath);
         }
         else
         {
-            currentSave = new SaveData();
-            currentSave.equippedWeaponName = ""; // Empty implies default
-            currentSave.soulEssence = 0;
-            currentSave.healthUpgradeLevel = 0;
-            currentSave.damageUpgradeLevel = 0;
-            currentSave.critUpgradeLevel = 0;
+            CreateDefaultSave();
             SaveGame();
         }
+    }
+
+    private void CreateDefaultSave()
+    {
+        currentSave = new SaveData
+        {
+            equippedWeaponName = "", // Empty implies default
+            soulEssence = 0,
+            healthUpgradeLevel = 0,
+            damageUpgradeLevel = 0,
+            critUpgradeLevel = 0
+        };
     }
 
     public void RefreshPlayerStats()
