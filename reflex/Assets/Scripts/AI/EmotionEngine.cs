@@ -105,23 +105,23 @@ public class EmotionEngine : MonoBehaviour
 
     [Header("Emotion State")]
     [SerializeField] private PlayerEmotionState startingEmotion = PlayerEmotionState.Calm;
-    [SerializeField, Range(0f, 1f)] private float aggressiveThreshold = 0.64f;
-    [SerializeField, Range(0f, 1f)] private float calmThreshold = 0.46f;
+    [SerializeField, Range(0f, 1f)] private float aggressiveThreshold = 0.61f;
+    [SerializeField, Range(0f, 1f)] private float calmThreshold = 0.41f;
     [SerializeField, Range(0f, 1f)] private float scoreSmoothing = 0.35f;
-    [SerializeField, Range(0f, 1f)] private float aggressionRiseSmoothing = 0.14f;
-    [SerializeField, Range(0f, 1f)] private float aggressionFallSmoothing = 0.55f;
+    [SerializeField, Range(0f, 1f)] private float aggressionRiseSmoothing = 0.18f;
+    [SerializeField, Range(0f, 1f)] private float aggressionFallSmoothing = 0.42f;
     [SerializeField] private float evaluationInterval = 1f;
     [SerializeField] private bool logEmotionChanges = true;
 
     [Header("Aggression Tempo")]
-    [SerializeField, Min(0f)] private float calmDecayDelay = 0.55f;
-    [SerializeField, Range(0f, 0.25f)] private float calmDecayPerSecond = 0.11f;
-    [SerializeField, Range(0.1f, 1f)] private float attackIntentScale = 0.58f;
-    [SerializeField, Range(0.1f, 1f)] private float hitIntentScale = 0.52f;
+    [SerializeField, Min(0f)] private float calmDecayDelay = 1.2f;
+    [SerializeField, Range(0f, 0.25f)] private float calmDecayPerSecond = 0.04f;
+    [SerializeField, Range(0.1f, 1f)] private float attackIntentScale = 0.68f;
+    [SerializeField, Range(0.1f, 1f)] private float hitIntentScale = 0.62f;
 
     [Header("Forgiveness Tuning")]
-    [SerializeField, Range(0f, 1f)] private float passiveRecoveryBoost = 0.5f;
-    [SerializeField, Range(0f, 0.25f)] private float passiveForgivenessBias = 0.09f;
+    [SerializeField, Range(0f, 1f)] private float passiveRecoveryBoost = 0.22f;
+    [SerializeField, Range(0f, 0.25f)] private float passiveForgivenessBias = 0.015f;
 
     [Header("Expected Values")]
     [SerializeField] private float expectedDamageTaken = 50f;
@@ -132,13 +132,13 @@ public class EmotionEngine : MonoBehaviour
     [SerializeField] private float expectedDeaths = 2f;
 
     [Header("Recent Behavior Tuning")]
-    [SerializeField, Range(0f, 1f)] private float recentBehaviorWeight = 0.75f;
+    [SerializeField, Range(0f, 1f)] private float recentBehaviorWeight = 0.62f;
     [SerializeField] private float expectedRoomDamageTaken = 20f;
     [SerializeField] private float expectedRoomEnemyEncounters = 4f;
     [SerializeField] private float expectedRoomAttacks = 10f;
     [SerializeField] private float expectedRoomMovementSpeed = 4f;
     [SerializeField] private float expectedRoomDeaths = 1f;
-    [SerializeField] private float minimumEvidenceForChange = 0.38f;
+    [SerializeField] private float minimumEvidenceForChange = 0.3f;
 
     [Header("Adaptive Spawning")]
     [SerializeField] private float aggressiveSpawnMultiplier = 1.35f;
@@ -236,6 +236,12 @@ public class EmotionEngine : MonoBehaviour
             _currentRoomTime += Time.deltaTime;
         }
 
+        if (!IsRoomActive)
+        {
+            _evaluationTimer = evaluationInterval;
+            return;
+        }
+
         _evaluationTimer -= Time.deltaTime;
         if (_evaluationTimer <= 0f)
         {
@@ -320,6 +326,11 @@ public class EmotionEngine : MonoBehaviour
 
     public void RecordDamageTaken(float amount)
     {
+        if (!IsRoomActive)
+        {
+            return;
+        }
+
         if (amount <= 0f)
         {
             return;
@@ -332,6 +343,11 @@ public class EmotionEngine : MonoBehaviour
 
     public void RecordDeath()
     {
+        if (!IsRoomActive)
+        {
+            return;
+        }
+
         _deathCount++;
         _lastCombatIntentTime = Time.time;
         EvaluateEmotion(true);
@@ -339,6 +355,11 @@ public class EmotionEngine : MonoBehaviour
 
     public void RecordEnemyEncounter(EnemyController enemy)
     {
+        if (!IsRoomActive)
+        {
+            return;
+        }
+
         if (enemy == null)
         {
             return;
@@ -352,6 +373,11 @@ public class EmotionEngine : MonoBehaviour
 
     public void RecordAttackStarted()
     {
+        if (!IsRoomActive)
+        {
+            return;
+        }
+
         _attacksPerformed++;
         _lastCombatIntentTime = Time.time;
         _lastAttackStartedTime = Time.time;
@@ -362,6 +388,11 @@ public class EmotionEngine : MonoBehaviour
 
     public void RecordEnemyHit(float damage)
     {
+        if (!IsRoomActive)
+        {
+            return;
+        }
+
         if (damage <= 0f)
         {
             return;
@@ -376,6 +407,11 @@ public class EmotionEngine : MonoBehaviour
 
     public void RecordMovement(float speed, bool isMoving, bool isIdle)
     {
+        if (!IsRoomActive)
+        {
+            return;
+        }
+
         float deltaTime = Time.deltaTime;
 
         if (isMoving)
@@ -846,6 +882,11 @@ public class EmotionEngine : MonoBehaviour
 
     private float ApplyPassiveCalmDecay(float targetScore, float elapsedSinceLastEvaluation, float now)
     {
+        if (!IsRoomActive)
+        {
+            return targetScore;
+        }
+
         if (calmDecayPerSecond <= 0f)
         {
             return targetScore;
@@ -862,6 +903,11 @@ public class EmotionEngine : MonoBehaviour
 
     private float CalculatePassiveForgivenessBias(EmotionProfileSnapshot recentSnapshot)
     {
+        if (!IsRoomActive)
+        {
+            return 0f;
+        }
+
         if (passiveForgivenessBias <= 0f)
         {
             return 0f;
@@ -937,7 +983,7 @@ public class EmotionEngine : MonoBehaviour
             RebaseTelemetry(levelCarryoverFactor);
         }
 
-        EvaluateEmotion(true);
+        EmotionProfileUpdated?.Invoke(BuildSnapshot());
 
         if (logEmotionChanges)
         {

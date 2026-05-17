@@ -863,6 +863,48 @@ Added progression-stability safeguards so emotion telemetry does not saturate or
 ### Known Limitations
 - Needs in-editor multi-floor verification to confirm behavior under all room/spawner combinations.
 
+## 2026-05-18 - Combat-Only Emotion Updates + Less-Forgiving Rebalance
+
+### Summary
+Reduced calm-overcorrection and restricted passive emotion decay/telemetry updates to active combat rooms only.
+
+### Files Affected
+- Assets/Scripts/AI/EmotionEngine.cs
+
+### Gameplay Changes
+- Rebalanced aggressiveness toward less-forgiving defaults:
+  - `aggressiveThreshold`: `0.64 -> 0.61`
+  - `calmThreshold`: `0.46 -> 0.41`
+  - `aggressionRiseSmoothing`: `0.14 -> 0.18`
+  - `aggressionFallSmoothing`: `0.55 -> 0.42`
+  - `calmDecayDelay`: `0.55 -> 1.20`
+  - `calmDecayPerSecond`: `0.11 -> 0.04`
+  - `attackIntentScale`: `0.58 -> 0.68`
+  - `hitIntentScale`: `0.52 -> 0.62`
+  - `passiveRecoveryBoost`: `0.50 -> 0.22`
+  - `passiveForgivenessBias`: `0.09 -> 0.015`
+  - `recentBehaviorWeight`: `0.75 -> 0.62`
+  - `minimumEvidenceForChange`: `0.38 -> 0.30`
+- Telemetry event writes now early-return when there is no active room:
+  - `RecordDamageTaken`
+  - `RecordDeath`
+  - `RecordEnemyEncounter`
+  - `RecordAttackStarted`
+  - `RecordEnemyHit`
+  - `RecordMovement`
+- Periodic evaluation in `Update()` now runs only while `IsRoomActive`.
+- Passive calm decay and passive forgiveness bias are now disabled outside active combat.
+- Floor-enter handler no longer forces an aggression re-score; it only pushes a snapshot update after optional rebase.
+
+### Design Notes
+- Addresses the issue where passive/out-of-combat behavior kept decreasing aggression.
+- Keeps calm recovery possible, but slower and more tied to actual combat behavior.
+
+### Build/Test
+- Full solution build is currently blocked by unrelated missing types:
+  - `BossManager`, `BossState`, `LevelDoorSlideSettings`
+- EmotionEngine edits themselves were applied cleanly, but in-editor validation is required until the unrelated compile blockers are resolved.
+
 ## 2026-05-17 - Composure Reward UI Wiring (Status Message)
 
 ### Summary

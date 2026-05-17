@@ -42,6 +42,8 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 - Emotion aggression tempo now uses slower rise / faster fall with passive calm decay after short combat inactivity.
 - Aggression state now uses a more forgiving threshold/weight profile with passive-disengage bias to avoid passive play being misclassified as aggressive.
 - Emotion telemetry now rebases on combat floor entry with stale-room cleanup to keep updates reliable across progression.
+- Emotion telemetry/evaluation writes are now combat-only to prevent out-of-combat score drift.
+- Forgiveness profile was tightened after over-calm feedback.
 - Upgrade station is now scene-authored in `Lobby` (not runtime-spawned), with interaction collider and visible mesh.
 - HP bar startup sync now initializes both green/red fill correctly at lobby start when HP is full.
 - Buff cards now support run-persistent stacking with per-card stage duration (`buffDurationStages`).
@@ -101,6 +103,10 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
   - `rebaseTelemetryOnLevelEntered`
   - `levelCarryoverFactor`
   - `clearRoomStateOnLevelEntered`
+- Tune strictness fields after combat-only gating:
+  - `aggressiveThreshold` / `calmThreshold`
+  - `attackIntentScale` / `hitIntentScale`
+  - `calmDecayDelay` / `calmDecayPerSecond`
 
 ## Remaining Tasks
 - Decide whether to keep `Final Boss Level` as stage 5 each floor or introduce a separate standard stage 5 scene.
