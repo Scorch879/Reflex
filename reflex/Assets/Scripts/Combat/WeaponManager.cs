@@ -182,7 +182,7 @@ public class WeaponManager : MonoBehaviour
 
         Collider[] hitEnemies = Physics.OverlapBox(center, halfExtents, orientation, enemyLayer);
         AttackStep step = playerManager.weaponData.comboChain[playerManager.currentComboIndex - 1];
-        CameraManager.Instance.StartCoroutine(CameraManager.Instance.ShakeCamera(step.cameraShakeIntensity, step.cameraShakeDuration, step.cameraShakeFrequency));
+        CameraManager.Instance.StartCoroutine(CameraManager.Instance.ShakeCamera(step.cameraShakeIntensity, step.cameraShakeDuration));
         Debug.Log("Camera Shake Intensity: " + step.cameraShakeIntensity + ", Duration: " + step.cameraShakeDuration + ", Frequency: " + step.cameraShakeFrequency);
         float finalDamage = step.attackDamage * playerManager.TotalDamageMultiplier;
         float attackStunDuration = step.attackStunDuration;
@@ -196,13 +196,24 @@ public class WeaponManager : MonoBehaviour
         foreach (Collider enemy in hitEnemies)
         {
             // Apply finalDamage to enemy logic here...
-            EnemyHurtbox hurtbox = enemy.GetComponent<EnemyHurtbox>();
-            if (hurtbox != null)
+            EnemyHurtbox enemyHurtbox = enemy.GetComponent<EnemyHurtbox>();
+            if (enemyHurtbox != null)
             {
-                hurtbox.ReceiveDamage(finalDamage, attackStunDuration);
+                enemyHurtbox.ReceiveDamage(finalDamage, attackStunDuration);
                 EmotionEngine.Instance.RecordEnemyHit(finalDamage);
                 // Spawn hit spark effect at the hitbox's position with a random rotation for visual variety
                 // despawn after 1.5 seconds
+                if (hitSparkPrefab != null)
+                {
+                    GameObject hitSpark = Instantiate(hitSparkPrefab, enemy.ClosestPoint(center), Quaternion.Euler(0, Random.Range(0, 360), 0));
+                    Destroy(hitSpark, 1.5f);
+                }
+            }
+            BossHurt bossHurt = enemy.GetComponent<BossHurt>();
+            if (bossHurt != null)
+            {
+                bossHurt.HandleHurt(finalDamage);
+                EmotionEngine.Instance.RecordEnemyHit(finalDamage);
                 if (hitSparkPrefab != null)
                 {
                     GameObject hitSpark = Instantiate(hitSparkPrefab, enemy.ClosestPoint(center), Quaternion.Euler(0, Random.Range(0, 360), 0));

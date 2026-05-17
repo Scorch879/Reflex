@@ -2,15 +2,13 @@ using UnityEngine;
 
 public class BossHurt : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public BossController bossController;
+    public BossManager bossManager;
 
-    // Update is called once per frame
-    void Update()
+    public void HandleHurt(float damage)
     {
-        
+        if (bossController.currentState == BossState.Defeated) return;
+
+        bossManager.TakeDamage(damage);
     }
 }

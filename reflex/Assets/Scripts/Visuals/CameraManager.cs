@@ -22,13 +22,11 @@ public class CameraManager : MonoBehaviour
         cameraNoise = GetComponent<CinemachineBasicMultiChannelPerlin>();
     }
 
-    public IEnumerator ShakeCamera(float intensity, float duration, float frequency)
+    public IEnumerator ShakeCamera(float intensity, float duration)
     {
         cameraNoise.AmplitudeGain = intensity;
-        cameraNoise.FrequencyGain = frequency;
         yield return new WaitForSeconds(duration);
         //lerp back to 0
         cameraNoise.AmplitudeGain = 0f;
-        cameraNoise.FrequencyGain = 0f;
     }
 }
