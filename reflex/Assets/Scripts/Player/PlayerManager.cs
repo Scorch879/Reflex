@@ -72,6 +72,11 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
+        if (SaveManager.Instance != null)
+        {
+            SaveManager.Instance.ApplyToPlayer(this);
+        }
+
         if (stats != null)
         {
             currentHealth = MaxHealth;
@@ -144,7 +149,17 @@ public class PlayerManager : MonoBehaviour
             return;
         }
 
-        soulEssence += safeAmount;
+        if (SaveManager.Instance != null)
+        {
+            SaveManager.Instance.currentSave.soulEssence += safeAmount;
+            SaveManager.Instance.SaveGame();
+            soulEssence = SaveManager.Instance.currentSave.soulEssence;
+        }
+        else
+        {
+            soulEssence += safeAmount;
+        }
+
         SoulEssenceChanged?.Invoke(soulEssence, safeAmount);
     }
 

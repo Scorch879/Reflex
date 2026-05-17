@@ -52,6 +52,11 @@ public class WeaponManager : MonoBehaviour
         // 1. Update the data reference in PlayerManager
         playerManager.weaponData = newData;
 
+        if (SaveManager.Instance != null)
+        {
+            SaveManager.Instance.SetEquippedWeapon(newData.weaponName);
+        }
+
         // 2. Reset combo state to prevent errors
         playerManager.currentComboIndex = 0;
         playerManager.canAttack = true;
