@@ -499,7 +499,7 @@ GameObject:
   - component: {fileID: 39204011}
   - component: {fileID: 39204010}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: invis Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1350,7 +1350,7 @@ GameObject:
   - component: {fileID: 422556492}
   - component: {fileID: 422556491}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: invis Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1976,7 +1976,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 517080517}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3920,7 +3920,7 @@ GameObject:
   - component: {fileID: 1393364819}
   - component: {fileID: 1393364818}
   m_Layer: 0
-  m_Name: Cube (3)
+  m_Name: invis Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4936,7 +4936,7 @@ GameObject:
   - component: {fileID: 1721714245}
   - component: {fileID: 1721714244}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: invis Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5578,7 +5578,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1808208458}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

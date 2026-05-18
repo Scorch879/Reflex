@@ -401,6 +401,7 @@ public class EnemyController : MonoBehaviour
             SwarmManager.UnregisterEnemy(enemyType, this);
             EnemyDefeated?.Invoke(this);
             ChangeState(new DeathState(this));
+            animator.Play("Hurt");
         }
         else
         {
