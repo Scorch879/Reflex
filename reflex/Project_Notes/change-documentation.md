@@ -1,3 +1,39 @@
+## 2026-05-18 - Player Startup HP Safety Guard
+
+### Summary
+Fixed a build-start health initialization risk where player scene/prefab instances serialize `currentHealth` as `0`, allowing other startup systems to see or use zero HP before `PlayerManager.Start()` restored full health.
+
+### Files Affected
+- Assets/Scripts/Player/PlayerManager.cs
+- Assets/Scripts/Game/UpgradeManager.cs
+- Project_Notes/change-documentation.md
+- Project_Notes/current-project-status.md
+- Project_Notes/player-manager.md
+
+### Scenes Affected
+- Any scene with a `PlayerManager` instance, including Lobby and combat scenes.
+
+### Systems Affected
+- Player health initialization
+- Permanent upgrade stat application
+- Health HUD startup sync
+- Player startup input/UI safety
+
+### Gameplay Changes
+- `PlayerManager.Awake()` now repairs invalid live-player HP immediately instead of waiting until `Start()`.
+- `PlayerManager.Start()` still restores full HP after saved permanent upgrades are applied, preserving the existing start-of-scene behavior.
+- `MaxHealth` now has a safe fallback if the player stats asset is missing, preventing null-reference crashes while still preferring the assigned `PlayerData`.
+- Upgrade stat application now calls `PlayerManager.EnsureValidHealthState(true)` so max-HP changes cannot leave an alive player at `0` HP.
+- Player startup weapon-icon and input binding now guard missing singleton/component references instead of throwing during build startup.
+
+### Build/Test
+- `dotnet build Assembly-CSharp.csproj -nologo` succeeded.
+- Existing unrelated warning remains:
+  - `Assets/Scripts/Movement/PlayerMovementManagement.cs(30,18) CS0649 isSprinting is never assigned`.
+
+### Known Limitations
+- Unity player rebuild/run validation is still required to confirm the packaged build no longer starts with zero HP or crashes from that state.
+
 ## 2026-05-18 - Player Build Shader Warmup Crash Guard
 
 ### Summary

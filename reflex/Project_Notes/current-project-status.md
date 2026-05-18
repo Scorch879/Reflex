@@ -51,6 +51,7 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 - Aggression strictness was increased again: higher aggressive-entry threshold + higher confidence requirement + stricter qualification defaults for attacks/enemies/time.
 - Upgrade station is now scene-authored in `Lobby` (not runtime-spawned), with interaction collider and visible mesh.
 - HP bar startup sync now initializes both green/red fill correctly at lobby start when HP is full.
+- Player startup now repairs serialized `currentHealth: 0` during `Awake()` and revalidates HP after permanent upgrades apply, preventing build startup from seeing an alive player at zero HP.
 - Player immortality can now be toggled in Play Mode with the `=` key through `PlayerManager`.
 - Buff cards now support run-persistent stacking with per-card stage duration (`buffDurationStages`).
 - Special buff cards now support one-pick-per-run locking and contradiction blocking (`blockedCards`), including Fleet foot vs Windrunner exclusivity.
@@ -90,6 +91,10 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 - Validate equipped-weapon persistence across full app restart without any manual weapon-list setup in inspector.
 - Validate authored UI Manager game-over canvas readability/spacing across target resolutions now that structured per-field binding is active.
 - Validate death -> Return to Lobby -> immediate re-entry loop for state correctness (movement/attack enabled, HP full, no lingering dead state).
+- Validate player startup HP in rebuilt player:
+  - Lobby player starts above zero HP before gameplay input.
+  - First combat scene starts with full upgraded max HP.
+  - No game-over or crash is triggered by serialized `currentHealth: 0`.
 - Validate loading overlay behavior across Lobby -> stage, stage -> stage, and game-over -> Lobby transitions (asset-load progress, shader warmup text states, and hide timing).
 - Validate Main Menu in Unity Play Mode:
   - Game starts on Main Menu in a build.
@@ -181,7 +186,7 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 - Existing warning persists: `PlayerMovementManagement.isSprinting` is never assigned.
 
 ## Known Blockers
-- Unity player rebuild/run validation is still needed after the shader warmup crash guard.
+- Unity player rebuild/run validation is still needed after the shader warmup and player HP startup guards.
 
 ## Systems In Progress
 - Level flow validation and scene progression polish.

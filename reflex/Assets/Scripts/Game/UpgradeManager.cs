@@ -162,10 +162,7 @@ public class UpgradeManager : MonoBehaviour
             playerManager.permanentCritBonus = data.critUpgradeLevel * GetCritPerLevel();
 
             // Ensure current health stays valid after max-health upgrades or downgrades.
-            if (playerManager.currentHealth > playerManager.MaxHealth)
-            {
-                playerManager.currentHealth = playerManager.MaxHealth;
-            }
+            playerManager.EnsureValidHealthState(true);
 
             if (InGameUIManager.Instance != null)
             {
