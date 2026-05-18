@@ -28,4 +28,7 @@ public class WeaponData : ScriptableObject
     [Header("Combo Settings")]
     public AttackStep[] comboChain; // Set size to 3 in the Inspector
     public float comboResetTime = 1.0f; 
+
+    [Header("Visuals")]
+    public Sprite weaponIcon;
 }
