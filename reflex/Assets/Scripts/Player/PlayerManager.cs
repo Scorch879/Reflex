@@ -184,11 +184,32 @@ public class PlayerManager : MonoBehaviour
 
     public void ResetTemporaryRunState()
     {
+        RespawnForRunStart();
+    }
+
+    public void RespawnForRunStart()
+    {
         ClearTemporaryCardBuffs();
 
         if (stats != null)
         {
             currentHealth = MaxHealth;
+        }
+
+        CancelInvoke(nameof(ResetVulnerability));
+        isDead = false;
+        isRunning = false;
+        isAttacking = false;
+        isIdle = true;
+        canAttack = true;
+        canGoToIdle = true;
+        isVulnerable = true;
+        currentComboIndex = 0;
+        comboTime = 0f;
+
+        if (InGameUIManager.Instance != null)
+        {
+            InGameUIManager.Instance.SetHealthImmediate(currentHealth, MaxHealth);
         }
     }
 

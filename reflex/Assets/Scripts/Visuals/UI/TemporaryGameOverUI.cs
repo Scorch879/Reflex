@@ -360,6 +360,12 @@ public class TemporaryGameOverUI : MonoBehaviour
             _canvasGroup.blocksRaycasts = false;
         }
 
+        PlayerManager player = _observedPlayer != null ? _observedPlayer : FindFirstObjectByType<PlayerManager>();
+        if (player != null)
+        {
+            player.RespawnForRunStart();
+        }
+
         if (generateFreshRunOnReturn && LevelRunManager.HasInstance)
         {
             LevelRunManager.Instance.GenerateNewRun();

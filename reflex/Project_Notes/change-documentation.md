@@ -330,6 +330,65 @@ Implemented contextual door animation and traversal rules so doors now open base
 ### Known Limitations
 - Final animation feel and entry-door grouping radius still need in-editor Play Mode tuning per scene layout.
 
+## 2026-05-18 - HitboxOn Combo Index Guard (IndexOutOfRange Fix)
+
+### Summary
+Fixed `IndexOutOfRangeException` in `WeaponManager.HitboxOn()` caused by animation event timing firing with an invalid combo index after state resets (for example after death/respawn transitions).
+
+### Files Affected
+- Assets/Scripts/Combat/WeaponManager.cs
+
+### Systems Affected
+- Combat hitbox animation-event execution safety
+- Post-reset combat stability
+
+### Gameplay Changes
+- Added robust guards in `HitboxOn()` for:
+  - missing `playerManager`
+  - dash state (null-safe)
+  - missing/empty weapon combo data
+  - invalid combo step index (`currentComboIndex - 1` out of bounds)
+  - missing hitbox visual object
+- On invalid combo-state events, hitbox flow now exits safely via `HitboxOff()` instead of crashing.
+
+### Build/Test
+- `dotnet build reflex.sln` succeeded.
+- Existing warning remains unrelated:
+  - `Assets/Scripts/Movement/PlayerMovementManagement.cs(30,18) CS0649 isSprinting is never assigned`.
+
+### Known Limitations
+- In-editor playtesting is still needed to validate animation-event timing during edge transitions (death, dash cancel, immediate re-entry).
+
+## 2026-05-18 - Return-to-Lobby Respawn Reset (Death Recovery)
+
+### Summary
+Updated return-to-lobby flow after death to perform a full player respawn reset: clear in-run card buffs, restore health, and clear dead/combat lock state before loading Lobby.
+
+### Files Affected
+- Assets/Scripts/Player/PlayerManager.cs
+- Assets/Scripts/Visuals/UI/TemporaryGameOverUI.cs
+
+### Systems Affected
+- Player runtime state reset
+- Game-over return-to-lobby behavior
+
+### Gameplay Changes
+- Added `PlayerManager.RespawnForRunStart()` to centralize true respawn reset behavior:
+  - clears card buffs
+  - restores HP to max
+  - resets dead/combat/state flags (`isDead`, `canAttack`, combo state, vulnerability state)
+  - refreshes health UI immediately
+- `ResetTemporaryRunState()` now calls `RespawnForRunStart()` to keep existing run-start reset paths consistent.
+- Pressing `Return to Lobby` on game-over now explicitly calls player respawn reset before fresh-run generation and lobby load.
+
+### Build/Test
+- `dotnet build reflex.sln` succeeded.
+- Existing warning remains unrelated:
+  - `Assets/Scripts/Movement/PlayerMovementManagement.cs(30,18) CS0649 isSprinting is never assigned`.
+
+### Known Limitations
+- In-editor Play Mode validation is still needed to confirm feel/timing around death-to-lobby transition and input recovery.
+
 ## 2026-05-18 - Game Over Return-to-Lobby Button
 
 ### Summary

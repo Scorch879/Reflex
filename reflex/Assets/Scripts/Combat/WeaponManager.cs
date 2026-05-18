@@ -194,18 +194,45 @@ public class WeaponManager : MonoBehaviour
     //             v
     public void HitboxOn()
     {
-        if (playerMovement.isDashing)
+        if (playerManager == null)
+        {
+            return;
+        }
+
+        if (playerMovement != null && playerMovement.isDashing)
         {
             HitboxOff();
             return;
         }
+
+        WeaponData weaponData = playerManager.weaponData;
+        if (weaponData == null || weaponData.comboChain == null || weaponData.comboChain.Length == 0)
+        {
+            Debug.LogWarning("HitboxOn skipped because no valid weapon combo data is available.");
+            HitboxOff();
+            return;
+        }
+
+        int comboStepIndex = playerManager.currentComboIndex - 1;
+        if (comboStepIndex < 0 || comboStepIndex >= weaponData.comboChain.Length)
+        {
+            Debug.LogWarning($"HitboxOn skipped due to invalid combo index {playerManager.currentComboIndex} for combo length {weaponData.comboChain.Length}.");
+            HitboxOff();
+            return;
+        }
+
+        if (hitboxVisual == null)
+        {
+            return;
+        }
+
         hitboxVisual.SetActive(true);
         Vector3 center = hitboxVisual.transform.position;
         Vector3 halfExtents = hitboxVisual.transform.lossyScale / 2f;
         Quaternion orientation = hitboxVisual.transform.rotation;
 
         Collider[] hitEnemies = Physics.OverlapBox(center, halfExtents, orientation, enemyLayer);
-        AttackStep step = playerManager.weaponData.comboChain[playerManager.currentComboIndex - 1];
+        AttackStep step = weaponData.comboChain[comboStepIndex];
         CameraManager.Instance.StartCoroutine(CameraManager.Instance.ShakeCamera(step.cameraShakeIntensity, step.cameraShakeDuration));
         Debug.Log("Camera Shake Intensity: " + step.cameraShakeIntensity + ", Duration: " + step.cameraShakeDuration + ", Frequency: " + step.cameraShakeFrequency);
         float finalDamage = step.attackDamage * playerManager.TotalDamageMultiplier;

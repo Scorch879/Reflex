@@ -53,6 +53,8 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 - Equipped-weapon restore no longer requires manually maintaining `SaveManager.availableWeapons`; runtime weapon discovery now resolves saved weapon names automatically.
 - Game-over screen now supports scene-authored Canvas binding through `TemporaryGameOverCanvasView`, enabling direct in-editor layout/design iteration.
 - Game-over flow now includes a Return to Lobby button (authored-canvas and runtime fallback), with optional fresh-run regeneration on return.
+- Return-to-lobby from game-over now performs a full respawn reset (clears in-run card buffs and revives player state) before loading Lobby.
+- Added `WeaponManager.HitboxOn()` combo-index safety guards to prevent post-reset animation-event `IndexOutOfRangeException` crashes.
 - Enemy spawners now support floor-scaled additional wave sequencing with queued-wave tracking via `HasUpcomingWave`.
 - Room clear now defers while upcoming waves are queued, preventing premature stage clear and buff-card reward flow.
 
@@ -71,6 +73,8 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 - Validate equipped-weapon persistence across full app restart without any manual weapon-list setup in inspector.
 - Design and iterate the authored game-over canvas visual style/spacing/typography now that the runtime hook is in place.
 - Wire and style the authored Return to Lobby button in the final UI prefab/canvas for production polish.
+- Validate death -> Return to Lobby -> immediate re-entry loop for state correctness (movement/attack enabled, HP full, no lingering dead state).
+- Validate attack animation events immediately after respawn/death transitions to confirm no invalid combo-step event fires.
 - Tune floor scaling fields:
   - `enemyHealthPerFloorStep`
   - `enemyDamagePerFloorStep`
