@@ -69,6 +69,7 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 - Room clear now defers while upcoming waves are queued, preventing premature stage clear and buff-card reward flow.
 - Shared spawn prefabs now use weighted random enemy-type waves (Ant/Drone/Tank), with tank as a lower-chance exclusive wave that scales count by floor.
 - Main Menu is now the build startup scene and has hooked Play, Settings, and Quit buttons.
+- Temporary loading overlay no longer forces global shader warmup by default in player builds, preventing the Main Menu startup crash where `Compiling shaders...` remained on top before the app exited.
 - Pause-menu Return to Menu now clears pause state and loads the authored Main Menu scene.
 - Pause-menu Settings now opens a frontmost music settings overlay with an in-panel close button, mute toggle, and volume controls for the persistent background music.
 - Background music mute/volume preferences now persist through `PlayerPrefs`.
@@ -92,6 +93,7 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 - Validate loading overlay behavior across Lobby -> stage, stage -> stage, and game-over -> Lobby transitions (asset-load progress, shader warmup text states, and hide timing).
 - Validate Main Menu in Unity Play Mode:
   - Game starts on Main Menu in a build.
+  - Startup no longer displays `Compiling shaders...` or exits during global shader warmup.
   - Play button loads Lobby.
   - Settings opens the music settings overlay.
   - Mute Music and Music Volume affect the persistent background track.
@@ -179,7 +181,7 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 - Existing warning persists: `PlayerMovementManagement.isSprinting` is never assigned.
 
 ## Known Blockers
-- In-editor playtesting not executed in this session.
+- Unity player rebuild/run validation is still needed after the shader warmup crash guard.
 
 ## Systems In Progress
 - Level flow validation and scene progression polish.
@@ -188,5 +190,5 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 
 ## Testing Status
 - Build test: pass (`dotnet build Assembly-CSharp.csproj -nologo`).
-- Runtime gameplay test: pending (Unity Editor Play Mode).
+- Runtime gameplay test: pending (Unity Editor Play Mode and rebuilt player launch).
 

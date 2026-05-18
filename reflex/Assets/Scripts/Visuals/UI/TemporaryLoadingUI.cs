@@ -11,10 +11,12 @@ public class TemporaryLoadingUI : MonoBehaviour
     private static TemporaryLoadingUI _instance;
 
     [Header("Startup")]
-    [SerializeField] private bool showStartupShaderWarmup = true;
+    [Tooltip("Keep this off by default: forcing global shader warmup at boot can crash some Windows player builds.")]
+    [SerializeField] private bool showStartupShaderWarmup = false;
 
     [Header("Shader Warmup")]
-    [SerializeField] private bool warmupShadersInPlayerBuilds = true;
+    [Tooltip("Optional diagnostic/profiling path. Runtime scene loading should not force Shader.WarmupAllShaders by default.")]
+    [SerializeField] private bool warmupShadersInPlayerBuilds = false;
     [SerializeField] private bool warmupShadersInEditor = false;
     [SerializeField] private bool logShaderWarmupFailures = true;
 

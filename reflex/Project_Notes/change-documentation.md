@@ -1,3 +1,37 @@
+## 2026-05-18 - Player Build Shader Warmup Crash Guard
+
+### Summary
+Disabled the default global shader warmup path in the temporary loading overlay to prevent Windows player builds from crashing on startup while `Compiling shaders...` is displayed over the Main Menu.
+
+### Files Affected
+- Assets/Scripts/Visuals/UI/TemporaryLoadingUI.cs
+- Project_Notes/change-documentation.md
+- Project_Notes/current-project-status.md
+- Project_Notes/main-menu.md
+
+### Scenes Affected
+- Assets/Scenes/Main Menu.unity
+- Any scene loaded through `TemporaryLoadingUI.LoadSceneWithOverlay()`
+
+### Systems Affected
+- Temporary loading overlay startup flow
+- Scene transition loading overlay
+- Player-build shader warmup behavior
+
+### Gameplay/UI Changes
+- `showStartupShaderWarmup` now defaults to `false`, so the Main Menu no longer boots under a startup `Compiling shaders...` overlay.
+- `warmupShadersInPlayerBuilds` now defaults to `false`, so scene transitions no longer force `Shader.WarmupAllShaders()` in built players.
+- The shader warmup path remains available as an explicit inspector opt-in for profiling or controlled validation.
+
+### Build/Test
+- `dotnet build Assembly-CSharp.csproj -nologo` succeeded.
+- Player log inspection showed the previous build reached Lobby/Main Menu under Direct3D 12 and then stopped without a managed exception, consistent with a native/render-side warmup crash.
+- Unity player rebuild/run validation is still required to confirm the packaged build no longer crashes.
+
+### Known Limitations
+- This avoids the crash-prone global warmup call; it does not precompile a curated `ShaderVariantCollection`.
+- Some first-use shader compilation may still occur naturally during gameplay on uncached machines.
+
 ## 2026-05-18 - Player Immortality Debug Toggle
 
 ### Summary
