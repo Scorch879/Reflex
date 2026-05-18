@@ -13,6 +13,7 @@ public class WeaponManager : MonoBehaviour
 
     [SerializeField] private GameObject hitSparkPrefab; // spawned on successful hit, positioned at the hitbox's location with a slight random rotation for visual variety
     public GameObject hitboxVisual;
+    [SerializeField] private bool showHitboxVisualIndicator = false;
     public LayerMask enemyLayer;
 
     [Header("Attack Assist")]
@@ -27,6 +28,7 @@ public class WeaponManager : MonoBehaviour
     private float lastAttackTime;
     private bool startResetTime = false;
     private CharacterController playerController;
+    private Renderer[] hitboxVisualRenderers = new Renderer[0];
 
     void Start()
     {
@@ -46,6 +48,9 @@ public class WeaponManager : MonoBehaviour
             playerVisuals.SwapWeaponAnimations(playerManager.weaponData.weaponOverride);
             
         }
+
+        RefreshHitboxVisualRenderers();
+        SetHitboxVisualIndicatorVisible(false);
     }
 
     public void EquipWeapon(WeaponData newData)
@@ -186,6 +191,11 @@ public class WeaponManager : MonoBehaviour
 
     private void UpdateHitboxTransform(AttackStep step)
     {
+        if (hitboxVisual == null)
+        {
+            return;
+        }
+
         hitboxVisual.transform.localScale = new Vector3(step.attackWidth, step.verticalScale, step.attackRange);
         hitboxVisual.transform.localPosition = new Vector3(0, 0, step.attackRange / 2f);
     }
@@ -226,7 +236,7 @@ public class WeaponManager : MonoBehaviour
             return;
         }
 
-        hitboxVisual.SetActive(true);
+        SetHitboxVisualActive(true);
         Vector3 center = hitboxVisual.transform.position;
         Vector3 halfExtents = hitboxVisual.transform.lossyScale / 2f;
         Quaternion orientation = hitboxVisual.transform.rotation;
@@ -293,7 +303,7 @@ public class WeaponManager : MonoBehaviour
     {
         if (hitboxVisual != null)
         {
-            hitboxVisual.SetActive(false);
+            SetHitboxVisualActive(false);
         }
 
         if (playerManager == null)
@@ -315,7 +325,7 @@ public class WeaponManager : MonoBehaviour
 
         if (hitboxVisual != null)
         {
-            hitboxVisual.SetActive(false);
+            SetHitboxVisualActive(false);
         }
 
         playerManager.canAttack = true;
@@ -456,9 +466,55 @@ public class WeaponManager : MonoBehaviour
         playerManager.comboTime = weaponData.comboResetTime + playerManager.cardComboWindowBonus;
     }
 
+    private void SetHitboxVisualActive(bool active)
+    {
+        if (hitboxVisual == null)
+        {
+            return;
+        }
+
+        hitboxVisual.SetActive(active);
+        SetHitboxVisualIndicatorVisible(active && showHitboxVisualIndicator);
+    }
+
+    private void RefreshHitboxVisualRenderers()
+    {
+        hitboxVisualRenderers = hitboxVisual != null
+            ? hitboxVisual.GetComponentsInChildren<Renderer>(true)
+            : new Renderer[0];
+    }
+
+    private void SetHitboxVisualIndicatorVisible(bool visible)
+    {
+        if (hitboxVisual == null)
+        {
+            return;
+        }
+
+        if (hitboxVisualRenderers == null || hitboxVisualRenderers.Length == 0)
+        {
+            RefreshHitboxVisualRenderers();
+        }
+
+        for (int i = 0; i < hitboxVisualRenderers.Length; i++)
+        {
+            Renderer hitboxRenderer = hitboxVisualRenderers[i];
+            if (hitboxRenderer != null)
+            {
+                hitboxRenderer.enabled = visible;
+            }
+        }
+    }
+
+    private void OnValidate()
+    {
+        RefreshHitboxVisualRenderers();
+        SetHitboxVisualIndicatorVisible(hitboxVisual != null && hitboxVisual.activeSelf && showHitboxVisualIndicator);
+    }
+
     private void OnDrawGizmos()
     {
-        if (hitboxVisual != null && hitboxVisual.activeInHierarchy)
+        if (showHitboxVisualIndicator && hitboxVisual != null && hitboxVisual.activeInHierarchy)
         {
             Gizmos.color = Color.yellow;
             Gizmos.matrix = hitboxVisual.transform.localToWorldMatrix;

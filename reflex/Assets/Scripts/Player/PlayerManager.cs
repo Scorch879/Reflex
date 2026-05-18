@@ -18,6 +18,9 @@ public class PlayerManager : MonoBehaviour
     public bool isVulnerable = true;
     public bool isImmortal = false; // For testing purposes, can be toggled on/off
 
+    [Header("Debug Controls")]
+    [SerializeField] private Key immortalToggleKey = Key.Equals;
+
     [Header("Combat & Combo")]
     public int currentComboIndex = 0;
     public float comboTime;
@@ -99,6 +102,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
+        HandleImmortalToggleInput();
         CheckIfIdle();
         CheckIfAttacking();
         CheckComboTime();
@@ -120,6 +124,25 @@ public class PlayerManager : MonoBehaviour
     // }
 
     // --- COMBAT LOGIC ---
+
+    private void HandleImmortalToggleInput()
+    {
+        if (Keyboard.current == null)
+        {
+            return;
+        }
+
+        if (Keyboard.current[immortalToggleKey].wasPressedThisFrame)
+        {
+            ToggleImmortal();
+        }
+    }
+
+    public void ToggleImmortal()
+    {
+        isImmortal = !isImmortal;
+        Debug.Log($"Player immortality {(isImmortal ? "enabled" : "disabled")}.");
+    }
 
     public void TakeDamage(float amount, bool ignoreInvulnerability = false)
     {

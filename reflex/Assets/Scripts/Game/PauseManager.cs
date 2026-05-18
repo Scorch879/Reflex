@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
@@ -13,16 +14,54 @@ public class PauseManager : MonoBehaviour
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        GameObject playerObj = GameObject.FindWithTag("Player");
-        playerInput = playerObj.GetComponent<PlayerInput>();
-        pauseAction = playerInput.actions.FindAction("Pause");
 
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        TryBindPauseAction();
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += HandleSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= HandleSceneLoaded;
+    }
+
+    private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        ResetPauseState();
+        TryBindPauseAction();
+    }
+
+    private void TryBindPauseAction()
+    {
+        pauseAction = null;
+        playerInput = null;
+
+        GameObject playerObj = GameObject.FindWithTag("Player");
+        if (playerObj == null)
+        {
+            return;
+        }
+
+        playerInput = playerObj.GetComponent<PlayerInput>();
+        if (playerInput == null)
+        {
+            Debug.LogWarning("PauseManager could not find PlayerInput on the Player object.");
+            return;
+        }
+
+        pauseAction = playerInput.actions.FindAction("Pause");
+        if (pauseAction == null)
+        {
+            Debug.LogWarning("PauseManager could not find the Pause input action.");
+        }
     }
 
     private void Update()
@@ -32,9 +71,8 @@ public class PauseManager : MonoBehaviour
 
     public void TogglePause()
     {
-        if (pauseAction.WasPressedThisFrame())
+        if (pauseAction != null && pauseAction.WasPressedThisFrame())
         {
-            isPaused = !isPaused;
             if (isPaused)
             {
                 ResumeGame();
@@ -48,13 +86,27 @@ public class PauseManager : MonoBehaviour
 
     public void PauseGame()
     {
+        isPaused = true;
         Time.timeScale = 0f;
-        InGameUIManager.Instance.ShowPauseUI();
+        if (InGameUIManager.Instance != null)
+        {
+            InGameUIManager.Instance.ShowPauseUI();
+        }
     }
 
     public void ResumeGame()
     {
+        isPaused = false;
         Time.timeScale = 1f;
-        InGameUIManager.Instance.HidePauseUI();
+        if (InGameUIManager.Instance != null)
+        {
+            InGameUIManager.Instance.HidePauseUI();
+        }
+    }
+
+    public void ResetPauseState()
+    {
+        isPaused = false;
+        Time.timeScale = 1f;
     }
 }

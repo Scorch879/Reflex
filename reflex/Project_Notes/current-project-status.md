@@ -51,6 +51,7 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 - Aggression strictness was increased again: higher aggressive-entry threshold + higher confidence requirement + stricter qualification defaults for attacks/enemies/time.
 - Upgrade station is now scene-authored in `Lobby` (not runtime-spawned), with interaction collider and visible mesh.
 - HP bar startup sync now initializes both green/red fill correctly at lobby start when HP is full.
+- Player immortality can now be toggled in Play Mode with the `=` key through `PlayerManager`.
 - Buff cards now support run-persistent stacking with per-card stage duration (`buffDurationStages`).
 - Special buff cards now support one-pick-per-run locking and contradiction blocking (`blockedCards`), including Fleet foot vs Windrunner exclusivity.
 - RewardManager singleton ownership now prioritizes scene-authored instances over bootstrap fallback, so Lobby-configured inspector card pools are used reliably.
@@ -63,9 +64,15 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 - Added a temporary loading overlay system for scene transitions and shader warmup, with authored-canvas bindings (`TemporaryLoadingCanvasView`) plus runtime fallback canvas generation.
 - Loading overlay shader warmup is now Editor-safe by default (full shader warmup disabled in Editor, still configurable and available for player builds).
 - Added `WeaponManager.HitboxOn()` combo-index safety guards to prevent post-reset animation-event `IndexOutOfRangeException` crashes.
+- Player weapon hitbox debug visuals are now hidden by default during attacks while hit detection still uses the same overlap box.
 - Enemy spawners now support floor-scaled additional wave sequencing with queued-wave tracking via `HasUpcomingWave`.
 - Room clear now defers while upcoming waves are queued, preventing premature stage clear and buff-card reward flow.
 - Shared spawn prefabs now use weighted random enemy-type waves (Ant/Drone/Tank), with tank as a lower-chance exclusive wave that scales count by floor.
+- Main Menu is now the build startup scene and has hooked Play, Settings, and Quit buttons.
+- Pause-menu Return to Menu now clears pause state and loads the authored Main Menu scene.
+- Pause-menu Settings now opens a frontmost music settings overlay with an in-panel close button, mute toggle, and volume controls for the persistent background music.
+- Background music mute/volume preferences now persist through `PlayerPrefs`.
+- Pause input now correctly routes to pause when unpaused and resume when paused.
 
 ## Active Priorities
 - Playtest full path: Lobby (start only) -> Floor 1 stage chain -> Floor 2 stage chain (no lobby return).
@@ -83,8 +90,29 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 - Validate authored UI Manager game-over canvas readability/spacing across target resolutions now that structured per-field binding is active.
 - Validate death -> Return to Lobby -> immediate re-entry loop for state correctness (movement/attack enabled, HP full, no lingering dead state).
 - Validate loading overlay behavior across Lobby -> stage, stage -> stage, and game-over -> Lobby transitions (asset-load progress, shader warmup text states, and hide timing).
+- Validate Main Menu in Unity Play Mode:
+  - Game starts on Main Menu in a build.
+  - Play button loads Lobby.
+  - Settings opens the music settings overlay.
+  - Mute Music and Music Volume affect the persistent background track.
+  - Quit exits the player build and stops Play Mode in the Editor.
+- Validate pause menu Settings in Unity Play Mode:
+  - Settings button opens the music settings overlay above the pause menu.
+  - The in-panel close button hides the settings overlay.
+  - Mute Music silences and restores the background track.
+  - Music Volume slider updates the track volume and persists after scene reload.
+- Validate pause menu Return to Menu in Unity Play Mode:
+  - Paused gameplay returns to the authored Main Menu.
+  - Game time resumes after returning to the menu.
+  - Re-entering Lobby from Main Menu keeps pause input functional.
 - Author and style a dedicated scene canvas using `TemporaryLoadingCanvasView` for final loading-screen visuals.
 - Validate attack animation events immediately after respawn/death transitions to confirm no invalid combo-step event fires.
+- Validate weapon attacks in Unity Play Mode:
+  - Hitbox debug cube/wireframe stays hidden during swings.
+  - Enemies still receive damage from the same attack range.
+- Validate player immortality debug toggle in Unity Play Mode:
+  - Pressing `=` toggles `isImmortal`.
+  - Incoming damage is ignored while immortality is enabled.
 - Tune floor scaling fields:
   - `enemyHealthPerFloorStep`
   - `enemyDamagePerFloorStep`

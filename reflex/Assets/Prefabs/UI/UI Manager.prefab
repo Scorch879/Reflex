@@ -4372,6 +4372,13 @@ MonoBehaviour:
   greenLerpSpeed: 5
   inGameUICanvasGroup: {fileID: 8614992494525861181}
   PauseUICanvasGroup: {fileID: 5706600338469276467}
+  backgroundMusicClip: {fileID: 8300000, guid: 45e31d1999a5df24c8c3699e154b8a8a, type: 3}
+  settingsButton: {fileID: 0}
+  musicSettingsPanel: {fileID: 0}
+  musicSettingsCanvasGroup: {fileID: 0}
+  muteMusicToggle: {fileID: 0}
+  musicVolumeSlider: {fileID: 0}
+  musicVolumeValueText: {fileID: 0}
   statusMessageText: {fileID: 901000001234567893}
   statusMessageCanvasGroup: {fileID: 901000001234567894}
   statusMessageFadeInDuration: 0.1

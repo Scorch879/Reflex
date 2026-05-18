@@ -650,6 +650,7 @@ GameObject:
   - component: {fileID: 1146439273}
   - component: {fileID: 1146439272}
   - component: {fileID: 1146439271}
+  - component: {fileID: 901000001234567901}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -674,6 +675,29 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &901000001234567901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146439270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c640bb0b9df48a4b9f4d022d16022c3, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::MainMenuManager
+  lobbySceneName: Lobby
+  backgroundMusicClip: {fileID: 8300000, guid: 45e31d1999a5df24c8c3699e154b8a8a, type: 3}
+  startButton: {fileID: 61183906}
+  settingsButton: {fileID: 699038389}
+  quitButton: {fileID: 2056815485}
+  settingsPanel: {fileID: 0}
+  settingsCanvasGroup: {fileID: 0}
+  muteToggle: {fileID: 0}
+  volumeSlider: {fileID: 0}
+  volumeValueText: {fileID: 0}
+  closeSettingsButton: {fileID: 0}
 --- !u!114 &1146439272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -729,7 +753,7 @@ RectTransform:
   m_GameObject: {fileID: 1146439270}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2111173457}

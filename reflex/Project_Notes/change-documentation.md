@@ -1,3 +1,216 @@
+## 2026-05-18 - Player Immortality Debug Toggle
+
+### Summary
+Added a keyboard debug toggle in `PlayerManager` for switching the existing `isImmortal` state on and off during Play Mode.
+
+### Files Affected
+- Assets/Scripts/Player/PlayerManager.cs
+- Project_Notes/change-documentation.md
+- Project_Notes/current-project-status.md
+- Project_Notes/player-manager.md
+
+### Scenes Affected
+- Any scene using the player `PlayerManager`
+
+### Systems Affected
+- Player damage handling
+- Debug/test controls
+
+### Gameplay/Debug Changes
+- Pressing `=` toggles `PlayerManager.isImmortal`.
+- The key is stored as serialized `immortalToggleKey` with default `Key.Equals`.
+- Toggling logs whether player immortality is enabled or disabled.
+- Existing damage behavior is unchanged: `TakeDamage()` still early-returns while `isImmortal` is true.
+
+### Build/Test
+- `dotnet build Assembly-CSharp.csproj -nologo --no-incremental` succeeded.
+- Existing unrelated warning remains:
+  - `Assets/Scripts/Movement/PlayerMovementManagement.cs(30,18) CS0649 isSprinting is never assigned`.
+
+### Known Limitations
+- Unity Editor Play Mode should be run to confirm pressing `=` toggles immortality and blocks incoming damage as expected.
+
+## 2026-05-18 - Player Weapon Hitbox Visual Indicator Hidden
+
+### Summary
+Stopped the player weapon hitbox debug cube/gizmo from showing during weapon activation while preserving the existing hit detection flow.
+
+### Files Affected
+- Assets/Scripts/Combat/WeaponManager.cs
+- Project_Notes/change-documentation.md
+- Project_Notes/current-project-status.md
+
+### Scenes Affected
+- Any scene using the player `WeaponManager`
+
+### Systems Affected
+- Player combat
+- Weapon hitbox debug visuals
+
+### Gameplay/UI Changes
+- `HitboxVisual` is still activated as the hitbox reference object for attack overlap calculations.
+- `HitboxVisual` renderers are now disabled by default so the hitbox indicator is not visible in normal gameplay.
+- Added a hidden-by-default `showHitboxVisualIndicator` debug toggle for future weapon range tuning.
+- `OnDrawGizmos()` now respects the same debug toggle, so the editor wire cube stays hidden unless intentionally enabled.
+
+### Build/Test
+- `dotnet build Assembly-CSharp.csproj -nologo` succeeded.
+- Existing unrelated warning remains:
+  - `Assets/Scripts/Movement/PlayerMovementManagement.cs(30,18) CS0649 isSprinting is never assigned`.
+
+### Known Limitations
+- Unity Editor Play Mode should be run to visually confirm attacks no longer reveal the hitbox cube while still damaging enemies.
+
+## 2026-05-18 - Pause Menu Return To Main Menu Button
+
+### Summary
+Made the pause-menu `Return to Menu` button functional so it exits the paused run and loads the authored Main Menu scene.
+
+### Files Affected
+- Assets/Scripts/Visuals/UI/InGameUIManager.cs
+- Assets/Scripts/Game/PauseManager.cs
+- Project_Notes/change-documentation.md
+- Project_Notes/current-project-status.md
+- Project_Notes/main-menu.md
+
+### Scenes Affected
+- Any scene using the persistent `UI Manager` pause menu
+- Assets/Scenes/Main Menu.unity
+
+### Systems Affected
+- Pause menu UI
+- Scene transition flow
+- Persistent pause manager state
+- Main Menu return flow
+
+### Gameplay/UI Changes
+- Pause-menu `Return to Menu` now loads `Main Menu` through `TemporaryLoadingUI.LoadSceneWithOverlay()` when available.
+- Return flow force-clears pause UI, music settings UI, game-over UI state, and `Time.timeScale` before changing scenes.
+- `PauseManager` now resets pause state on scene load and safely rebinds the player `Pause` input when a player exists.
+- Persistent in-game HUD and pause canvas are hidden when the Main Menu scene loads, preventing UI from carrying over on top of the menu.
+
+### Build/Test
+- `dotnet build Assembly-CSharp.csproj -nologo` succeeded.
+- Existing unrelated warning remains:
+  - `Assets/Scripts/Movement/PlayerMovementManagement.cs(30,18) CS0649 isSprinting is never assigned`.
+
+### Known Limitations
+- Unity Editor Play Mode should be run to confirm pause -> Return to Menu -> Main Menu, then Play -> Lobby, with pause input still working after re-entry.
+
+## 2026-05-18 - Main Menu Startup Flow Hookup
+
+### Summary
+Hooked the authored Main Menu scene into the playable flow so the built game starts on the main menu and its buttons drive Start, Settings, and Quit behavior.
+
+### Files Affected
+- Assets/Scenes/Main Menu.unity
+- Assets/Scripts/Game/MainMenuManager.cs
+- Assets/Scripts/Game/MainMenuManager.cs.meta
+- Project_Notes/change-documentation.md
+- Project_Notes/current-project-status.md
+- Project_Notes/main-menu.md
+
+### Scenes Affected
+- Assets/Scenes/Main Menu.unity
+
+### Systems Affected
+- Main menu UI
+- Scene startup flow
+- Background music settings
+
+### Gameplay/UI Changes
+- Confirmed `Assets/Scenes/Main Menu.unity` is first in Build Settings.
+- Added `MainMenuManager` to the Main Menu canvas.
+- Main Menu canvas now starts visible instead of being serialized at zero scale.
+- `Play btn` loads `Lobby`, using `TemporaryLoadingUI.LoadSceneWithOverlay()` when available.
+- `SETTINGS` opens a runtime music settings panel with:
+  - Mute Music toggle
+  - Music Volume slider
+  - percentage readout
+  - close button
+- `Quit` calls `Application.Quit()` in builds and stops Play Mode in the Unity Editor.
+- Main Menu music uses the existing persistent `BackgroundMusic` system and the same `REflex.mp3` clip/preferences as in-game pause settings.
+
+### Build/Test
+- `dotnet build Assembly-CSharp.csproj -nologo` succeeded.
+- Existing unrelated warning remains:
+  - `Assets/Scripts/Movement/PlayerMovementManagement.cs(30,18) CS0649 isSprinting is never assigned`.
+
+### Known Limitations
+- Unity Editor Play Mode should be run from `Main Menu` to confirm button clicks, settings overlay placement, music mute/volume, and Quit behavior.
+
+## 2026-05-18 - Pause Music Settings Overlay Placement Fix
+
+### Summary
+Moved the pause-menu music settings panel out of the pause button layout stack so it opens as a frontmost overlay, and added an in-panel close button.
+
+### Files Affected
+- Assets/Scripts/Visuals/UI/InGameUIManager.cs
+- Project_Notes/change-documentation.md
+- Project_Notes/current-project-status.md
+
+### Scenes Affected
+- Any scene using the `UI Manager` prefab/runtime pause UI
+
+### Systems Affected
+- Pause menu UI
+- Background music settings UI
+
+### Gameplay/UI Changes
+- Runtime music settings panel is now parented directly to the pause canvas instead of the `Main` vertical layout group.
+- Panel is centered above the pause menu and brought to the top sibling layer when opened.
+- Added a top-right `X` close button inside the settings panel.
+- Settings button lookup now falls back to searching child buttons by GameObject name.
+- Existing mute toggle and volume slider bindings continue to drive `BackgroundMusic.SetMuted()` and `BackgroundMusic.SetVolume()`.
+
+### Build/Test
+- `dotnet build Assembly-CSharp.csproj -nologo` succeeded.
+- Existing unrelated warning remains:
+  - `Assets/Scripts/Movement/PlayerMovementManagement.cs(30,18) CS0649 isSprinting is never assigned`.
+
+### Known Limitations
+- Unity Editor Play Mode still needs to be run to visually confirm the panel position and click/drag behavior in the authored pause menu.
+
+## 2026-05-18 - Pause Menu Music Settings
+
+### Summary
+Made the pause-menu Settings button functional by adding a runtime music settings panel for muting and changing background music volume.
+
+### Files Affected
+- Assets/Scripts/Game/BackgroundMusic.cs
+- Assets/Scripts/Game/PauseManager.cs
+- Assets/Scripts/Visuals/UI/InGameUIManager.cs
+- Assets/Prefabs/UI/UI Manager.prefab
+- Project_Notes/change-documentation.md
+- Project_Notes/current-project-status.md
+
+### Scenes Affected
+- Lobby
+- Any scene using the `UI Manager` prefab
+
+### Systems Affected
+- Pause menu UI
+- Background music playback
+- Audio preferences
+
+### Gameplay/UI Changes
+- Existing pause-menu `Settings` button now opens a music settings panel.
+- Settings panel contains only:
+  - Mute Music toggle
+  - Music Volume slider with percentage readout
+- Music mute and volume values persist through `PlayerPrefs`.
+- `BackgroundMusic` now creates/maintains a persistent 2D `AudioSource`, uses `Assets/Audio/REflex.mp3` through the `UI Manager` prefab, and applies saved settings across scenes.
+- Pause input now correctly calls `PauseGame()` when unpaused and `ResumeGame()` when paused.
+- Pause UI visibility now restores the pause canvas scale when showing, matching the prefab's scale-based hidden state.
+
+### Build/Test
+- `dotnet build Assembly-CSharp.csproj -nologo` succeeded.
+- Existing unrelated warning remains:
+  - `Assets/Scripts/Movement/PlayerMovementManagement.cs(30,18) CS0649 isSprinting is never assigned`.
+
+### Known Limitations
+- Unity Editor Play Mode should be run to visually confirm pause menu layout, Settings button interaction, mute behavior, and volume adjustment in the authored Lobby UI.
+
 ## 2026-05-18 - UI Manager Game Over Binding Fallback Fix
 
 ### Summary
