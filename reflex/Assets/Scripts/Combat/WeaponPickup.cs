@@ -16,6 +16,6 @@ public class WeaponPickup : MonoBehaviour, IInteractable
 
     public string GetInteractionText()
     {
-        return $"Equip {weaponData.weaponName}"; // e.g., "Equip Gauntlet"
+        return $"[E] Equip {weaponData.weaponName}"; // e.g., "Equip Gauntlet"
     }
 }

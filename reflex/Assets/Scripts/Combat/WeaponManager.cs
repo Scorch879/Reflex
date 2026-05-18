@@ -44,17 +44,20 @@ public class WeaponManager : MonoBehaviour
         if (playerManager.weaponData != null && playerManager.weaponData.weaponOverride != null)
         {
             playerVisuals.SwapWeaponAnimations(playerManager.weaponData.weaponOverride);
+            
         }
     }
 
     public void EquipWeapon(WeaponData newData)
     {
         EquipWeaponInternal(newData, true);
+        InGameUIManager.Instance.UpdateWeaponIcon(newData.weaponIcon);
     }
 
     public void EquipWeaponFromSave(WeaponData newData)
     {
         EquipWeaponInternal(newData, false);
+        InGameUIManager.Instance.UpdateWeaponIcon(newData.weaponIcon);
     }
 
     private void EquipWeaponInternal(WeaponData newData, bool persistToSave)
@@ -80,6 +83,7 @@ public class WeaponManager : MonoBehaviour
         if (newData.weaponOverride != null)
         {
             playerVisuals.SwapWeaponAnimations(newData.weaponOverride);
+            InGameUIManager.Instance.UpdateWeaponIcon(newData.weaponIcon);
         }
 
         Debug.Log($"<color=cyan>Weapon Swapped to {newData.weaponName}!</color>");

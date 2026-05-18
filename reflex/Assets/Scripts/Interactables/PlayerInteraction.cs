@@ -71,11 +71,16 @@ public class PlayerInteraction : MonoBehaviour
 
         if (closest != null && closestTransform != null)
         {
-            currentInteractable = closest;
-
-            if (uiElement != null)
+            WeaponData newWeapon = GetComponent<PlayerManager>().weaponData;
+            WeaponData interactableWeapon = (closest as WeaponPickup)?.weaponData;
+            if(newWeapon != interactableWeapon)
             {
-                uiElement.Show(closest.GetInteractionText(), closestTransform.position);
+                currentInteractable = closest;
+
+                if (uiElement != null)
+                {
+                    uiElement.Show(closest.GetInteractionText(), closestTransform.position);
+                }
             }
         }
         else

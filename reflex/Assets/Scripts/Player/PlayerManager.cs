@@ -70,6 +70,15 @@ public class PlayerManager : MonoBehaviour
         {
             Debug.LogError("Pause action not found in PlayerInput actions. Please check your Input Actions setup.");
         }
+            if (weaponData != null)
+            {
+                InGameUIManager.Instance.UpdateWeaponIcon(weaponData.weaponIcon);
+            }
+            else
+            {
+                InGameUIManager.Instance.UpdateWeaponIcon(null);
+            }
+
     }
 
     private void Start()

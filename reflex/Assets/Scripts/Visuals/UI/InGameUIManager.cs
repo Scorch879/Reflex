@@ -12,6 +12,9 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] private Image redHPBarFill;
     [SerializeField] private TextMeshProUGUI hpText;
 
+    [Header("Weapon Icon")]
+    public Image weaponIcon;
+
     [Header("HP Bar Settings")]
     [SerializeField] private float redLerpSpeed = 5f; // Speed of the health bar animation
     [SerializeField] private float greenLerpSpeed = 5f; // Speed of the health bar animation
@@ -27,6 +30,11 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] private float statusMessageHoldDuration = 1.8f;
     [SerializeField] private float statusMessageFadeOutDuration = 0.35f;
 
+    [Header("Pop-up Text")]
+    [SerializeField] private TextMeshProUGUI popupText;
+    [SerializeField] private CanvasGroup popupCanvasGroup;
+    [SerializeField] private float popupFadeInDuration = 0.1f;
+    [SerializeField] private float popupFadeOutDuration = 0.35f;
 
     private Coroutine healthAnimationCoroutine;
     private Coroutine statusMessageCoroutine;
@@ -61,6 +69,68 @@ public class InGameUIManager : MonoBehaviour
         // Start the managed animation routine on this persistent UI manager
         healthAnimationCoroutine = StartCoroutine(HealthBarRoutine(currentHp, maxHp));
     }
+
+    public void UpdateWeaponIcon(Sprite newIcon)
+    {
+        if (weaponIcon != null)
+        {
+            weaponIcon.sprite = newIcon;
+            weaponIcon.SetNativeSize();
+        }
+    }
+
+    // display popup text canvas group with fade in transition
+    public void ShowPopupText(string text)
+    {
+        if (popupText == null || popupCanvasGroup == null || string.IsNullOrWhiteSpace(text))
+        {
+            return;
+        }
+
+        popupText.text = text;
+        StartCoroutine(OnPopupTextRoutine());
+    }
+
+    public void HidePopupText()
+    {
+        if (popupCanvasGroup == null)
+        {
+            return;
+        }
+
+        StartCoroutine(OffPopupTextRoutine());
+    }
+
+    private IEnumerator OnPopupTextRoutine()
+    {
+        // Fade in
+        float elapsed = 0f;
+        while (elapsed < popupFadeInDuration)
+        {
+            popupCanvasGroup.alpha = Mathf.Lerp(0f, 1f, elapsed / popupFadeInDuration);
+            elapsed += Time.unscaledDeltaTime;
+            yield return null;
+        }
+        popupCanvasGroup.alpha = 1f;
+        popupCanvasGroup.interactable = true;
+        popupCanvasGroup.blocksRaycasts = true;
+    }
+
+    public IEnumerator OffPopupTextRoutine()
+    {
+        popupCanvasGroup.interactable = false;
+        popupCanvasGroup.blocksRaycasts = false;
+        // Fade out
+        float elapsed = 0f;
+        while (elapsed < popupFadeOutDuration)
+        {
+            popupCanvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsed / popupFadeOutDuration);
+            elapsed += Time.unscaledDeltaTime;
+            yield return null;
+        }
+        popupCanvasGroup.alpha = 0f;
+    }
+
 
     public void SetHealthImmediate(float currentHp, float maxHp)
     {
