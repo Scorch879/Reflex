@@ -78,7 +78,10 @@ public class EnemyController : MonoBehaviour
         speed = EnemyStatData.speed;
         attackDamage = EnemyStatData.attackDamage * floorDamageMultiplier;
         attackCooldown = EnemyStatData.attackCooldown;
-        enemyHitbox.SetActive(false); // Ensure hitbox starts disabled
+        if (enemyHitbox != null)
+        {
+            enemyHitbox.SetActive(false); // Ensure hitbox starts disabled
+        }
         PrintCurrentState();
 
         if (agent == null)

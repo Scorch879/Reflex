@@ -55,6 +55,7 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 - Added a temporary runtime game-over summary overlay with run metrics and soul-essence calculation breakdown on player death.
 - Equipped-weapon restore no longer requires manually maintaining `SaveManager.availableWeapons`; runtime weapon discovery now resolves saved weapon names automatically.
 - Game-over screen now supports scene-authored Canvas binding through `TemporaryGameOverCanvasView`, enabling direct in-editor layout/design iteration.
+- Game-over UI now auto-binds the authored `UI Manager` `Game Over Canvas` (even without manual canvas-view component wiring), restores readable authored typography, and populates each summary value field directly.
 - Game-over flow now includes a Return to Lobby button (authored-canvas and runtime fallback), with optional fresh-run regeneration on return.
 - Return-to-lobby from game-over now performs a full respawn reset (clears in-run card buffs and revives player state) before loading Lobby.
 - Runtime game-over canvas now consumes the new `Assets/Sprites/UI` Game Over art set (Background/Header/Statistics Rect) with sprite-aware fallback binding.
@@ -79,8 +80,7 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 - Validate stage-duration expiration behavior for short-duration cards (for example Berserker Tempo).
 - Validate special-card contradiction filtering and one-time pick constraints across long runs.
 - Validate equipped-weapon persistence across full app restart without any manual weapon-list setup in inspector.
-- Validate and tune game-over art scale/spacing across target resolutions now that sprite-backed runtime rendering is active.
-- Wire the same layout into a fully scene-authored/prefab game-over canvas for final production handoff.
+- Validate authored game-over canvas readability/spacing across target resolutions now that structured per-field binding is active.
 - Validate death -> Return to Lobby -> immediate re-entry loop for state correctness (movement/attack enabled, HP full, no lingering dead state).
 - Validate loading overlay behavior across Lobby -> stage, stage -> stage, and game-over -> Lobby transitions (asset-load progress, shader warmup text states, and hide timing).
 - Author and style a dedicated scene canvas using `TemporaryLoadingCanvasView` for final loading-screen visuals.
@@ -137,7 +137,7 @@ Lobby-first run flow is now wired with deterministic progression to boss, with a
 - Validate that calm state remains stable during slower, low-engagement clears.
 - Validate that room pacing remains readable at high spawn density.
 - Confirm enemy containment behavior still feels intentional under blended values.
-- Convert runtime-generated game-over layout into a final scene-authored/prefab canvas once the production UI pass is approved.
+- Verify authored game-over canvas field mapping and formatting in Unity Play Mode after death/return loops.
 
 ## Known Bugs
 - Existing warning persists: `PlayerMovementManagement.isSprinting` is never assigned.

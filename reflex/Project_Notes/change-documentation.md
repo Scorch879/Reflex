@@ -1,3 +1,68 @@
+## 2026-05-18 - Enemy Tank Hitbox Auto-Binding + NullReference Fix
+
+### Summary
+Fixed a runtime `NullReferenceException` in enemy melee hitbox damage flow and added automatic hitbox/hurtbox discovery for spawned enemies (including tank naming variants).
+
+### Files Affected
+- Assets/Scripts/AI/EnemyHitbox.cs
+- Assets/Scripts/AI/EnemyController.cs
+- Assets/Scripts/AI/States/SpawnControl/EnemySpawner.cs
+
+### Systems Affected
+- Enemy attack hitbox damage trigger flow
+- Enemy spawn-time hitbox/hurtbox auto-setup
+- Tank enemy prefab compatibility at runtime
+
+### Gameplay Changes
+- `EnemyHitbox` now auto-resolves its parent `EnemyController` on spawn/enable before applying damage.
+- Added null-guard behavior so missing controller links no longer throw exceptions during `OnTriggerStay`.
+- Spawned enemies now run automatic hitbox setup:
+  - resolves attack hitbox from `EnemyHitbox` component or fallback names (`Hit Box`, `Hitbox`)
+  - resolves hurtbox from `EnemyHurtbox` component or fallback names (`Hurt Box`, `Hurtbox`)
+  - applies `Enemy` tag to resolved hurtbox
+  - ensures resolved attack hitbox starts inactive
+- This specifically covers spawned tank enemies that do not use the exact `Hurt Box` naming previously expected.
+
+### Build/Test
+- `dotnet build Assembly-CSharp.csproj -nologo` succeeded.
+- Existing unrelated warning remains:
+  - `Assets/Scripts/Movement/PlayerMovementManagement.cs(30,18) CS0649 isSprinting is never assigned`.
+
+### Known Limitations
+- Unity Editor Play Mode validation is still required to confirm in-game hit timing and collision behavior across all enemy types.
+
+## 2026-05-18 - Authored Game Over Canvas Binding + Typography/Format Fix
+
+### Summary
+Rewired game-over presentation to use the authored `UI Manager` `Game Over Canvas` stats layout directly, fixing the tiny fallback text formatting and restoring the intended readable font sizing/style from the designed canvas.
+
+### Files Affected
+- Assets/Scripts/Visuals/UI/TemporaryGameOverUI.cs
+
+### Systems Affected
+- Game-over canvas binding and visibility flow
+- Game-over summary formatting/rendering
+- Return-to-lobby interaction wiring for authored canvas
+
+### Gameplay/UI Changes
+- Added authored-canvas auto-binding fallback by canvas name (`Game Over Canvas`) so setup works even without manually adding `TemporaryGameOverCanvasView`.
+- Added structured field mapping for the authored stats panel:
+  - Runtime, floors/stages cleared, enemies killed
+  - Kill/base/floor/subtotal essence values
+  - Run multiplier, reward total, composure bonus, other bonus
+  - Final soul essence earned
+- Game-over summary now fills each authored value field directly instead of rendering one dense monolithic TMP block.
+- Added canvas root scale visibility handling so authored canvases hidden at `0,0,0` are correctly shown on death and hidden again on return.
+- Updated `TemporaryGameOverCanvasView.TryGetBindings` to allow structured-layout usage without requiring a fallback `detailsText` assignment.
+
+### Build/Test
+- `dotnet build reflex.sln` succeeded.
+- Existing unrelated warning remains:
+  - `Assets/Scripts/Movement/PlayerMovementManagement.cs(30,18) CS0649 isSprinting is never assigned`.
+
+### Known Limitations
+- Final visual tuning still needs in-editor Play Mode confirmation on your target resolutions after this binding change.
+
 ## 2026-05-18 - Game Over Runtime Layout Match Pass (Reference Image Alignment)
 
 ### Summary

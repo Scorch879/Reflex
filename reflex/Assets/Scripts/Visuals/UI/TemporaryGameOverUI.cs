@@ -18,6 +18,22 @@ public class TemporaryGameOverUI : MonoBehaviour
     private const string GameOverBackgroundResourcePath = "UI/GameOver Background";
     private const string GameOverHeaderResourcePath = "UI/Game Over Header";
     private const string GameOverStatsResourcePath = "UI/Game Over Statistics Rect";
+    private const string LegacyAuthoredCanvasName = "Game Over Canvas";
+    private const string AuthoredRuntimeValuePath = "Main Box/Horiz 1/Vert 1/Runtime/Text Out";
+    private const string AuthoredFloorsClearedValuePath = "Main Box/Horiz 1/Vert 1/Floors Cleared/Text Out";
+    private const string AuthoredStagesClearedValuePath = "Main Box/Horiz 1/Vert 2/Stage Cleared/Text Out";
+    private const string AuthoredEnemiesKilledValuePath = "Main Box/Horiz 1/Vert 2/Enemies Killed/Text Out";
+    private const string AuthoredKillEssenceValuePath = "Main Box/GameObject/Horizontal/Vert 1/Kill Essence/Text Out";
+    private const string AuthoredBaseClearValuePath = "Main Box/GameObject/Horizontal/Vert 1/Base Clear/Text Out";
+    private const string AuthoredFloorDepthValuePath = "Main Box/GameObject/Horizontal/Vert 1/Floor Depth/Text Out";
+    private const string AuthoredRawSubtotalValuePath = "Main Box/GameObject/Horizontal/Vert 1/Floors Cleared/Text Out";
+    private const string AuthoredRunMultiplierValuePath = "Main Box/GameObject/Horizontal/Vert 2/Multiplier/Text Out";
+    private const string AuthoredRewardTotalValuePath = "Main Box/GameObject/Horizontal/Vert 2/'Reward '/Text Out";
+    private const string AuthoredComposureBonusValuePath = "Main Box/GameObject/Horizontal/Vert 2/Composure Bonus/Text Out";
+    private const string AuthoredOtherBonusValuePath = "Main Box/GameObject/Horizontal/Vert 2/Others/Text Out";
+    private const string AuthoredSoulEssenceEarnedValuePath = "Main Box/Soul Essence/Text Out";
+    private const string AuthoredTitlePath = "Main Box/Header";
+    private const string AuthoredReturnToLobbyButtonPath = "Lobby btn";
 
     [Header("Navigation")]
     [SerializeField] private string lobbySceneName = DefaultLobbySceneName;
@@ -34,6 +50,23 @@ public class TemporaryGameOverUI : MonoBehaviour
     private TextMeshProUGUI _titleText;
     private TextMeshProUGUI _detailsText;
     private Button _returnToLobbyButton;
+    private RectTransform _boundCanvasRoot;
+    private Vector3 _boundCanvasVisibleScale = Vector3.one;
+    private bool _useScaleVisibilityForBoundCanvas;
+    private bool _hasStructuredSummaryFields;
+    private TextMeshProUGUI _runtimeValueText;
+    private TextMeshProUGUI _floorsClearedValueText;
+    private TextMeshProUGUI _stagesClearedValueText;
+    private TextMeshProUGUI _enemiesKilledValueText;
+    private TextMeshProUGUI _killEssenceValueText;
+    private TextMeshProUGUI _baseClearValueText;
+    private TextMeshProUGUI _floorDepthValueText;
+    private TextMeshProUGUI _rawSubtotalValueText;
+    private TextMeshProUGUI _runMultiplierValueText;
+    private TextMeshProUGUI _rewardTotalValueText;
+    private TextMeshProUGUI _composureBonusValueText;
+    private TextMeshProUGUI _otherBonusValueText;
+    private TextMeshProUGUI _soulEssenceEarnedValueText;
     private bool _isShowing;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -130,7 +163,7 @@ public class TemporaryGameOverUI : MonoBehaviour
         }
 
         ResolveCanvasBindings();
-        if (_canvasGroup == null || _detailsText == null)
+        if (_canvasGroup == null || (!_hasStructuredSummaryFields && _detailsText == null))
         {
             return;
         }
@@ -142,15 +175,21 @@ public class TemporaryGameOverUI : MonoBehaviour
             summary = runSummary;
         }
 
-        _detailsText.text = BuildSummaryDetailsText(summary);
+        if (_hasStructuredSummaryFields)
+        {
+            PopulateStructuredSummary(summary);
+        }
+        else
+        {
+            _detailsText.text = BuildSummaryDetailsText(summary);
+        }
+
         if (_titleText != null)
         {
             _titleText.text = "GAME OVER";
         }
 
-        _canvasGroup.alpha = 1f;
-        _canvasGroup.interactable = true;
-        _canvasGroup.blocksRaycasts = true;
+        SetCanvasVisible(true);
         if (_returnToLobbyButton != null)
         {
             _returnToLobbyButton.interactable = true;
@@ -219,9 +258,38 @@ public class TemporaryGameOverUI : MonoBehaviour
             $"<align=center>Soul Essence Earned :{summary.totalEssenceEarned}</align>";
     }
 
+    private void PopulateStructuredSummary(RunRewardSummary summary)
+    {
+        int otherEssence = Mathf.Max(0, summary.totalEssenceEarned - summary.stageRewardEssence - summary.composureBonusEssence);
+        int stagesCleared = Mathf.Max(summary.stagesCleared, summary.stageReached);
+        int floorsCleared = Mathf.Max(0, summary.floorReached);
+
+        SetText(_runtimeValueText, FormatRuntime(summary.runtimeSeconds));
+        SetText(_floorsClearedValueText, floorsCleared.ToString());
+        SetText(_stagesClearedValueText, stagesCleared.ToString());
+        SetText(_enemiesKilledValueText, summary.enemiesDefeated.ToString());
+        SetText(_killEssenceValueText, summary.rawKillEssence.ToString());
+        SetText(_baseClearValueText, summary.rawBaseEssence.ToString());
+        SetText(_floorDepthValueText, summary.rawFloorEssence.ToString());
+        SetText(_rawSubtotalValueText, summary.rawEssenceBeforeMultipliers.ToString());
+        SetText(_runMultiplierValueText, $"x{summary.effectiveCombinedMultiplier:0.00}");
+        SetText(_rewardTotalValueText, summary.stageRewardEssence.ToString());
+        SetText(_composureBonusValueText, summary.composureBonusEssence.ToString());
+        SetText(_otherBonusValueText, otherEssence.ToString());
+        SetText(_soulEssenceEarnedValueText, summary.totalEssenceEarned.ToString());
+    }
+
     private string FormatTwoColumn(string left, string right)
     {
         return $"{left,-34}{right}";
+    }
+
+    private static void SetText(TextMeshProUGUI text, string value)
+    {
+        if (text != null)
+        {
+            text.text = value;
+        }
     }
 
     private void ResolveCanvasBindings()
@@ -236,47 +304,190 @@ public class TemporaryGameOverUI : MonoBehaviour
 
     private bool TryBindAuthoredCanvas()
     {
-        if (_authoredCanvasView != null)
+        if (_authoredCanvasView != null && TryBindFromCanvasView(_authoredCanvasView))
         {
-            if (_authoredCanvasView.TryGetBindings(out CanvasGroup group, out TextMeshProUGUI details, out Button returnButton))
-            {
-                _canvasGroup = group;
-                _titleText = null;
-                _detailsText = details;
-                BindReturnToLobbyButton(returnButton);
-                _authoredCanvasView.HideImmediate();
-                return true;
-            }
+            return true;
         }
 
         TemporaryGameOverCanvasView discoveredView = FindFirstObjectByType<TemporaryGameOverCanvasView>(FindObjectsInactive.Include);
-        if (discoveredView == null)
+        if (TryBindFromCanvasView(discoveredView))
+        {
+            _authoredCanvasView = discoveredView;
+            return true;
+        }
+
+        return TryBindLegacyAuthoredCanvas();
+    }
+
+    private bool TryBindFromCanvasView(TemporaryGameOverCanvasView view)
+    {
+        if (view == null || !view.TryGetBindings(out CanvasGroup group, out TextMeshProUGUI details, out Button returnButton))
         {
             return false;
         }
 
-        if (!discoveredView.TryGetBindings(out CanvasGroup discoveredGroup, out TextMeshProUGUI discoveredDetails, out Button discoveredReturnButton))
+        _canvasGroup = group;
+        _detailsText = details;
+        BindReturnToLobbyButton(returnButton);
+        CacheCanvasRootVisibility(group.transform as RectTransform, true);
+
+        bool hasStructuredFields = TryBindStructuredSummaryFields(view.transform);
+        if ((!hasStructuredFields && _detailsText == null) || _returnToLobbyButton == null)
         {
-            Debug.LogWarning("TemporaryGameOverCanvasView found but missing CanvasGroup or details text reference.");
+            Debug.LogWarning("TemporaryGameOverCanvasView found but missing required summary text or return button bindings.");
             return false;
         }
 
-        _authoredCanvasView = discoveredView;
-        _canvasGroup = discoveredGroup;
-        _titleText = null;
-        _detailsText = discoveredDetails;
-        BindReturnToLobbyButton(discoveredReturnButton);
-        _authoredCanvasView.HideImmediate();
+        _titleText = FindTextByPath(view.transform, AuthoredTitlePath);
+        SetCanvasVisible(false);
         return true;
     }
 
-    private void BuildRuntimeUIIfNeeded()
+    private bool TryBindLegacyAuthoredCanvas()
     {
-        if (_canvasGroup != null && _detailsText != null && _returnToLobbyButton != null)
+        Canvas[] canvases = FindObjectsByType<Canvas>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        for (int i = 0; i < canvases.Length; i++)
+        {
+            Canvas candidate = canvases[i];
+            if (candidate == null || candidate.gameObject.name != LegacyAuthoredCanvasName)
+            {
+                continue;
+            }
+
+            _canvasGroup = candidate.GetComponent<CanvasGroup>();
+            if (_canvasGroup == null)
+            {
+                _canvasGroup = candidate.gameObject.AddComponent<CanvasGroup>();
+            }
+
+            Transform root = candidate.transform;
+            _detailsText = FindTextByPath(root, "Main Box/Details");
+            _titleText = FindTextByPath(root, AuthoredTitlePath);
+
+            Transform returnButtonTransform = root.Find(AuthoredReturnToLobbyButtonPath);
+            BindReturnToLobbyButton(returnButtonTransform != null ? returnButtonTransform.GetComponent<Button>() : null);
+            CacheCanvasRootVisibility(candidate.transform as RectTransform, true);
+
+            bool hasStructuredFields = TryBindStructuredSummaryFields(root);
+            if ((!hasStructuredFields && _detailsText == null) || _returnToLobbyButton == null)
+            {
+                return false;
+            }
+
+            SetCanvasVisible(false);
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool TryBindStructuredSummaryFields(Transform root)
+    {
+        ClearStructuredSummaryBindings();
+        if (root == null)
+        {
+            return false;
+        }
+
+        _runtimeValueText = FindTextByPath(root, AuthoredRuntimeValuePath);
+        _floorsClearedValueText = FindTextByPath(root, AuthoredFloorsClearedValuePath);
+        _stagesClearedValueText = FindTextByPath(root, AuthoredStagesClearedValuePath);
+        _enemiesKilledValueText = FindTextByPath(root, AuthoredEnemiesKilledValuePath);
+        _killEssenceValueText = FindTextByPath(root, AuthoredKillEssenceValuePath);
+        _baseClearValueText = FindTextByPath(root, AuthoredBaseClearValuePath);
+        _floorDepthValueText = FindTextByPath(root, AuthoredFloorDepthValuePath);
+        _rawSubtotalValueText = FindTextByPath(root, AuthoredRawSubtotalValuePath);
+        _runMultiplierValueText = FindTextByPath(root, AuthoredRunMultiplierValuePath);
+        _rewardTotalValueText = FindTextByPath(root, AuthoredRewardTotalValuePath);
+        _composureBonusValueText = FindTextByPath(root, AuthoredComposureBonusValuePath);
+        _otherBonusValueText = FindTextByPath(root, AuthoredOtherBonusValuePath);
+        _soulEssenceEarnedValueText = FindTextByPath(root, AuthoredSoulEssenceEarnedValuePath);
+
+        _hasStructuredSummaryFields =
+            _runtimeValueText != null &&
+            _floorsClearedValueText != null &&
+            _stagesClearedValueText != null &&
+            _enemiesKilledValueText != null &&
+            _killEssenceValueText != null &&
+            _baseClearValueText != null &&
+            _floorDepthValueText != null &&
+            _rawSubtotalValueText != null &&
+            _runMultiplierValueText != null &&
+            _rewardTotalValueText != null &&
+            _composureBonusValueText != null &&
+            _otherBonusValueText != null &&
+            _soulEssenceEarnedValueText != null;
+
+        return _hasStructuredSummaryFields;
+    }
+
+    private void ClearStructuredSummaryBindings()
+    {
+        _hasStructuredSummaryFields = false;
+        _runtimeValueText = null;
+        _floorsClearedValueText = null;
+        _stagesClearedValueText = null;
+        _enemiesKilledValueText = null;
+        _killEssenceValueText = null;
+        _baseClearValueText = null;
+        _floorDepthValueText = null;
+        _rawSubtotalValueText = null;
+        _runMultiplierValueText = null;
+        _rewardTotalValueText = null;
+        _composureBonusValueText = null;
+        _otherBonusValueText = null;
+        _soulEssenceEarnedValueText = null;
+    }
+
+    private static TextMeshProUGUI FindTextByPath(Transform root, string path)
+    {
+        if (root == null || string.IsNullOrWhiteSpace(path))
+        {
+            return null;
+        }
+
+        Transform found = root.Find(path);
+        return found != null ? found.GetComponent<TextMeshProUGUI>() : null;
+    }
+
+    private void CacheCanvasRootVisibility(RectTransform root, bool useScaleForVisibility)
+    {
+        _boundCanvasRoot = root;
+        _useScaleVisibilityForBoundCanvas = useScaleForVisibility && root != null;
+        _boundCanvasVisibleScale = Vector3.one;
+
+        if (_boundCanvasRoot == null)
         {
             return;
         }
 
+        Vector3 currentScale = _boundCanvasRoot.localScale;
+        _boundCanvasVisibleScale = currentScale.sqrMagnitude > 0.0001f ? currentScale : Vector3.one;
+    }
+
+    private void SetCanvasVisible(bool visible)
+    {
+        if (_canvasGroup != null)
+        {
+            _canvasGroup.alpha = visible ? 1f : 0f;
+            _canvasGroup.interactable = visible;
+            _canvasGroup.blocksRaycasts = visible;
+        }
+
+        if (_useScaleVisibilityForBoundCanvas && _boundCanvasRoot != null)
+        {
+            _boundCanvasRoot.localScale = visible ? _boundCanvasVisibleScale : Vector3.zero;
+        }
+    }
+
+    private void BuildRuntimeUIIfNeeded()
+    {
+        if (_canvasGroup != null && (_hasStructuredSummaryFields || _detailsText != null) && _returnToLobbyButton != null)
+        {
+            return;
+        }
+
+        ClearStructuredSummaryBindings();
         EnsureGameOverSprites();
 
         GameObject canvasObject = new GameObject(
@@ -405,6 +616,8 @@ public class TemporaryGameOverUI : MonoBehaviour
             TextAlignmentOptions.Center);
 
         BindReturnToLobbyButton(button);
+        CacheCanvasRootVisibility(canvasRect, false);
+        SetCanvasVisible(false);
     }
 
     private void BindReturnToLobbyButton(Button button)
@@ -428,13 +641,7 @@ public class TemporaryGameOverUI : MonoBehaviour
     {
         Time.timeScale = 1f;
         _isShowing = false;
-
-        if (_canvasGroup != null)
-        {
-            _canvasGroup.alpha = 0f;
-            _canvasGroup.interactable = false;
-            _canvasGroup.blocksRaycasts = false;
-        }
+        SetCanvasVisible(false);
 
         PlayerManager player = _observedPlayer != null ? _observedPlayer : FindFirstObjectByType<PlayerManager>();
         if (player != null)
@@ -570,7 +777,7 @@ public class TemporaryGameOverCanvasView : MonoBehaviour
         group = canvasGroup;
         details = detailsText;
         returnButton = returnToLobbyButton;
-        return group != null && details != null;
+        return group != null;
     }
 
     public void HideImmediate()

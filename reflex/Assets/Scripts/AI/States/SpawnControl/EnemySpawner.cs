@@ -143,11 +143,7 @@ public class EnemySpawner : MonoBehaviour
             offset.y = spawnHeight;  // Use the configurable spawn height
             Vector3 spawnPosition = transform.position + offset;
             GameObject enemy = Instantiate(selectedEnemyPrefab, spawnPosition, transform.rotation);
-            Transform hitbox = enemy.transform.Find("Hurt Box");
-            if (hitbox != null)
-            {
-                hitbox.tag = "Enemy";
-            }
+            SpawnedEnemyHitboxAutoBinder.Configure(enemy);
             _currentEnemies.Add(enemy);
         }
 
@@ -360,6 +356,109 @@ public class EnemySpawner : MonoBehaviour
         {
             EmotionEngine.Instance.RecordRoomCleared(this);
             _roomClearReported = true;
+        }
+    }
+
+    private static class SpawnedEnemyHitboxAutoBinder
+    {
+        private const string EnemyTag = "Enemy";
+
+        private static readonly string[] AttackHitboxNames =
+        {
+            "Hit Box",
+            "Hitbox"
+        };
+
+        private static readonly string[] HurtboxNames =
+        {
+            "Hurt Box",
+            "Hurtbox"
+        };
+
+        public static void Configure(GameObject spawnedEnemy)
+        {
+            if (spawnedEnemy == null)
+            {
+                return;
+            }
+
+            EnemyController enemyController = spawnedEnemy.GetComponent<EnemyController>();
+            if (enemyController != null)
+            {
+                GameObject attackHitboxObject = enemyController.enemyHitbox;
+                if (attackHitboxObject == null)
+                {
+                    attackHitboxObject = FindAttackHitbox(spawnedEnemy.transform);
+                }
+
+                if (attackHitboxObject != null)
+                {
+                    enemyController.enemyHitbox = attackHitboxObject;
+                    enemyController.enemyHitbox.SetActive(false);
+                }
+            }
+
+            GameObject hurtboxObject = FindHurtbox(spawnedEnemy.transform);
+            if (hurtboxObject != null)
+            {
+                hurtboxObject.tag = EnemyTag;
+            }
+        }
+
+        private static GameObject FindAttackHitbox(Transform root)
+        {
+            EnemyHitbox enemyHitbox = root.GetComponentInChildren<EnemyHitbox>(true);
+            if (enemyHitbox != null)
+            {
+                return enemyHitbox.gameObject;
+            }
+
+            return FindByNames(root, AttackHitboxNames);
+        }
+
+        private static GameObject FindHurtbox(Transform root)
+        {
+            EnemyHurtbox enemyHurtbox = root.GetComponentInChildren<EnemyHurtbox>(true);
+            if (enemyHurtbox != null)
+            {
+                return enemyHurtbox.gameObject;
+            }
+
+            return FindByNames(root, HurtboxNames);
+        }
+
+        private static GameObject FindByNames(Transform root, string[] candidateNames)
+        {
+            for (int i = 0; i < candidateNames.Length; i++)
+            {
+                Transform candidate = FindChildRecursive(root, candidateNames[i]);
+                if (candidate != null)
+                {
+                    return candidate.gameObject;
+                }
+            }
+
+            return null;
+        }
+
+        private static Transform FindChildRecursive(Transform root, string targetName)
+        {
+            if (root.name == targetName)
+            {
+                return root;
+            }
+
+            for (int i = 0; i < root.childCount; i++)
+            {
+                Transform child = root.GetChild(i);
+                Transform found = FindChildRecursive(child, targetName);
+                if (found != null)
+                {
+                    return found;
+                }
+            }
+
+            return null;
         }
     }
 }
